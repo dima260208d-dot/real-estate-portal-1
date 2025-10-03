@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Icon from '@/components/ui/icon';
 import { toast } from 'sonner';
 
@@ -21,6 +22,80 @@ interface ServiceModalProps {
   selectedService: Service | null;
 }
 
+const serviceOptions: Record<string, { label: string; type: 'select' | 'checkbox' | 'input'; options?: string[]; placeholder?: string }[]> = {
+  mortgage: [
+    { label: 'Сумма кредита', type: 'select', options: ['до 3 млн ₽', '3-5 млн ₽', '5-10 млн ₽', 'более 10 млн ₽'] },
+    { label: 'Срок кредита', type: 'select', options: ['до 10 лет', '10-15 лет', '15-20 лет', '20-30 лет'] },
+    { label: 'Первоначальный взнос', type: 'select', options: ['менее 10%', '10-20%', '20-30%', 'более 30%'] },
+    { label: 'Есть одобренная ипотека', type: 'checkbox' },
+    { label: 'Нужна помощь с подбором банка', type: 'checkbox' }
+  ],
+  buy: [
+    { label: 'Тип недвижимости', type: 'select', options: ['Квартира', 'Дом', 'Участок', 'Коммерческая'] },
+    { label: 'Количество комнат', type: 'select', options: ['Студия', '1 комната', '2 комнаты', '3 комнаты', '4+ комнаты'] },
+    { label: 'Бюджет', type: 'select', options: ['до 3 млн ₽', '3-5 млн ₽', '5-10 млн ₽', 'более 10 млн ₽'] },
+    { label: 'Район', type: 'input', placeholder: 'Укажите желаемый район' },
+    { label: 'Покупка с использованием ипотеки', type: 'checkbox' },
+    { label: 'Рассматриваю новостройки', type: 'checkbox' }
+  ],
+  sale: [
+    { label: 'Тип недвижимости', type: 'select', options: ['Квартира', 'Дом', 'Участок', 'Коммерческая'] },
+    { label: 'Количество комнат', type: 'select', options: ['Студия', '1 комната', '2 комнаты', '3 комнаты', '4+ комнаты'] },
+    { label: 'Желаемая цена', type: 'input', placeholder: 'Укажите желаемую стоимость' },
+    { label: 'Срочная продажа', type: 'checkbox' },
+    { label: 'Есть обременения', type: 'checkbox' },
+    { label: 'Нужна помощь с оценкой', type: 'checkbox' }
+  ],
+  legal: [
+    { label: 'Тип сделки', type: 'select', options: ['Покупка', 'Продажа', 'Дарение', 'Наследство', 'Другое'] },
+    { label: 'Проверка юридической чистоты', type: 'checkbox' },
+    { label: 'Сопровождение сделки', type: 'checkbox' },
+    { label: 'Составление договоров', type: 'checkbox' },
+    { label: 'Регистрация в Росреестре', type: 'checkbox' }
+  ],
+  rent: [
+    { label: 'Тип недвижимости', type: 'select', options: ['Квартира', 'Дом', 'Коммерческая'] },
+    { label: 'Количество комнат', type: 'select', options: ['Студия', '1 комната', '2 комнаты', '3 комнаты', '4+ комнаты'] },
+    { label: 'Желаемая арендная плата', type: 'input', placeholder: 'Укажите желаемую сумму в месяц' },
+    { label: 'Нужна помощь с поиском арендаторов', type: 'checkbox' },
+    { label: 'Нужен договор аренды', type: 'checkbox' }
+  ],
+  insurance: [
+    { label: 'Тип страхования', type: 'select', options: ['Ипотека', 'Титул', 'Имущество', 'Комплексное'] },
+    { label: 'Сумма страхования', type: 'select', options: ['до 3 млн ₽', '3-5 млн ₽', '5-10 млн ₽', 'более 10 млн ₽'] },
+    { label: 'Срок страхования', type: 'select', options: ['1 год', '3 года', '5 лет', 'На весь срок ипотеки'] },
+    { label: 'Есть действующая ипотека', type: 'checkbox' }
+  ],
+  pledge: [
+    { label: 'Сумма займа', type: 'select', options: ['до 500 тыс ₽', '500 тыс - 1 млн ₽', '1-3 млн ₽', 'более 3 млн ₽'] },
+    { label: 'Срок займа', type: 'select', options: ['до 6 месяцев', '6-12 месяцев', '1-2 года', 'более 2 лет'] },
+    { label: 'Тип залога', type: 'select', options: ['Квартира', 'Дом', 'Участок', 'Коммерческая'] },
+    { label: 'Есть обременения на объект', type: 'checkbox' },
+    { label: 'Срочно нужны деньги', type: 'checkbox' }
+  ],
+  valuation: [
+    { label: 'Тип объекта', type: 'select', options: ['Квартира', 'Дом', 'Участок', 'Коммерческая'] },
+    { label: 'Цель оценки', type: 'select', options: ['Для продажи', 'Для ипотеки', 'Для залога', 'Для наследства', 'Другое'] },
+    { label: 'Срочная оценка (1-2 дня)', type: 'checkbox' },
+    { label: 'Нужен официальный отчет', type: 'checkbox' }
+  ],
+  contract: [
+    { label: 'Тип договора', type: 'select', options: ['Купли-продажи', 'Дарения', 'Мены', 'Другой'] },
+    { label: 'Стороны сделки', type: 'select', options: ['Физ. лица', 'Физ. и юр. лицо', 'Юр. лица'] },
+    { label: 'Нужна регистрация в Росреестре', type: 'checkbox' },
+    { label: 'Требуется нотариальное заверение', type: 'checkbox' },
+    { label: 'Сделка с использованием ипотеки', type: 'checkbox' }
+  ],
+  newbuilding: [
+    { label: 'Застройщик', type: 'input', placeholder: 'Укажите застройщика, если знаете' },
+    { label: 'Количество комнат', type: 'select', options: ['Студия', '1 комната', '2 комнаты', '3 комнаты', '4+ комнаты'] },
+    { label: 'Бюджет', type: 'select', options: ['до 3 млн ₽', '3-5 млн ₽', '5-10 млн ₽', 'более 10 млн ₽'] },
+    { label: 'Срок сдачи', type: 'select', options: ['Сдан', 'До 6 месяцев', '6-12 месяцев', '1-2 года', 'Не важно'] },
+    { label: 'Покупка с использованием ипотеки', type: 'checkbox' },
+    { label: 'Рассматриваю квартиры с отделкой', type: 'checkbox' }
+  ]
+};
+
 export default function ServiceModal({ isOpen, onOpenChange, selectedService }: ServiceModalProps) {
   const [agreed, setAgreed] = useState(false);
   const [formData, setFormData] = useState({
@@ -30,6 +105,13 @@ export default function ServiceModal({ isOpen, onOpenChange, selectedService }: 
     service: selectedService?.title || '',
     message: ''
   });
+  const [serviceDetails, setServiceDetails] = useState<Record<string, string | boolean>>({});
+
+  useEffect(() => {
+    if (selectedService) {
+      setServiceDetails({});
+    }
+  }, [selectedService]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,9 +124,24 @@ export default function ServiceModal({ isOpen, onOpenChange, selectedService }: 
       const userData = localStorage.getItem('user');
       const user = userData ? JSON.parse(userData) : null;
       
+      const detailsText = Object.entries(serviceDetails)
+        .filter(([_, value]) => value)
+        .map(([key, value]) => {
+          if (typeof value === 'boolean') {
+            return `✓ ${key}`;
+          }
+          return `${key}: ${value}`;
+        })
+        .join('\n');
+
+      const fullMessage = detailsText 
+        ? `${detailsText}\n\n${formData.message || ''}`.trim()
+        : formData.message;
+      
       const applicationData = {
         ...formData,
         service: selectedService?.title || formData.service,
+        message: fullMessage,
         user_id: user?.user_id || null
       };
 
@@ -62,6 +159,7 @@ export default function ServiceModal({ isOpen, onOpenChange, selectedService }: 
         toast.success('Спасибо! Ваша заявка принята. Мы свяжемся с вами в течение 15 минут!');
         onOpenChange(false);
         setFormData({ name: '', phone: '', email: '', service: '', message: '' });
+        setServiceDetails({});
         setAgreed(false);
       } else {
         toast.error('Ошибка отправки заявки. Попробуйте позже.');
@@ -70,6 +168,8 @@ export default function ServiceModal({ isOpen, onOpenChange, selectedService }: 
       toast.error('Ошибка подключения к серверу');
     }
   };
+
+  const currentOptions = selectedService ? serviceOptions[selectedService.id] || [] : [];
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
@@ -84,6 +184,55 @@ export default function ServiceModal({ isOpen, onOpenChange, selectedService }: 
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+          {currentOptions.length > 0 && (
+            <div className="bg-gray-50 p-4 rounded-lg space-y-3">
+              <h3 className="font-semibold text-sm text-gray-700">Детали услуги:</h3>
+              {currentOptions.map((option, index) => (
+                <div key={index}>
+                  {option.type === 'select' ? (
+                    <div>
+                      <Label className="text-sm">{option.label}</Label>
+                      <Select
+                        value={serviceDetails[option.label] as string || ''}
+                        onValueChange={(value) => setServiceDetails({ ...serviceDetails, [option.label]: value })}
+                      >
+                        <SelectTrigger className="mt-1">
+                          <SelectValue placeholder="Выберите вариант" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {option.options?.map((opt) => (
+                            <SelectItem key={opt} value={opt}>{opt}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  ) : option.type === 'input' ? (
+                    <div>
+                      <Label className="text-sm">{option.label}</Label>
+                      <Input
+                        className="mt-1"
+                        value={serviceDetails[option.label] as string || ''}
+                        onChange={(e) => setServiceDetails({ ...serviceDetails, [option.label]: e.target.value })}
+                        placeholder={option.placeholder}
+                      />
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <Checkbox
+                        id={`option-${index}`}
+                        checked={serviceDetails[option.label] as boolean || false}
+                        onCheckedChange={(checked) => setServiceDetails({ ...serviceDetails, [option.label]: checked as boolean })}
+                      />
+                      <Label htmlFor={`option-${index}`} className="text-sm cursor-pointer">
+                        {option.label}
+                      </Label>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
           <div>
             <Label htmlFor="modal-name">ФИО *</Label>
             <Input
@@ -117,13 +266,13 @@ export default function ServiceModal({ isOpen, onOpenChange, selectedService }: 
             />
           </div>
           <div>
-            <Label htmlFor="modal-message">Детали услуги</Label>
+            <Label htmlFor="modal-message">Дополнительные пожелания</Label>
             <Textarea
               id="modal-message"
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               placeholder="Расскажите подробнее о вашей ситуации..."
-              rows={4}
+              rows={3}
             />
           </div>
           <div className="flex items-center gap-2">
