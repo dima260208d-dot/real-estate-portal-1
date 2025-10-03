@@ -1,0 +1,35 @@
+{
+  "tests": [
+    {
+      "name": "Submit application successfully",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "name": "Иван Иванов",
+        "phone": "+79001234567",
+        "email": "test@example.com",
+        "service": "Покупка недвижимости",
+        "message": "Ищу квартиру в центре"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true,
+        "application_id": "number"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Missing required fields",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "name": "Иван Иванов"
+      },
+      "expectedStatus": 400,
+      "expectedBody": {
+        "error": "string"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

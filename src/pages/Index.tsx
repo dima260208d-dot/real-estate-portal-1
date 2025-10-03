@@ -57,16 +57,35 @@ export default function Index() {
     setIsOpen(true);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!agreed) {
       toast.error('Необходимо согласие на обработку данных');
       return;
     }
-    toast.success('Спасибо! Ваша заявка принята. Мы свяжемся с вами в течение 15 минут!');
-    setIsOpen(false);
-    setFormData({ name: '', phone: '', email: '', service: '', message: '' });
-    setAgreed(false);
+
+    try {
+      const response = await fetch('https://functions.poehali.dev/680c3b01-9d4e-4dee-a366-4c371d7942aa', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        toast.success('Спасибо! Ваша заявка принята. Мы свяжемся с вами в течение 15 минут!');
+        setIsOpen(false);
+        setFormData({ name: '', phone: '', email: '', service: '', message: '' });
+        setAgreed(false);
+      } else {
+        toast.error('Ошибка отправки заявки. Попробуйте позже.');
+      }
+    } catch (error) {
+      toast.error('Ошибка подключения к серверу');
+    }
   };
 
   const scrollToForm = () => {
@@ -95,20 +114,21 @@ export default function Index() {
       <header className="fixed top-0 w-full bg-white/95 backdrop-blur-sm shadow-sm z-50">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-[#FF6600] to-[#FF8833] rounded-lg flex items-center justify-center">
-              <Icon name="Home" size={28} className="text-white" />
-            </div>
+            <img src="https://cdn.poehali.dev/files/49921f72-fe81-4d6d-975f-1ba898046b57.jpg" alt="ЮР Недвижимость" className="w-12 h-12 rounded-full" />
             <div>
               <h1 className="text-xl font-bold text-[#1A1A1A]">ЮР Недвижимость</h1>
               <p className="text-xs text-gray-500">Юрист Риэлтор Недвижимость</p>
             </div>
           </div>
-          <nav className="hidden md:flex gap-6 items-center">
+          <nav className="hidden md:flex gap-4 items-center">
             <a href="#services" className="text-[#1A1A1A] hover:text-[#FF6600] transition-colors">Услуги</a>
             <a href="#faq" className="text-[#1A1A1A] hover:text-[#FF6600] transition-colors">FAQ</a>
             <a href="#contacts" className="text-[#1A1A1A] hover:text-[#FF6600] transition-colors">Контакты</a>
             <Button onClick={scrollToForm} className="bg-[#FF6600] hover:bg-[#FF7720] text-white">
               Подать заявку
+            </Button>
+            <Button variant="outline" className="border-[#FF6600] text-[#FF6600] hover:bg-[#FF6600] hover:text-white" onClick={() => window.location.href = '/login'}>
+              Вход
             </Button>
           </nav>
           <Button variant="ghost" size="icon" className="md:hidden">
@@ -118,8 +138,8 @@ export default function Index() {
       </header>
 
       <section className="relative h-screen flex items-center justify-center overflow-hidden pt-20">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#FF6600]/90 via-[#FF6600]/80 to-[#FF8833]/70 z-10" />
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1920')] bg-cover bg-center" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#FF6600]/85 via-[#FF6600]/75 to-[#FF8833]/65 z-10" />
+        <div className="absolute inset-0 bg-[url('/img/952939ad-8b7d-4630-b375-5b90f91be222.jpg')] bg-cover bg-center" />
         <div className="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">ЮР Недвижимость</h1>
           <h2 className="text-2xl md:text-3xl mb-4 animate-fade-in animation-delay-200">
@@ -129,10 +149,16 @@ export default function Index() {
             Ваш надежный партнер на рынке недвижимости Воронежа. Полный цикл услуг с 2010 года.
           </p>
           <div className="flex gap-4 justify-center flex-wrap animate-fade-in animation-delay-600">
-            <Button size="lg" onClick={scrollToForm} className="bg-white text-[#FF6600] hover:bg-gray-100">
+            <Button size="lg" asChild className="bg-white text-[#FF6600] hover:bg-gray-100">
+              <a href="tel:+79805557580" className="flex items-center gap-2">
+                <Icon name="Phone" size={20} />
+                Позвонить
+              </a>
+            </Button>
+            <Button size="lg" onClick={scrollToForm} className="bg-[#FF6600]/90 text-white hover:bg-[#FF6600] border-2 border-white">
               Бесплатная консультация
             </Button>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/20" onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>
+            <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-[#FF6600]" onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>
               Наши услуги
             </Button>
           </div>
@@ -317,16 +343,7 @@ export default function Index() {
       <section id="contacts" className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-16 text-[#1A1A1A] animate-on-scroll">Наши контакты</h2>
-          <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
-            <div className="animate-on-scroll">
-              <div className="bg-gray-200 rounded-lg h-96 flex items-center justify-center mb-6">
-                <div className="text-center">
-                  <Icon name="MapPin" size={48} className="text-[#FF6600] mx-auto mb-4" />
-                  <p className="text-gray-600">Яндекс.Карты</p>
-                  <p className="text-sm text-gray-500">Московский пр., 114В, оф. 200</p>
-                </div>
-              </div>
-            </div>
+          <div className="max-w-4xl mx-auto">
             <div className="space-y-6 animate-on-scroll">
               <Card>
                 <CardHeader>
@@ -422,9 +439,7 @@ export default function Index() {
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-[#FF6600] to-[#FF8833] rounded-lg flex items-center justify-center">
-                  <Icon name="Home" size={28} className="text-white" />
-                </div>
+                <img src="https://cdn.poehali.dev/files/49921f72-fe81-4d6d-975f-1ba898046b57.jpg" alt="ЮР Недвижимость" className="w-12 h-12 rounded-full" />
                 <div>
                   <h3 className="font-bold text-lg">ЮР Недвижимость</h3>
                   <p className="text-xs text-gray-400">С 2010 года</p>

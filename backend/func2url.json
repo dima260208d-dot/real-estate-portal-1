@@ -1,0 +1,6 @@
+{
+  "get-applications": "https://functions.poehali.dev/60f48b27-a9ec-4e24-bf65-2f0b68248028",
+  "auth": "https://functions.poehali.dev/e2acb26b-07e7-4439-8683-620e06ed06ef",
+  "update-application-status": "https://functions.poehali.dev/818732d3-a7b7-4290-ba1a-c68264f1df79",
+  "submit-application": "https://functions.poehali.dev/680c3b01-9d4e-4dee-a366-4c371d7942aa"
+}

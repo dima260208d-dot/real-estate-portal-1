@@ -1,0 +1,48 @@
+{
+  "tests": [
+    {
+      "name": "Admin login successful",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "username": "admin",
+        "password": "admin"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true,
+        "role": "admin"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Director login successful",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "username": "director",
+        "password": "director"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true,
+        "role": "director"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Invalid credentials",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "username": "wrong",
+        "password": "wrong"
+      },
+      "expectedStatus": 401,
+      "expectedBody": {
+        "error": "string"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

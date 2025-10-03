@@ -1,0 +1,25 @@
+{
+  "tests": [
+    {
+      "name": "Get all applications",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200,
+      "expectedBody": {
+        "applications": "array",
+        "count": "number"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Get applications by status",
+      "method": "GET",
+      "path": "/?status=new",
+      "expectedStatus": 200,
+      "expectedBody": {
+        "applications": "array"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

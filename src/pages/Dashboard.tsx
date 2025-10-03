@@ -1,0 +1,285 @@
+import { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import Icon from '@/components/ui/icon';
+import { toast } from 'sonner';
+
+interface Application {
+  id: number;
+  name: string;
+  phone: string;
+  email: string;
+  service: string;
+  message: string;
+  status: 'new' | 'in_progress' | 'completed';
+  created_at: string;
+  updated_at: string;
+}
+
+interface User {
+  user_id: number;
+  username: string;
+  role: 'admin' | 'director';
+}
+
+export default function Dashboard() {
+  const [applications, setApplications] = useState<Application[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(null);
+  const [statusFilter, setStatusFilter] = useState<string>('all');
+
+  useEffect(() => {
+    const userData = localStorage.getItem('user');
+    if (!userData) {
+      window.location.href = '/login';
+      return;
+    }
+    setUser(JSON.parse(userData));
+    fetchApplications();
+  }, []);
+
+  const fetchApplications = async (status?: string) => {
+    try {
+      const url = status && status !== 'all' 
+        ? `https://functions.poehali.dev/60f48b27-a9ec-4e24-bf65-2f0b68248028?status=${status}`
+        : 'https://functions.poehali.dev/60f48b27-a9ec-4e24-bf65-2f0b68248028';
+      
+      const response = await fetch(url);
+      const data = await response.json();
+      
+      if (response.ok) {
+        setApplications(data.applications || []);
+      }
+    } catch (error) {
+      toast.error('Ошибка загрузки заявок');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const updateStatus = async (appId: number, newStatus: string) => {
+    try {
+      const response = await fetch('https://functions.poehali.dev/818732d3-a7b7-4290-ba1a-c68264f1df79', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          application_id: appId,
+          status: newStatus,
+        }),
+      });
+
+      if (response.ok) {
+        toast.success('Статус обновлен');
+        fetchApplications(statusFilter === 'all' ? undefined : statusFilter);
+      }
+    } catch (error) {
+      toast.error('Ошибка обновления статуса');
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    window.location.href = '/login';
+  };
+
+  const getStatusBadge = (status: string) => {
+    const variants: Record<string, { label: string; className: string }> = {
+      new: { label: 'Новая', className: 'bg-blue-500 hover:bg-blue-600' },
+      in_progress: { label: 'В работе', className: 'bg-yellow-500 hover:bg-yellow-600' },
+      completed: { label: 'Выполнена', className: 'bg-green-500 hover:bg-green-600' },
+    };
+    const variant = variants[status] || variants.new;
+    return <Badge className={variant.className}>{variant.label}</Badge>;
+  };
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('ru-RU', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(date);
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF6600] mx-auto mb-4"></div>
+          <p className="text-gray-600">Загрузка...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-[#F5F5F5]">
+      <header className="bg-white shadow-sm border-b">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <img 
+              src="https://cdn.poehali.dev/files/49921f72-fe81-4d6d-975f-1ba898046b57.jpg" 
+              alt="ЮР Недвижимость" 
+              className="w-12 h-12 rounded-full"
+            />
+            <div>
+              <h1 className="text-xl font-bold text-[#1A1A1A]">Личный кабинет</h1>
+              <p className="text-xs text-gray-500">
+                {user?.role === 'director' ? 'Директор' : 'Администратор'} ({user?.username})
+              </p>
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <Button variant="outline" onClick={() => window.location.href = '/'}>
+              <Icon name="Home" size={16} className="mr-2" />
+              На сайт
+            </Button>
+            <Button variant="outline" onClick={handleLogout} className="text-red-600 hover:text-red-700">
+              <Icon name="LogOut" size={16} className="mr-2" />
+              Выйти
+            </Button>
+          </div>
+        </div>
+      </header>
+
+      <main className="container mx-auto px-4 py-8">
+        <div className="grid md:grid-cols-4 gap-6 mb-8">
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-sm font-medium text-gray-600">Всего заявок</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold text-[#1A1A1A]">{applications.length}</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-sm font-medium text-gray-600">Новые</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold text-blue-600">
+                {applications.filter(a => a.status === 'new').length}
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-sm font-medium text-gray-600">В работе</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold text-yellow-600">
+                {applications.filter(a => a.status === 'in_progress').length}
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-sm font-medium text-gray-600">Выполнены</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold text-green-600">
+                {applications.filter(a => a.status === 'completed').length}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <Card>
+          <CardHeader>
+            <div className="flex justify-between items-center">
+              <div>
+                <CardTitle>Заявки клиентов</CardTitle>
+                <CardDescription>Архив всех заявок с сайта</CardDescription>
+              </div>
+              <Select value={statusFilter} onValueChange={(value) => {
+                setStatusFilter(value);
+                fetchApplications(value === 'all' ? undefined : value);
+              }}>
+                <SelectTrigger className="w-48">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Все заявки</SelectItem>
+                  <SelectItem value="new">Новые</SelectItem>
+                  <SelectItem value="in_progress">В работе</SelectItem>
+                  <SelectItem value="completed">Выполнены</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>ID</TableHead>
+                    <TableHead>Дата</TableHead>
+                    <TableHead>ФИО</TableHead>
+                    <TableHead>Телефон</TableHead>
+                    <TableHead>Email</TableHead>
+                    <TableHead>Услуга</TableHead>
+                    <TableHead>Сообщение</TableHead>
+                    <TableHead>Статус</TableHead>
+                    <TableHead>Действия</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {applications.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={9} className="text-center py-8 text-gray-500">
+                        Заявок пока нет
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    applications.map((app) => (
+                      <TableRow key={app.id}>
+                        <TableCell className="font-medium">{app.id}</TableCell>
+                        <TableCell className="whitespace-nowrap">{formatDate(app.created_at)}</TableCell>
+                        <TableCell>{app.name}</TableCell>
+                        <TableCell>
+                          <a href={`tel:${app.phone}`} className="text-[#FF6600] hover:underline">
+                            {app.phone}
+                          </a>
+                        </TableCell>
+                        <TableCell>
+                          <a href={`mailto:${app.email}`} className="text-[#FF6600] hover:underline">
+                            {app.email}
+                          </a>
+                        </TableCell>
+                        <TableCell className="max-w-xs truncate">{app.service}</TableCell>
+                        <TableCell className="max-w-xs truncate">{app.message || '—'}</TableCell>
+                        <TableCell>{getStatusBadge(app.status)}</TableCell>
+                        <TableCell>
+                          <Select
+                            value={app.status}
+                            onValueChange={(value) => updateStatus(app.id, value)}
+                          >
+                            <SelectTrigger className="w-32">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="new">Новая</SelectItem>
+                              <SelectItem value="in_progress">В работе</SelectItem>
+                              <SelectItem value="completed">Выполнена</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+          </CardContent>
+        </Card>
+      </main>
+    </div>
+  );
+}
