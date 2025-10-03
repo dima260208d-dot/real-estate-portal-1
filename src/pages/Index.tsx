@@ -162,7 +162,7 @@ export default function Index() {
             <Button size="lg" onClick={scrollToForm} className="bg-[#FF6600]/90 text-white hover:bg-[#FF6600] border-2 border-white">
               Бесплатная консультация
             </Button>
-            <Button size="lg" variant="outline" className="border-2 border-white bg-transparent text-white hover:bg-white hover:text-[#FF6600] font-semibold" onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>
+            <Button size="lg" className="bg-white text-[#FF6600] hover:bg-gray-100" onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>
               Наши услуги
             </Button>
           </div>
