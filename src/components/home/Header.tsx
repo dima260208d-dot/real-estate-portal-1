@@ -8,6 +8,7 @@ interface HeaderProps {
 
 export default function Header({ onApplicationClick }: HeaderProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const user = localStorage.getItem('user');
@@ -20,6 +21,10 @@ export default function Header({ onApplicationClick }: HeaderProps) {
     } else {
       window.location.href = '/login';
     }
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -43,10 +48,60 @@ export default function Header({ onApplicationClick }: HeaderProps) {
             {isLoggedIn ? 'Личный кабинет' : 'Вход'}
           </Button>
         </nav>
-        <Button variant="ghost" size="icon" className="md:hidden">
-          <Icon name="Menu" size={24} />
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          className="md:hidden"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          <Icon name={isMobileMenuOpen ? "X" : "Menu"} size={24} />
         </Button>
       </div>
+
+      {/* Мобильное меню */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden bg-white border-t border-gray-200 shadow-lg">
+          <nav className="container mx-auto px-4 py-4 flex flex-col gap-3">
+            <a 
+              href="#services" 
+              className="text-[#1A1A1A] hover:text-[#FF6600] transition-colors py-2 border-b"
+              onClick={closeMobileMenu}
+            >
+              Услуги
+            </a>
+            <a 
+              href="#faq" 
+              className="text-[#1A1A1A] hover:text-[#FF6600] transition-colors py-2 border-b"
+              onClick={closeMobileMenu}
+            >
+              FAQ
+            </a>
+            <a 
+              href="#contacts" 
+              className="text-[#1A1A1A] hover:text-[#FF6600] transition-colors py-2 border-b"
+              onClick={closeMobileMenu}
+            >
+              Контакты
+            </a>
+            <Button 
+              onClick={() => {
+                onApplicationClick();
+                closeMobileMenu();
+              }} 
+              className="bg-[#FF6600] hover:bg-[#FF7720] text-white w-full"
+            >
+              Подать заявку
+            </Button>
+            <Button 
+              variant="outline" 
+              className="border-[#FF6600] text-[#FF6600] hover:bg-[#FF6600] hover:text-white w-full" 
+              onClick={handleAuthClick}
+            >
+              {isLoggedIn ? 'Личный кабинет' : 'Вход'}
+            </Button>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
