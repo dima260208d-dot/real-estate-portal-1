@@ -31,10 +31,10 @@ export default function Header({ onApplicationClick }: HeaderProps) {
     <header className="fixed top-0 w-full bg-white/95 backdrop-blur-sm border-b-2 border-[#FF6600] shadow-sm z-50">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <div className="flex items-center gap-3">
-          <img src="https://cdn.poehali.dev/files/49921f72-fe81-4d6d-975f-1ba898046b57.jpg" alt="ЮР Недвижимость" className="w-12 h-12 rounded-full" />
+          <img src="https://cdn.poehali.dev/files/49921f72-fe81-4d6d-975f-1ba898046b57.jpg" alt="ЮР недвижимость" className="w-12 h-12 rounded-full" />
           <div>
-            <h1 className="text-xl font-bold text-[#1A1A1A]">ЮР Недвижимость</h1>
-            <p className="text-xs text-gray-500">Юрист Риэлтор Недвижимость</p>
+            <h1 className="text-xl font-bold text-[#1A1A1A]">ЮР недвижимость</h1>
+            <p className="text-xs text-gray-500">Профессионализм в квадратах</p>
           </div>
         </div>
         <nav className="hidden md:flex gap-4 items-center">

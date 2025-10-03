@@ -84,7 +84,7 @@ export default function Register() {
           <div className="flex justify-center mb-4">
             <img 
               src="https://cdn.poehali.dev/files/49921f72-fe81-4d6d-975f-1ba898046b57.jpg" 
-              alt="ЮР Недвижимость" 
+              alt="ЮР недвижимость" 
               className="w-20 h-20 rounded-full"
             />
           </div>

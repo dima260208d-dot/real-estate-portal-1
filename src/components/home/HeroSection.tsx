@@ -11,12 +11,12 @@ export default function HeroSection({ onConsultationClick }: HeroSectionProps) {
       <div className="absolute inset-0 bg-gradient-to-br from-[#FF6600]/85 via-[#FF6600]/75 to-[#FF8833]/65 z-10" />
       <div className="absolute inset-0 bg-[url('/img/952939ad-8b7d-4630-b375-5b90f91be222.jpg')] bg-cover bg-center" />
       <div className="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
-        <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">ЮР Недвижимость</h1>
+        <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">ЮР недвижимость</h1>
         <h2 className="text-2xl md:text-3xl mb-4 animate-fade-in animation-delay-200">
-          Юрист Риэлтор Недвижимость
+          Профессионализм в квадратах
         </h2>
         <p className="text-lg md:text-xl mb-4 animate-fade-in animation-delay-400">
-          Опытные специалисты на рынке недвижимости Воронежа
+          Юрист и риэлтор для эффективного решения Ваших задач
         </p>
         <p className="text-base md:text-lg mb-8 animate-fade-in animation-delay-500 italic">
           Делаем процесс продажи и покупки недвижимости простым и понятным для каждого

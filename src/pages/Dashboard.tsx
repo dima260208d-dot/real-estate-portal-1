@@ -196,7 +196,7 @@ export default function Dashboard() {
           <div className="flex items-center gap-3">
             <img 
               src="https://cdn.poehali.dev/files/49921f72-fe81-4d6d-975f-1ba898046b57.jpg" 
-              alt="ЮР Недвижимость" 
+              alt="ЮР недвижимость" 
               className="w-12 h-12 rounded-full"
             />
             <div>
