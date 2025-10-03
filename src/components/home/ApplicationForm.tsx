@@ -35,12 +35,20 @@ export default function ApplicationForm({ services }: ApplicationFormProps) {
     }
 
     try {
+      const userData = localStorage.getItem('user');
+      const user = userData ? JSON.parse(userData) : null;
+      
+      const applicationData = {
+        ...formData,
+        user_id: user?.user_id || null
+      };
+
       const response = await fetch('https://functions.poehali.dev/680c3b01-9d4e-4dee-a366-4c371d7942aa', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(applicationData),
       });
 
       const data = await response.json();

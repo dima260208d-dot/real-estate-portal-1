@@ -42,6 +42,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     email = body_data.get('email')
     service = body_data.get('service')
     message = body_data.get('message', '')
+    user_id = body_data.get('user_id')
     
     if not all([name, phone, email, service]):
         return {
@@ -69,12 +70,26 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     conn = psycopg2.connect(database_url)
     cur = conn.cursor()
     
-    insert_query = """
-        INSERT INTO applications (name, phone, email, service, message, status)
-        VALUES (%s, %s, %s, %s, %s, 'new')
-        RETURNING id
-    """
-    cur.execute(insert_query, (name, phone, email, service, message))
+    name_escaped = name.replace("'", "''")
+    phone_escaped = phone.replace("'", "''")
+    email_escaped = email.replace("'", "''")
+    service_escaped = service.replace("'", "''")
+    message_escaped = message.replace("'", "''")
+    
+    if user_id:
+        insert_query = f"""
+            INSERT INTO applications (name, phone, email, service, message, status, user_id)
+            VALUES ('{name_escaped}', '{phone_escaped}', '{email_escaped}', '{service_escaped}', '{message_escaped}', 'new', {user_id})
+            RETURNING id
+        """
+    else:
+        insert_query = f"""
+            INSERT INTO applications (name, phone, email, service, message, status)
+            VALUES ('{name_escaped}', '{phone_escaped}', '{email_escaped}', '{service_escaped}', '{message_escaped}', 'new')
+            RETURNING id
+        """
+    
+    cur.execute(insert_query)
     app_id = cur.fetchone()[0]
     
     conn.commit()

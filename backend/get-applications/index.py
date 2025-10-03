@@ -38,6 +38,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     
     params = event.get('queryStringParameters') or {}
     status_filter = params.get('status')
+    user_id = params.get('user_id')
     
     database_url = os.environ.get('DATABASE_URL')
     if not database_url:
@@ -54,15 +55,33 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     conn = psycopg2.connect(database_url)
     cur = conn.cursor()
     
-    if status_filter:
-        query = """
+    if user_id and status_filter:
+        query = f"""
             SELECT id, name, phone, email, service, message, status, 
                    created_at, updated_at
             FROM applications
-            WHERE status = %s
+            WHERE user_id = {user_id} AND status = '{status_filter.replace("'", "''")}'
             ORDER BY created_at DESC
         """
-        cur.execute(query, (status_filter,))
+        cur.execute(query)
+    elif user_id:
+        query = f"""
+            SELECT id, name, phone, email, service, message, status, 
+                   created_at, updated_at
+            FROM applications
+            WHERE user_id = {user_id}
+            ORDER BY created_at DESC
+        """
+        cur.execute(query)
+    elif status_filter:
+        query = f"""
+            SELECT id, name, phone, email, service, message, status, 
+                   created_at, updated_at
+            FROM applications
+            WHERE status = '{status_filter.replace("'", "''")}'
+            ORDER BY created_at DESC
+        """
+        cur.execute(query)
     else:
         query = """
             SELECT id, name, phone, email, service, message, status, 

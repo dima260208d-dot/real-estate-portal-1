@@ -39,19 +39,30 @@ export default function Dashboard() {
     }
     const parsedUser = JSON.parse(userData);
     setUser(parsedUser);
-    
-    if (parsedUser.role === 'admin' || parsedUser.role === 'director') {
-      fetchApplications();
-    } else {
-      setLoading(false);
-    }
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      fetchApplications();
+    }
+  }, [user]);
 
   const fetchApplications = async (status?: string) => {
     try {
-      const url = status && status !== 'all' 
-        ? `https://functions.poehali.dev/60f48b27-a9ec-4e24-bf65-2f0b68248028?status=${status}`
-        : 'https://functions.poehali.dev/60f48b27-a9ec-4e24-bf65-2f0b68248028';
+      let url = 'https://functions.poehali.dev/60f48b27-a9ec-4e24-bf65-2f0b68248028';
+      const params = new URLSearchParams();
+      
+      if (user?.role === 'client' && user.user_id) {
+        params.append('user_id', user.user_id.toString());
+      }
+      
+      if (status && status !== 'all') {
+        params.append('status', status);
+      }
+      
+      if (params.toString()) {
+        url += '?' + params.toString();
+      }
       
       const response = await fetch(url);
       const data = await response.json();
@@ -159,28 +170,99 @@ export default function Dashboard() {
 
       <main className="container mx-auto px-4 py-8">
         {user?.role === 'client' ? (
-          <Card className="max-w-2xl mx-auto">
-            <CardHeader className="text-center">
-              <CardTitle className="text-2xl">Добро пожаловать, {user.username}!</CardTitle>
-              <CardDescription>Ваш личный кабинет клиента</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="text-center py-8">
-                <div className="w-20 h-20 bg-[#FF6600]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Icon name="User" size={40} className="text-[#FF6600]" />
+          <>
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold text-[#1A1A1A] mb-2">Мои заявки</h2>
+              <p className="text-gray-600">История ваших обращений и их статус</p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6 mb-8">
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-medium text-gray-600">Всего заявок</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-3xl font-bold text-[#1A1A1A]">{applications.length}</div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-medium text-gray-600">В работе</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-3xl font-bold text-yellow-600">
+                    {applications.filter(a => a.status === 'in_progress').length}
+                  </div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-medium text-gray-600">Выполнены</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-3xl font-bold text-green-600">
+                    {applications.filter(a => a.status === 'completed').length}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <Card>
+              <CardHeader>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle>История заявок</CardTitle>
+                    <CardDescription>Ваши обращения в компанию</CardDescription>
+                  </div>
+                  <Button asChild className="bg-[#FF6600] hover:bg-[#FF7720]">
+                    <a href="/">
+                      <Icon name="Plus" size={16} className="mr-2" />
+                      Новая заявка
+                    </a>
+                  </Button>
                 </div>
-                <p className="text-gray-600 mb-6">
-                  Для подачи заявки на услугу, пожалуйста, воспользуйтесь формой на главной странице сайта
-                </p>
-                <Button asChild className="bg-[#FF6600] hover:bg-[#FF7720]">
-                  <a href="/">
-                    <Icon name="Home" size={16} className="mr-2" />
-                    Перейти на сайт
-                  </a>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+              </CardHeader>
+              <CardContent>
+                {applications.length === 0 ? (
+                  <div className="text-center py-12">
+                    <div className="w-20 h-20 bg-[#FF6600]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Icon name="FileText" size={40} className="text-[#FF6600]" />
+                    </div>
+                    <p className="text-gray-600 mb-4">У вас пока нет заявок</p>
+                    <Button asChild className="bg-[#FF6600] hover:bg-[#FF7720]">
+                      <a href="/">
+                        <Icon name="Home" size={16} className="mr-2" />
+                        Подать заявку на сайте
+                      </a>
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Дата</TableHead>
+                          <TableHead>Услуга</TableHead>
+                          <TableHead>Сообщение</TableHead>
+                          <TableHead>Статус</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {applications.map((app) => (
+                          <TableRow key={app.id}>
+                            <TableCell className="whitespace-nowrap">{formatDate(app.created_at)}</TableCell>
+                            <TableCell className="font-medium">{app.service}</TableCell>
+                            <TableCell className="max-w-xs truncate">{app.message || '—'}</TableCell>
+                            <TableCell>{getStatusBadge(app.status)}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </>
         ) : (
           <>
             <div className="grid md:grid-cols-4 gap-6 mb-8">
