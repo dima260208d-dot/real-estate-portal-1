@@ -22,7 +22,7 @@ interface Application {
 interface User {
   user_id: number;
   username: string;
-  role: 'admin' | 'director';
+  role: 'admin' | 'director' | 'client';
 }
 
 export default function Dashboard() {
@@ -37,8 +37,14 @@ export default function Dashboard() {
       window.location.href = '/login';
       return;
     }
-    setUser(JSON.parse(userData));
-    fetchApplications();
+    const parsedUser = JSON.parse(userData);
+    setUser(parsedUser);
+    
+    if (parsedUser.role === 'admin' || parsedUser.role === 'director') {
+      fetchApplications();
+    } else {
+      setLoading(false);
+    }
   }, []);
 
   const fetchApplications = async (status?: string) => {
@@ -132,7 +138,7 @@ export default function Dashboard() {
             <div>
               <h1 className="text-xl font-bold text-[#1A1A1A]">Личный кабинет</h1>
               <p className="text-xs text-gray-500">
-                {user?.role === 'director' ? 'Директор' : 'Администратор'} ({user?.username})
+                {user?.role === 'director' ? 'Директор' : user?.role === 'admin' ? 'Администратор' : 'Клиент'} ({user?.username})
               </p>
             </div>
           </div>
@@ -152,135 +158,162 @@ export default function Dashboard() {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        <div className="grid md:grid-cols-4 gap-6 mb-8">
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">Всего заявок</CardTitle>
+        {user?.role === 'client' ? (
+          <Card className="max-w-2xl mx-auto">
+            <CardHeader className="text-center">
+              <CardTitle className="text-2xl">Добро пожаловать, {user.username}!</CardTitle>
+              <CardDescription>Ваш личный кабинет клиента</CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-[#1A1A1A]">{applications.length}</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">Новые</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-blue-600">
-                {applications.filter(a => a.status === 'new').length}
+            <CardContent className="space-y-6">
+              <div className="text-center py-8">
+                <div className="w-20 h-20 bg-[#FF6600]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Icon name="User" size={40} className="text-[#FF6600]" />
+                </div>
+                <p className="text-gray-600 mb-6">
+                  Для подачи заявки на услугу, пожалуйста, воспользуйтесь формой на главной странице сайта
+                </p>
+                <Button asChild className="bg-[#FF6600] hover:bg-[#FF7720]">
+                  <a href="/">
+                    <Icon name="Home" size={16} className="mr-2" />
+                    Перейти на сайт
+                  </a>
+                </Button>
               </div>
             </CardContent>
           </Card>
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">В работе</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-yellow-600">
-                {applications.filter(a => a.status === 'in_progress').length}
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-sm font-medium text-gray-600">Выполнены</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-green-600">
-                {applications.filter(a => a.status === 'completed').length}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+        ) : (
+          <>
+            <div className="grid md:grid-cols-4 gap-6 mb-8">
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-medium text-gray-600">Всего заявок</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-3xl font-bold text-[#1A1A1A]">{applications.length}</div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-medium text-gray-600">Новые</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-3xl font-bold text-blue-600">
+                    {applications.filter(a => a.status === 'new').length}
+                  </div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-medium text-gray-600">В работе</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-3xl font-bold text-yellow-600">
+                    {applications.filter(a => a.status === 'in_progress').length}
+                  </div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-medium text-gray-600">Выполнены</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-3xl font-bold text-green-600">
+                    {applications.filter(a => a.status === 'completed').length}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
 
-        <Card>
-          <CardHeader>
-            <div className="flex justify-between items-center">
-              <div>
-                <CardTitle>Заявки клиентов</CardTitle>
-                <CardDescription>Архив всех заявок с сайта</CardDescription>
-              </div>
-              <Select value={statusFilter} onValueChange={(value) => {
-                setStatusFilter(value);
-                fetchApplications(value === 'all' ? undefined : value);
-              }}>
-                <SelectTrigger className="w-48">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Все заявки</SelectItem>
-                  <SelectItem value="new">Новые</SelectItem>
-                  <SelectItem value="in_progress">В работе</SelectItem>
-                  <SelectItem value="completed">Выполнены</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>ID</TableHead>
-                    <TableHead>Дата</TableHead>
-                    <TableHead>ФИО</TableHead>
-                    <TableHead>Телефон</TableHead>
-                    <TableHead>Email</TableHead>
-                    <TableHead>Услуга</TableHead>
-                    <TableHead>Сообщение</TableHead>
-                    <TableHead>Статус</TableHead>
-                    <TableHead>Действия</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {applications.length === 0 ? (
-                    <TableRow>
-                      <TableCell colSpan={9} className="text-center py-8 text-gray-500">
-                        Заявок пока нет
-                      </TableCell>
-                    </TableRow>
-                  ) : (
-                    applications.map((app) => (
-                      <TableRow key={app.id}>
-                        <TableCell className="font-medium">{app.id}</TableCell>
-                        <TableCell className="whitespace-nowrap">{formatDate(app.created_at)}</TableCell>
-                        <TableCell>{app.name}</TableCell>
-                        <TableCell>
-                          <a href={`tel:${app.phone}`} className="text-[#FF6600] hover:underline">
-                            {app.phone}
-                          </a>
-                        </TableCell>
-                        <TableCell>
-                          <a href={`mailto:${app.email}`} className="text-[#FF6600] hover:underline">
-                            {app.email}
-                          </a>
-                        </TableCell>
-                        <TableCell className="max-w-xs truncate">{app.service}</TableCell>
-                        <TableCell className="max-w-xs truncate">{app.message || '—'}</TableCell>
-                        <TableCell>{getStatusBadge(app.status)}</TableCell>
-                        <TableCell>
-                          <Select
-                            value={app.status}
-                            onValueChange={(value) => updateStatus(app.id, value)}
-                          >
-                            <SelectTrigger className="w-32">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="new">Новая</SelectItem>
-                              <SelectItem value="in_progress">В работе</SelectItem>
-                              <SelectItem value="completed">Выполнена</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </TableCell>
+            <Card>
+              <CardHeader>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle>Заявки клиентов</CardTitle>
+                    <CardDescription>Архив всех заявок с сайта</CardDescription>
+                  </div>
+                  <Select value={statusFilter} onValueChange={(value) => {
+                    setStatusFilter(value);
+                    fetchApplications(value === 'all' ? undefined : value);
+                  }}>
+                    <SelectTrigger className="w-48">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Все заявки</SelectItem>
+                      <SelectItem value="new">Новые</SelectItem>
+                      <SelectItem value="in_progress">В работе</SelectItem>
+                      <SelectItem value="completed">Выполнены</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>ID</TableHead>
+                        <TableHead>Дата</TableHead>
+                        <TableHead>ФИО</TableHead>
+                        <TableHead>Телефон</TableHead>
+                        <TableHead>Email</TableHead>
+                        <TableHead>Услуга</TableHead>
+                        <TableHead>Сообщение</TableHead>
+                        <TableHead>Статус</TableHead>
+                        <TableHead>Действия</TableHead>
                       </TableRow>
-                    ))
-                  )}
-                </TableBody>
-              </Table>
-            </div>
-          </CardContent>
-        </Card>
+                    </TableHeader>
+                    <TableBody>
+                      {applications.length === 0 ? (
+                        <TableRow>
+                          <TableCell colSpan={9} className="text-center py-8 text-gray-500">
+                            Заявок пока нет
+                          </TableCell>
+                        </TableRow>
+                      ) : (
+                        applications.map((app) => (
+                          <TableRow key={app.id}>
+                            <TableCell className="font-medium">{app.id}</TableCell>
+                            <TableCell className="whitespace-nowrap">{formatDate(app.created_at)}</TableCell>
+                            <TableCell>{app.name}</TableCell>
+                            <TableCell>
+                              <a href={`tel:${app.phone}`} className="text-[#FF6600] hover:underline">
+                                {app.phone}
+                              </a>
+                            </TableCell>
+                            <TableCell>
+                              <a href={`mailto:${app.email}`} className="text-[#FF6600] hover:underline">
+                                {app.email}
+                              </a>
+                            </TableCell>
+                            <TableCell className="max-w-xs truncate">{app.service}</TableCell>
+                            <TableCell className="max-w-xs truncate">{app.message || '—'}</TableCell>
+                            <TableCell>{getStatusBadge(app.status)}</TableCell>
+                            <TableCell>
+                              <Select
+                                value={app.status}
+                                onValueChange={(value) => updateStatus(app.id, value)}
+                              >
+                                <SelectTrigger className="w-32">
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="new">Новая</SelectItem>
+                                  <SelectItem value="in_progress">В работе</SelectItem>
+                                  <SelectItem value="completed">Выполнена</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      )}
+                    </TableBody>
+                  </Table>
+                </div>
+              </CardContent>
+            </Card>
+          </>
+        )}
       </main>
     </div>
   );

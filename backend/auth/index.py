@@ -68,8 +68,14 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     conn = psycopg2.connect(database_url)
     cur = conn.cursor()
     
+    username_escaped = username.replace("'", "''")
+    password_escaped = password.replace("'", "''")
+    
     if register_mode and email:
-        cur.execute("SELECT id FROM users WHERE username = %s", (username,))
+        email_escaped = email.replace("'", "''")
+        
+        check_query = f"SELECT id FROM users WHERE username = '{username_escaped}'"
+        cur.execute(check_query)
         if cur.fetchone():
             cur.close()
             conn.close()
@@ -83,12 +89,12 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 'isBase64Encoded': False
             }
         
-        insert_query = """
+        insert_query = f"""
             INSERT INTO users (username, email, password, role)
-            VALUES (%s, %s, %s, 'client')
+            VALUES ('{username_escaped}', '{email_escaped}', '{password_escaped}', 'client')
             RETURNING id
         """
-        cur.execute(insert_query, (username, email, password))
+        cur.execute(insert_query)
         user_id = cur.fetchone()[0]
         conn.commit()
         cur.close()
@@ -110,8 +116,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             'isBase64Encoded': False
         }
     
-    query = "SELECT id, role FROM users WHERE username = %s AND password = %s"
-    cur.execute(query, (username, password))
+    query = f"SELECT id, role FROM users WHERE username = '{username_escaped}' AND password = '{password_escaped}'"
+    cur.execute(query)
     result = cur.fetchone()
     
     cur.close()

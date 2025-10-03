@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
 
@@ -6,6 +7,21 @@ interface HeaderProps {
 }
 
 export default function Header({ onApplicationClick }: HeaderProps) {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    setIsLoggedIn(!!user);
+  }, []);
+
+  const handleAuthClick = () => {
+    if (isLoggedIn) {
+      window.location.href = '/dashboard';
+    } else {
+      window.location.href = '/login';
+    }
+  };
+
   return (
     <header className="fixed top-0 w-full bg-white/95 backdrop-blur-sm border-b-2 border-[#FF6600] shadow-sm z-50">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -23,8 +39,8 @@ export default function Header({ onApplicationClick }: HeaderProps) {
           <Button onClick={onApplicationClick} className="bg-[#FF6600] hover:bg-[#FF7720] text-white">
             Подать заявку
           </Button>
-          <Button variant="outline" className="border-[#FF6600] text-[#FF6600] hover:bg-[#FF6600] hover:text-white" onClick={() => window.location.href = '/login'}>
-            Вход
+          <Button variant="outline" className="border-[#FF6600] text-[#FF6600] hover:bg-[#FF6600] hover:text-white" onClick={handleAuthClick}>
+            {isLoggedIn ? 'Личный кабинет' : 'Вход'}
           </Button>
         </nav>
         <Button variant="ghost" size="icon" className="md:hidden">

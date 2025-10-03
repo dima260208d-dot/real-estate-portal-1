@@ -47,9 +47,14 @@ export default function Register() {
       const data = await response.json();
 
       if (response.ok && data.success) {
-        toast.success('Регистрация успешна! Теперь войдите в систему.');
+        localStorage.setItem('user', JSON.stringify({
+          user_id: data.user_id,
+          username: data.username,
+          role: data.role
+        }));
+        toast.success('Регистрация успешна! Перенаправляем в личный кабинет...');
         setTimeout(() => {
-          window.location.href = '/login';
+          window.location.href = '/dashboard';
         }, 1500);
       } else {
         toast.error(data.error || 'Ошибка регистрации');
