@@ -10,7 +10,7 @@ export default function Footer() {
                 <h3 className="font-bold text-lg">ЮР недвижимость</h3>
               </div>
             </div>
-            <p className="text-gray-400 text-sm">Полный комплекс услуг на рынке недвижимости Воронежа</p>
+            <p className="text-gray-400 text-sm">Юрист и риэлтор для эффективного решения Ваших задач</p>
           </div>
           <div>
             <h4 className="font-semibold mb-4">Быстрые ссылки</h4>
