@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import Icon from '@/components/ui/icon';
 import { toast } from 'sonner';
 
@@ -30,6 +31,8 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [selectedApp, setSelectedApp] = useState<Application | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   useEffect(() => {
     const userData = localStorage.getItem('user');
@@ -93,6 +96,9 @@ export default function Dashboard() {
       if (response.ok) {
         toast.success('Статус обновлен');
         fetchApplications(statusFilter === 'all' ? undefined : statusFilter);
+        if (selectedApp && selectedApp.id === appId) {
+          setSelectedApp({ ...selectedApp, status: newStatus as 'new' | 'in_progress' | 'completed' });
+        }
       }
     } catch (error) {
       toast.error('Ошибка обновления статуса');
@@ -123,6 +129,11 @@ export default function Dashboard() {
       hour: '2-digit',
       minute: '2-digit',
     }).format(date);
+  };
+
+  const openApplicationDetails = (app: Application) => {
+    setSelectedApp(app);
+    setIsDialogOpen(true);
   };
 
   if (loading) {
@@ -352,24 +363,36 @@ export default function Dashboard() {
                         </TableRow>
                       ) : (
                         applications.map((app) => (
-                          <TableRow key={app.id}>
+                          <TableRow 
+                            key={app.id} 
+                            className="cursor-pointer hover:bg-gray-50"
+                            onClick={() => openApplicationDetails(app)}
+                          >
                             <TableCell className="font-medium">{app.id}</TableCell>
                             <TableCell className="whitespace-nowrap">{formatDate(app.created_at)}</TableCell>
                             <TableCell>{app.name}</TableCell>
                             <TableCell>
-                              <a href={`tel:${app.phone}`} className="text-[#FF6600] hover:underline">
+                              <a 
+                                href={`tel:${app.phone}`} 
+                                className="text-[#FF6600] hover:underline"
+                                onClick={(e) => e.stopPropagation()}
+                              >
                                 {app.phone}
                               </a>
                             </TableCell>
                             <TableCell>
-                              <a href={`mailto:${app.email}`} className="text-[#FF6600] hover:underline">
+                              <a 
+                                href={`mailto:${app.email}`} 
+                                className="text-[#FF6600] hover:underline"
+                                onClick={(e) => e.stopPropagation()}
+                              >
                                 {app.email}
                               </a>
                             </TableCell>
                             <TableCell className="max-w-xs truncate">{app.service}</TableCell>
                             <TableCell className="max-w-xs truncate">{app.message || '—'}</TableCell>
                             <TableCell>{getStatusBadge(app.status)}</TableCell>
-                            <TableCell>
+                            <TableCell onClick={(e) => e.stopPropagation()}>
                               <Select
                                 value={app.status}
                                 onValueChange={(value) => updateStatus(app.id, value)}
@@ -395,6 +418,109 @@ export default function Dashboard() {
           </>
         )}
       </main>
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl flex items-center gap-2">
+              <Icon name="FileText" className="text-[#FF6600]" size={28} />
+              Заявка #{selectedApp?.id}
+            </DialogTitle>
+            <DialogDescription>
+              Полная информация о заявке
+            </DialogDescription>
+          </DialogHeader>
+          
+          {selectedApp && (
+            <div className="space-y-4 mt-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <div className="text-sm text-gray-500 mb-1">ID заявки</div>
+                  <div className="font-semibold text-lg">#{selectedApp.id}</div>
+                </div>
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <div className="text-sm text-gray-500 mb-1">Статус</div>
+                  <div>{getStatusBadge(selectedApp.status)}</div>
+                </div>
+              </div>
+
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <div className="text-sm text-gray-500 mb-1">Дата создания</div>
+                <div className="font-semibold">{formatDate(selectedApp.created_at)}</div>
+              </div>
+
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <div className="text-sm text-gray-500 mb-1">Последнее обновление</div>
+                <div className="font-semibold">{formatDate(selectedApp.updated_at)}</div>
+              </div>
+
+              <div className="border-t pt-4">
+                <h3 className="font-semibold text-lg mb-3 text-[#1A1A1A]">Контактная информация</h3>
+                
+                <div className="space-y-3">
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <div className="text-sm text-gray-500 mb-1">ФИО клиента</div>
+                    <div className="font-semibold">{selectedApp.name}</div>
+                  </div>
+
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <div className="text-sm text-gray-500 mb-1">Телефон</div>
+                    <a href={`tel:${selectedApp.phone}`} className="font-semibold text-[#FF6600] hover:underline flex items-center gap-2">
+                      <Icon name="Phone" size={16} />
+                      {selectedApp.phone}
+                    </a>
+                  </div>
+
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <div className="text-sm text-gray-500 mb-1">Email</div>
+                    <a href={`mailto:${selectedApp.email}`} className="font-semibold text-[#FF6600] hover:underline flex items-center gap-2">
+                      <Icon name="Mail" size={16} />
+                      {selectedApp.email}
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div className="border-t pt-4">
+                <h3 className="font-semibold text-lg mb-3 text-[#1A1A1A]">Детали заявки</h3>
+                
+                <div className="space-y-3">
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <div className="text-sm text-gray-500 mb-1">Услуга</div>
+                    <div className="font-semibold text-lg">{selectedApp.service}</div>
+                  </div>
+
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <div className="text-sm text-gray-500 mb-2">Сообщение</div>
+                    <div className="whitespace-pre-wrap text-gray-800">
+                      {selectedApp.message || 'Сообщение отсутствует'}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="border-t pt-4 flex gap-3">
+                <Select
+                  value={selectedApp.status}
+                  onValueChange={(value) => updateStatus(selectedApp.id, value)}
+                >
+                  <SelectTrigger className="flex-1">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="new">Новая</SelectItem>
+                    <SelectItem value="in_progress">В работе</SelectItem>
+                    <SelectItem value="completed">Выполнена</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+                  Закрыть
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
