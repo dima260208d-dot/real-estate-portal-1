@@ -18,6 +18,17 @@ export default function Register() {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    const loginRegex = /^[a-zA-Z0-9_-]+$/;
+    if (!loginRegex.test(formData.username)) {
+      toast.error('Логин может содержать только латинские буквы, цифры, дефис и подчеркивание');
+      return;
+    }
+
+    if (formData.username.length < 3) {
+      toast.error('Логин должен быть не менее 3 символов');
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       toast.error('Пароли не совпадают');
       return;
@@ -90,9 +101,11 @@ export default function Register() {
                 required
                 value={formData.username}
                 onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                placeholder="Введите логин"
+                placeholder="Только латинские буквы и цифры"
                 disabled={loading}
+                minLength={3}
               />
+              <p className="text-xs text-gray-500 mt-1">Минимум 3 символа, латинские буквы, цифры, дефис и подчеркивание</p>
             </div>
             <div>
               <Label htmlFor="email">Email</Label>
