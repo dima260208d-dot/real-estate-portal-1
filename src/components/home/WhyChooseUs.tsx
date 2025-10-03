@@ -12,7 +12,10 @@ export default function WhyChooseUs() {
   return (
     <section className="py-20 bg-[#F5F5F5]">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-16 text-[#1A1A1A] animate-on-scroll">Почему выбирают нас?</h2>
+        <h2 className="text-4xl font-bold text-center mb-4 text-[#1A1A1A] animate-on-scroll">Почему выбирают нас?</h2>
+        <p className="text-center text-lg text-gray-600 mb-12 max-w-2xl mx-auto animate-on-scroll">
+          Юрист и риэлтор для эффективного решения Ваших задач
+        </p>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((item, i) => (
             <Card key={i} className="text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2 animate-on-scroll border-t-4 border-t-[#FF6600]">
