@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -34,6 +35,7 @@ export default function Dashboard() {
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [selectedApp, setSelectedApp] = useState<Application | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const userData = localStorage.getItem('user');
@@ -177,6 +179,18 @@ export default function Dashboard() {
     XLSX.writeFile(workbook, fileName);
     toast.success('Файл Excel успешно сохранен');
   };
+
+  const filteredApplications = applications.filter(app => {
+    const query = searchQuery.toLowerCase();
+    return (
+      app.id.toString().includes(query) ||
+      app.name.toLowerCase().includes(query) ||
+      app.phone.includes(query) ||
+      app.email.toLowerCase().includes(query) ||
+      app.service.toLowerCase().includes(query) ||
+      (app.message && app.message.toLowerCase().includes(query))
+    );
+  });
 
   if (loading) {
     return (
@@ -364,7 +378,16 @@ export default function Dashboard() {
                     <CardTitle>Заявки клиентов</CardTitle>
                     <CardDescription>Архив всех заявок с сайта</CardDescription>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 flex-wrap">
+                    <div className="relative">
+                      <Icon name="Search" size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                      <Input
+                        placeholder="Поиск по заявкам..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="pl-10 w-64"
+                      />
+                    </div>
                     <Button 
                       variant="outline" 
                       onClick={exportToExcel}
@@ -407,14 +430,14 @@ export default function Dashboard() {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {applications.length === 0 ? (
+                      {filteredApplications.length === 0 ? (
                         <TableRow>
                           <TableCell colSpan={9} className="text-center py-8 text-gray-500">
-                            Заявок пока нет
+                            {searchQuery ? 'Заявки не найдены' : 'Заявок пока нет'}
                           </TableCell>
                         </TableRow>
                       ) : (
-                        applications.map((app) => (
+                        filteredApplications.map((app) => (
                           <TableRow 
                             key={app.id} 
                             className="cursor-pointer hover:bg-gray-50"
