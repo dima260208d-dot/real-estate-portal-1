@@ -8,7 +8,6 @@ export default function Footer() {
               <img src="https://cdn.poehali.dev/files/49921f72-fe81-4d6d-975f-1ba898046b57.jpg" alt="ЮР Недвижимость" className="w-12 h-12 rounded-full" />
               <div>
                 <h3 className="font-bold text-lg">ЮР Недвижимость</h3>
-                <p className="text-xs text-gray-400">С 2010 года</p>
               </div>
             </div>
             <p className="text-gray-400 text-sm">Полный комплекс услуг на рынке недвижимости Воронежа</p>
