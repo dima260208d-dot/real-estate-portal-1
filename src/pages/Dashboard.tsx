@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import Icon from '@/components/ui/icon';
 import { toast } from 'sonner';
+import * as XLSX from 'xlsx';
 
 interface Application {
   id: number;
@@ -134,6 +135,47 @@ export default function Dashboard() {
   const openApplicationDetails = (app: Application) => {
     setSelectedApp(app);
     setIsDialogOpen(true);
+  };
+
+  const exportToExcel = () => {
+    const statusLabels: Record<string, string> = {
+      new: 'Новая',
+      in_progress: 'В работе',
+      completed: 'Выполнена'
+    };
+
+    const dataForExport = applications.map(app => ({
+      'ID': app.id,
+      'Дата создания': formatDate(app.created_at),
+      'ФИО': app.name,
+      'Телефон': app.phone,
+      'Email': app.email,
+      'Услуга': app.service,
+      'Сообщение': app.message || '—',
+      'Статус': statusLabels[app.status] || app.status,
+      'Обновлено': formatDate(app.updated_at)
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(dataForExport);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Заявки');
+
+    const colWidths = [
+      { wch: 6 },
+      { wch: 18 },
+      { wch: 25 },
+      { wch: 16 },
+      { wch: 25 },
+      { wch: 30 },
+      { wch: 50 },
+      { wch: 15 },
+      { wch: 18 }
+    ];
+    worksheet['!cols'] = colWidths;
+
+    const fileName = `Заявки_${new Date().toLocaleDateString('ru-RU').replace(/\./g, '-')}.xlsx`;
+    XLSX.writeFile(workbook, fileName);
+    toast.success('Файл Excel успешно сохранен');
   };
 
   if (loading) {
@@ -317,25 +359,35 @@ export default function Dashboard() {
 
             <Card>
               <CardHeader>
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center flex-wrap gap-3">
                   <div>
                     <CardTitle>Заявки клиентов</CardTitle>
                     <CardDescription>Архив всех заявок с сайта</CardDescription>
                   </div>
-                  <Select value={statusFilter} onValueChange={(value) => {
-                    setStatusFilter(value);
-                    fetchApplications(value === 'all' ? undefined : value);
-                  }}>
-                    <SelectTrigger className="w-48">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">Все заявки</SelectItem>
-                      <SelectItem value="new">Новые</SelectItem>
-                      <SelectItem value="in_progress">В работе</SelectItem>
-                      <SelectItem value="completed">Выполнены</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <div className="flex gap-2">
+                    <Button 
+                      variant="outline" 
+                      onClick={exportToExcel}
+                      className="bg-green-50 hover:bg-green-100 text-green-700 border-green-300"
+                    >
+                      <Icon name="Download" size={16} className="mr-2" />
+                      Экспорт в Excel
+                    </Button>
+                    <Select value={statusFilter} onValueChange={(value) => {
+                      setStatusFilter(value);
+                      fetchApplications(value === 'all' ? undefined : value);
+                    }}>
+                      <SelectTrigger className="w-48">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">Все заявки</SelectItem>
+                        <SelectItem value="new">Новые</SelectItem>
+                        <SelectItem value="in_progress">В работе</SelectItem>
+                        <SelectItem value="completed">Выполнены</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
               </CardHeader>
               <CardContent>
