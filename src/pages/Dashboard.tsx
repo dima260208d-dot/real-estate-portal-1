@@ -153,16 +153,14 @@ export default function Dashboard() {
               </p>
             </div>
           </div>
-          <div className="flex gap-3">
-            <Button variant="outline" asChild>
+          <div className="flex gap-2">
+            <Button variant="outline" size="icon" asChild title="На сайт">
               <a href="/">
-                <Icon name="Home" size={16} className="mr-2" />
-                На сайт
+                <Icon name="Home" size={20} />
               </a>
             </Button>
-            <Button variant="outline" onClick={handleLogout} className="text-red-600 hover:text-red-700">
-              <Icon name="LogOut" size={16} className="mr-2" />
-              Выйти
+            <Button variant="outline" size="icon" onClick={handleLogout} className="text-red-600 hover:text-red-700" title="Выйти">
+              <Icon name="LogOut" size={20} />
             </Button>
           </div>
         </div>
