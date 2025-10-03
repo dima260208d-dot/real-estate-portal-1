@@ -83,14 +83,14 @@ export default function Register() {
         <CardContent>
           <form onSubmit={handleRegister} className="space-y-4">
             <div>
-              <Label htmlFor="username">Имя пользователя</Label>
+              <Label htmlFor="username">Логин</Label>
               <Input
                 id="username"
                 type="text"
                 required
                 value={formData.username}
                 onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                placeholder="Введите имя пользователя"
+                placeholder="Введите логин"
                 disabled={loading}
               />
             </div>
