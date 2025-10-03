@@ -137,9 +137,11 @@ export default function Dashboard() {
             </div>
           </div>
           <div className="flex gap-3">
-            <Button variant="outline" onClick={() => window.location.href = '/'}>
-              <Icon name="Home" size={16} className="mr-2" />
-              На сайт
+            <Button variant="outline" asChild>
+              <a href="/">
+                <Icon name="Home" size={16} className="mr-2" />
+                На сайт
+              </a>
             </Button>
             <Button variant="outline" onClick={handleLogout} className="text-red-600 hover:text-red-700">
               <Icon name="LogOut" size={16} className="mr-2" />

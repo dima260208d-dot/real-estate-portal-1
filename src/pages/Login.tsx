@@ -88,6 +88,12 @@ export default function Login() {
             >
               {loading ? 'Вход...' : 'Войти'}
             </Button>
+            <div className="text-center text-sm text-gray-600">
+              Нет аккаунта?{' '}
+              <a href="/register" className="text-[#FF6600] hover:underline font-semibold">
+                Зарегистрироваться
+              </a>
+            </div>
             <Button 
               type="button" 
               variant="outline" 

@@ -5,10 +5,10 @@ from typing import Dict, Any
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     '''
-    Business: Authenticate user and return role
-    Args: event - dict with httpMethod, body containing username and password
+    Business: Authenticate user, register new clients, return role
+    Args: event - dict with httpMethod, body containing username, password, optional email for registration
           context - object with request_id attribute
-    Returns: HTTP response dict with authentication result and user role
+    Returns: HTTP response dict with authentication or registration result
     '''
     method: str = event.get('httpMethod', 'GET')
     
@@ -39,6 +39,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     body_data = json.loads(event.get('body', '{}'))
     username = body_data.get('username')
     password = body_data.get('password')
+    email = body_data.get('email')
+    register_mode = body_data.get('register', False)
     
     if not username or not password:
         return {
@@ -65,6 +67,48 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     
     conn = psycopg2.connect(database_url)
     cur = conn.cursor()
+    
+    if register_mode and email:
+        cur.execute("SELECT id FROM users WHERE username = %s", (username,))
+        if cur.fetchone():
+            cur.close()
+            conn.close()
+            return {
+                'statusCode': 400,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                'body': json.dumps({'error': 'Username already exists'}),
+                'isBase64Encoded': False
+            }
+        
+        insert_query = """
+            INSERT INTO users (username, email, password, role)
+            VALUES (%s, %s, %s, 'client')
+            RETURNING id
+        """
+        cur.execute(insert_query, (username, email, password))
+        user_id = cur.fetchone()[0]
+        conn.commit()
+        cur.close()
+        conn.close()
+        
+        return {
+            'statusCode': 200,
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            'body': json.dumps({
+                'success': True,
+                'user_id': user_id,
+                'role': 'client',
+                'username': username,
+                'message': 'Registration successful'
+            }),
+            'isBase64Encoded': False
+        }
     
     query = "SELECT id, role FROM users WHERE username = %s AND password = %s"
     cur.execute(query, (username, password))

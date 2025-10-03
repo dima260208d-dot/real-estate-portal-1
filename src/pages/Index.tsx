@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Checkbox } from '@/components/ui/checkbox';
 import Icon from '@/components/ui/icon';
 import { toast } from 'sonner';
+import ChatBot from '@/components/ChatBot';
 
 const services = [
   { id: 'sale', title: 'Продажа квартиры', icon: 'Home', description: 'Поможем быстро и выгодно продать вашу недвижимость' },
@@ -111,7 +112,7 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-white">
-      <header className="fixed top-0 w-full bg-white/95 backdrop-blur-sm shadow-sm z-50">
+      <header className="fixed top-0 w-full bg-white/95 backdrop-blur-sm border-b-2 border-[#FF6600] shadow-sm z-50">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center gap-3">
             <img src="https://cdn.poehali.dev/files/49921f72-fe81-4d6d-975f-1ba898046b57.jpg" alt="ЮР Недвижимость" className="w-12 h-12 rounded-full" />
@@ -145,8 +146,11 @@ export default function Index() {
           <h2 className="text-2xl md:text-3xl mb-4 animate-fade-in animation-delay-200">
             Юрист Риэлтор Недвижимость
           </h2>
-          <p className="text-lg md:text-xl mb-8 animate-fade-in animation-delay-400">
-            Ваш надежный партнер на рынке недвижимости Воронежа. Полный цикл услуг с 2010 года.
+          <p className="text-lg md:text-xl mb-4 animate-fade-in animation-delay-400">
+            Опытные специалисты на рынке недвижимости Воронежа
+          </p>
+          <p className="text-base md:text-lg mb-8 animate-fade-in animation-delay-500 italic">
+            Делаем процесс продажи и покупки недвижимости простым и понятным для каждого
           </p>
           <div className="flex gap-4 justify-center flex-wrap animate-fade-in animation-delay-600">
             <Button size="lg" asChild className="bg-white text-[#FF6600] hover:bg-gray-100">
@@ -158,7 +162,7 @@ export default function Index() {
             <Button size="lg" onClick={scrollToForm} className="bg-[#FF6600]/90 text-white hover:bg-[#FF6600] border-2 border-white">
               Бесплатная консультация
             </Button>
-            <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white hover:text-[#FF6600]" onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>
+            <Button size="lg" variant="outline" className="border-2 border-white bg-transparent text-white hover:bg-white hover:text-[#FF6600] font-semibold" onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>
               Наши услуги
             </Button>
           </div>
@@ -172,7 +176,7 @@ export default function Index() {
             {[
               { icon: 'ShieldCheck', title: 'Юридическая чистота', text: 'Все сделки проходят юридическую экспертизу' },
               { icon: 'Briefcase', title: 'Полный комплекс', text: 'От оценки до получения ключей в одном месте' },
-              { icon: 'Award', title: 'Опыт 14+ лет', text: 'Более 5000 успешных сделок с 2010 года' },
+              { icon: 'Award', title: 'Опытные специалисты', text: 'Более 5000 успешных сделок в Воронеже' },
               { icon: 'Clock', title: 'Работаем 24/7', text: 'Принимаем заявки онлайн в любое время' }
             ].map((item, i) => (
               <Card key={i} className="text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2 animate-on-scroll border-t-4 border-t-[#FF6600]">
@@ -472,6 +476,8 @@ export default function Index() {
           </div>
         </div>
       </footer>
+
+      <ChatBot />
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
