@@ -43,6 +43,23 @@
         "error": "string"
       },
       "bodyMatcher": "partial"
+    },
+    {
+      "name": "Client registration successful",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "username": "testclient",
+        "email": "client@test.com",
+        "password": "password123",
+        "register": true
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true,
+        "role": "client"
+      },
+      "bodyMatcher": "partial"
     }
   ]
 }
