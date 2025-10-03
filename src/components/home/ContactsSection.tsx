@@ -36,8 +36,8 @@ export default function ContactsSection() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <a href="mailto:yur.nedv@mail.com" className="text-xl font-semibold text-[#FF6600] hover:underline">
-                  yur.nedv@mail.com
+                <a href="mailto:yur.nedv@mail.ru" className="text-xl font-semibold text-[#FF6600] hover:underline">
+                  yur.nedv@mail.ru
                 </a>
               </CardContent>
             </Card>

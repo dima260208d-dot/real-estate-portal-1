@@ -24,7 +24,7 @@ export default function Footer() {
             <h4 className="font-semibold mb-4">Контакты</h4>
             <div className="space-y-2 text-sm text-gray-400">
               <p>+7 980 555 75 80</p>
-              <p>yur.nedv@mail.com</p>
+              <p>yur.nedv@mail.ru</p>
               <div className="flex gap-3 mt-4">
                 <a href="https://vk.com/yur.nedv" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF6600] transition-colors">VK</a>
                 <a href="https://t.me/yur_nedv" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF6600] transition-colors">Telegram</a>
