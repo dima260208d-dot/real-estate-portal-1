@@ -385,8 +385,16 @@ export default function Dashboard() {
                         placeholder="Поиск по заявкам..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="pl-10 w-64"
+                        className="pl-10 pr-10 w-64"
                       />
+                      {searchQuery && (
+                        <button
+                          onClick={() => setSearchQuery('')}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                        >
+                          <Icon name="X" size={18} />
+                        </button>
+                      )}
                     </div>
                     <Button 
                       variant="outline" 
