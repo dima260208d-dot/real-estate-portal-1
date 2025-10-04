@@ -15,11 +15,8 @@ export default function HeroSection({ onConsultationClick }: HeroSectionProps) {
         <h2 className="text-2xl md:text-3xl mb-4 animate-fade-in animation-delay-200">
           Профессионализм в квадратах
         </h2>
-        <p className="text-lg md:text-xl mb-4 animate-fade-in animation-delay-400">
+        <p className="text-lg md:text-xl mb-8 animate-fade-in animation-delay-400">
           Юрист и риэлтор для эффективного решения Ваших задач
-        </p>
-        <p className="text-base md:text-lg mb-8 animate-fade-in animation-delay-500 italic">
-          Делаем процесс продажи и покупки недвижимости простым и понятным для каждого
         </p>
         <div className="flex gap-4 justify-center flex-wrap animate-fade-in animation-delay-600">
           <Button size="lg" asChild className="bg-white text-[#FF6600] hover:bg-gray-100">
