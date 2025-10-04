@@ -3,16 +3,16 @@ import Icon from '@/components/ui/icon';
 
 export default function WhyChooseUs() {
   const features = [
-    { icon: 'ShieldCheck', title: 'Юридическая чистота', text: 'Все сделки проходят юридическую экспертизу' },
-    { icon: 'Briefcase', title: 'Полный комплекс', text: 'От оценки до получения ключей в одном месте' },
-    { icon: 'Award', title: 'Опытные специалисты', text: 'Более 5000 успешных сделок в Воронеже' },
-    { icon: 'Clock', title: 'Работаем 24/7', text: 'Принимаем заявки онлайн в любое время' }
+    { icon: 'TrendingUp', title: 'Мы продаем Вашу квартиру, а не мечты', text: 'Не рисуем воздушные замки, а даем честную рыночную цену и реальный план продаж' },
+    { icon: 'Shield', title: 'Берем на себя ваш стресс, как свой', text: 'Каждая сделка — это нервный марафон: реклама, звонки, показы, торги, банк, регистрация. Наша работа — быть вашим щитом' },
+    { icon: 'Eye', title: 'Мы видим на три шага вперед', text: '«Подводные камни» есть в каждой второй сделке. Наш опыт — это ваш зонтик, который раскрывается до начала дождя' },
+    { icon: 'FileCheck', title: 'Работаем с полной прозрачностью', text: 'Вы в курсе каждого шага. Отчеты о показах, все контакты с покупателями. Вы не будете месяц гадать «ну как там?»' }
   ];
 
   return (
     <section className="py-20 bg-[#F5F5F5]">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-4 text-[#1A1A1A] animate-on-scroll">Почему выбирают нас?</h2>
+        <h2 className="text-4xl font-bold text-center mb-4 text-[#1A1A1A] animate-on-scroll">Почему выбирают нас— и остаются на годы</h2>
         <p className="text-center text-lg text-gray-600 mb-12 max-w-2xl mx-auto animate-on-scroll">
           Юрист и риэлтор для эффективного решения Ваших задач
         </p>
