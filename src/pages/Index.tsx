@@ -12,8 +12,8 @@ import ServiceModal from '@/components/home/ServiceModal';
 import ChatBot from '@/components/ChatBot';
 
 const services = [
-  { id: 'sale', title: 'Продажа квартиры', icon: 'Home', description: 'Поможем быстро и выгодно продать вашу недвижимость' },
-  { id: 'buy', title: 'Покупка недвижимости', icon: 'Key', description: 'Подберем идеальный вариант под ваши требования' },
+  { id: 'sale', title: 'Продать квартиру', icon: 'Home', description: 'Поможем быстро и выгодно продать вашу недвижимость' },
+  { id: 'buy', title: 'Купить недвижимость', icon: 'Key', description: 'Подберем идеальный вариант под ваши требования' },
   { id: 'mortgage', title: 'Оформление ипотеки', icon: 'CreditCard', description: 'Одобрение ипотеки в ведущих банках' },
   { id: 'legal', title: 'Юридическое сопровождение', icon: 'Scale', description: 'Полная юридическая чистота сделки' },
   { id: 'rent', title: 'Сдать квартиру', icon: 'Building', description: 'Поиск надежных арендаторов' },
