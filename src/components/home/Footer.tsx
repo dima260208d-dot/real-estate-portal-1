@@ -11,7 +11,7 @@ export default function Footer() {
                 <p className="text-sm text-gray-400">Профессионализм в квадратах</p>
               </div>
             </div>
-            <p className="text-gray-400 text-sm">Юрист и риэлтор для эффективного решения Ваших задач</p>
+            <p className="text-gray-400 text-sm">Юрист и риэлтор для эффективного решения задач</p>
           </div>
           <div>
             <h4 className="font-semibold mb-4">Услуги</h4>
