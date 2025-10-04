@@ -27,7 +27,7 @@ export default function Footer() {
             <div className="space-y-2 text-sm text-gray-400">
               <p>+7 980 555 75 80</p>
               <p>yur.nedv@mail.ru</p>
-              <p>г. Воронеж, Московский пр-т</p>
+              <p>г. Воронеж, Московский пр-т, д. 114 В, офис 200</p>
               <div className="flex gap-3 mt-4">
                 <a href="https://vk.com/yur.nedv" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF6600] transition-colors">VK</a>
                 <a href="https://t.me/yur_nedv" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF6600] transition-colors">Telegram</a>

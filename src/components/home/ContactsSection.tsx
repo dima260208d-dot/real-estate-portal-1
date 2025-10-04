@@ -50,7 +50,7 @@ export default function ContactsSection() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="font-semibold">Московский проспект, д. 114 В, офис 200</p>
+                <p className="font-semibold">Московский пр-т, д. 114 В, офис 200</p>
                 <p className="text-gray-600">Воронеж</p>
               </CardContent>
             </Card>
