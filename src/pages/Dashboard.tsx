@@ -11,6 +11,7 @@ import { toast } from 'sonner';
 import * as XLSX from 'xlsx';
 import PaymentForm from '@/components/dashboard/PaymentForm';
 import ClientSupport from '@/components/dashboard/ClientSupport';
+import FileUpload from '@/components/dashboard/FileUpload';
 
 interface Application {
   id: number;
@@ -282,6 +283,11 @@ export default function Dashboard() {
                 <div>
                   <h3 className="text-xl font-bold text-[#1A1A1A] mb-4">Оплата услуг</h3>
                   <PaymentForm />
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-bold text-[#1A1A1A] mb-4">Документы</h3>
+                  <FileUpload />
                 </div>
               </div>
               
