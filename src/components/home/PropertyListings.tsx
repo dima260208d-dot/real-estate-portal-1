@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -68,16 +69,53 @@ const properties: Property[] = [
 ];
 
 export default function PropertyListings() {
+  const [selectedType, setSelectedType] = useState<'все' | 'квартира' | 'дом' | 'участок'>('все');
+
+  const filteredProperties = selectedType === 'все' 
+    ? properties 
+    : properties.filter(p => p.type === selectedType);
+
   return (
     <section id="listings" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12 animate-on-scroll">
+        <div className="text-center mb-8 animate-on-scroll">
           <h2 className="text-4xl font-bold text-foreground mb-4">Доска объявлений</h2>
           <p className="text-gray-600 text-lg">Актуальные предложения по продаже недвижимости</p>
         </div>
 
+        <div className="flex justify-center gap-3 mb-8 flex-wrap animate-on-scroll">
+          <Button 
+            variant={selectedType === 'все' ? 'default' : 'outline'}
+            onClick={() => setSelectedType('все')}
+            className={selectedType === 'все' ? 'bg-primary hover:bg-primary/90' : ''}
+          >
+            Все
+          </Button>
+          <Button 
+            variant={selectedType === 'квартира' ? 'default' : 'outline'}
+            onClick={() => setSelectedType('квартира')}
+            className={selectedType === 'квартира' ? 'bg-primary hover:bg-primary/90' : ''}
+          >
+            Квартиры
+          </Button>
+          <Button 
+            variant={selectedType === 'дом' ? 'default' : 'outline'}
+            onClick={() => setSelectedType('дом')}
+            className={selectedType === 'дом' ? 'bg-primary hover:bg-primary/90' : ''}
+          >
+            Дома
+          </Button>
+          <Button 
+            variant={selectedType === 'участок' ? 'default' : 'outline'}
+            onClick={() => setSelectedType('участок')}
+            className={selectedType === 'участок' ? 'bg-primary hover:bg-primary/90' : ''}
+          >
+            Участки
+          </Button>
+        </div>
+
         <div className="grid md:grid-cols-2 gap-6 animate-on-scroll">
-          {properties.map((property) => (
+          {filteredProperties.map((property) => (
             <Card key={property.id} className="overflow-hidden hover:shadow-xl transition-shadow">
               <div className="relative h-64">
                 <img 
