@@ -13,6 +13,7 @@ import ContactsSection from '@/components/home/ContactsSection';
 import Footer from '@/components/home/Footer';
 import ServiceModal from '@/components/home/ServiceModal';
 import ChatBot from '@/components/ChatBot';
+import PaymentForm from '@/components/home/PaymentForm';
 
 
 const services = [
@@ -79,6 +80,7 @@ export default function Index() {
       <Certificates />
       <StepsSection />
       <ApplicationForm services={services} />
+      <PaymentForm />
       <FAQSection faqs={faqs} />
       <ContactsSection />
       <Footer />
