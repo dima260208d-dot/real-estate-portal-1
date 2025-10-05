@@ -44,7 +44,7 @@ export default function Header({ onApplicationClick }: HeaderProps) {
           <Button onClick={onApplicationClick} className="bg-primary hover:bg-primary/90">
             Подать заявку
           </Button>
-          <Button variant="outline" className="border-secondary text-secondary hover:bg-secondary hover:text-white" onClick={handleAuthClick}>
+          <Button variant="outline" className="border-secondary text-secondary hover:bg-secondary hover:text-white transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-secondary/50" onClick={handleAuthClick}>
             {isLoggedIn ? 'Личный кабинет' : 'Вход'}
           </Button>
         </nav>
@@ -94,7 +94,7 @@ export default function Header({ onApplicationClick }: HeaderProps) {
             </Button>
             <Button 
               variant="outline" 
-              className="border-secondary text-secondary hover:bg-secondary hover:text-white w-full" 
+              className="border-secondary text-secondary hover:bg-secondary hover:text-white transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-secondary/50 w-full" 
               onClick={handleAuthClick}
             >
               {isLoggedIn ? 'Личный кабинет' : 'Вход'}

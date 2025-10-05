@@ -13,9 +13,9 @@ export default function StepsSection() {
         <h2 className="text-4xl font-bold text-center mb-16 text-foreground animate-on-scroll">5 простых шагов</h2>
         <div className="max-w-4xl mx-auto">
           {steps.map((step, i) => (
-            <div key={i} className="flex gap-6 mb-8 animate-on-scroll">
+            <div key={i} className="flex gap-6 mb-8 animate-on-scroll group cursor-pointer hover:scale-105 transition-all duration-300">
               <div className="flex-shrink-0">
-                <div className={`w-16 h-16 ${i % 2 === 0 ? 'bg-primary' : 'bg-secondary'} rounded-full flex items-center justify-center text-white text-xl font-bold`}>
+                <div className={`w-16 h-16 ${i % 2 === 0 ? 'bg-primary group-hover:shadow-lg group-hover:shadow-primary/50' : 'bg-secondary group-hover:shadow-lg group-hover:shadow-secondary/50'} rounded-full flex items-center justify-center text-white text-xl font-bold transition-all duration-300 group-hover:scale-110`}>
                   {i + 1}
                 </div>
               </div>

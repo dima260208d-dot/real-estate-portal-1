@@ -25,7 +25,7 @@ export default function HeroSection({ onConsultationClick }: HeroSectionProps) {
               Позвонить
             </a>
           </Button>
-          <Button size="lg" onClick={onConsultationClick} className="bg-secondary hover:bg-secondary/90 border-2 border-white">
+          <Button size="lg" onClick={onConsultationClick} className="bg-secondary hover:bg-secondary/90 hover:scale-105 border-2 border-white transition-all duration-300 hover:shadow-lg hover:shadow-secondary/50">
             Бесплатная консультация
           </Button>
           <Button size="lg" className="bg-white text-black hover:bg-gray-100" onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>

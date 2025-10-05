@@ -91,7 +91,7 @@ export default function ContactsSection() {
                     href="https://t.me/yur_nedv"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 h-12 bg-secondary rounded-full flex items-center justify-center hover:scale-110 transition-transform"
+                    className="w-12 h-12 bg-secondary rounded-full flex items-center justify-center hover:scale-110 transition-all duration-300 hover:shadow-lg hover:shadow-secondary/50"
                   >
                     <Icon name="Send" className="text-white" />
                   </a>
