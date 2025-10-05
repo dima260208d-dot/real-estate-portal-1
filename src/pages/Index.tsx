@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import Header from '@/components/home/Header';
 import HeroSection from '@/components/home/HeroSection';
+import AboutUs from '@/components/home/AboutUs';
 import WhyChooseUs from '@/components/home/WhyChooseUs';
 import ServicesSection from '@/components/home/ServicesSection';
+import Testimonials from '@/components/home/Testimonials';
 import StepsSection from '@/components/home/StepsSection';
 import ApplicationForm from '@/components/home/ApplicationForm';
 import FAQSection from '@/components/home/FAQSection';
@@ -69,8 +71,10 @@ export default function Index() {
     <div className="min-h-screen bg-white">
       <Header onApplicationClick={scrollToForm} />
       <HeroSection onConsultationClick={scrollToForm} />
+      <AboutUs />
       <WhyChooseUs />
       <ServicesSection services={services} onServiceClick={handleServiceClick} />
+      <Testimonials />
       <StepsSection />
       <ApplicationForm services={services} />
       <FAQSection faqs={faqs} />
