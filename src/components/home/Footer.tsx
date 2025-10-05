@@ -24,6 +24,7 @@ export default function Footer() {
             <div className="space-y-2 text-sm">
               <a href="#services" className="block text-gray-400 hover:text-primary transition-colors">Продать квартиру</a>
               <a href="#services" className="block text-gray-400 hover:text-primary transition-colors">Купить недвижимость</a>
+              <Link to="/app" className="block text-gray-400 hover:text-primary transition-colors">Мобильное приложение</Link>
               <a href="#faq" className="block text-gray-400 hover:text-primary transition-colors">FAQ</a>
               <a href="#contacts" className="block text-gray-400 hover:text-primary transition-colors">Контакты</a>
             </div>

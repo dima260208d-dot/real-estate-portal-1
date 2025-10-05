@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
+import MobileApp from "./pages/MobileApp";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import UserAgreement from "./pages/UserAgreement";
 import PersonalDataConsent from "./pages/PersonalDataConsent";
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/app" element={<MobileApp />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/user-agreement" element={<UserAgreement />} />
           <Route path="/personal-data-consent" element={<PersonalDataConsent />} />
