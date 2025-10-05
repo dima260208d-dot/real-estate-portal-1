@@ -39,6 +39,7 @@ export default function Header({ onApplicationClick }: HeaderProps) {
         </div>
         <nav className="hidden md:flex gap-4 items-center">
           <a href="#services" className="text-white hover:text-primary transition-colors">Услуги</a>
+          <a href="#listings" className="text-white hover:text-primary transition-colors">Объявления</a>
           <a href="#faq" className="text-white hover:text-primary transition-colors">FAQ</a>
           <a href="#contacts" className="text-white hover:text-primary transition-colors">Контакты</a>
           <Button onClick={onApplicationClick} className="bg-primary hover:bg-primary/90">
@@ -68,6 +69,13 @@ export default function Header({ onApplicationClick }: HeaderProps) {
               onClick={closeMobileMenu}
             >
               Услуги
+            </a>
+            <a 
+              href="#listings" 
+              className="text-white hover:text-primary transition-colors py-2 border-b border-gray-700"
+              onClick={closeMobileMenu}
+            >
+              Объявления
             </a>
             <a 
               href="#faq" 

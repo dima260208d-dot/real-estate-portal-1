@@ -10,6 +10,7 @@ import ContactsSection from '@/components/home/ContactsSection';
 import Footer from '@/components/home/Footer';
 import ServiceModal from '@/components/home/ServiceModal';
 import ChatBot from '@/components/ChatBot';
+import PropertyListings from '@/components/home/PropertyListings';
 
 const services = [
   { id: 'sale', title: 'Продать квартиру', icon: 'Home', description: 'Поможем быстро и выгодно продать вашу недвижимость' },
@@ -70,6 +71,7 @@ export default function Index() {
       <HeroSection onConsultationClick={scrollToForm} />
       <WhyChooseUs />
       <ServicesSection services={services} onServiceClick={handleServiceClick} />
+      <PropertyListings />
       <StepsSection />
       <ApplicationForm services={services} />
       <FAQSection faqs={faqs} />
