@@ -16,11 +16,8 @@ export default function HeroSection({ onConsultationClick }: HeroSectionProps) {
           Юрист и риэлтор для эффективного решения Ваших задач
         </p>
         <div className="flex gap-4 justify-center flex-wrap animate-fade-in animation-delay-600">
-          <Button size="lg" asChild className="bg-primary hover:bg-primary/90">
-            <a href="tel:+79805557580" className="flex items-center gap-2">
-              <Icon name="Phone" size={20} />
-              Позвонить
-            </a>
+          <Button size="lg" onClick={onConsultationClick} className="bg-primary hover:bg-primary/90">
+            Продать квартиру
           </Button>
           <Button size="lg" onClick={onConsultationClick} className="bg-secondary hover:bg-secondary/90 hover:scale-105 border-2 border-white transition-all duration-300 hover:shadow-lg hover:shadow-secondary/50">
             Бесплатная консультация
