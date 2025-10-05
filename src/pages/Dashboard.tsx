@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import Icon from '@/components/ui/icon';
 import { toast } from 'sonner';
 import * as XLSX from 'xlsx';
+import PaymentForm from '@/components/dashboard/PaymentForm';
 
 interface Application {
   id: number;
@@ -237,39 +238,49 @@ export default function Dashboard() {
         {user?.role === 'client' ? (
           <>
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-[#1A1A1A] mb-2">Мои заявки</h2>
-              <p className="text-gray-600">История ваших обращений и их статус</p>
+              <h2 className="text-2xl font-bold text-[#1A1A1A] mb-2">Личный кабинет</h2>
+              <p className="text-gray-600">Управление заявками и оплата услуг</p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-6 mb-8">
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium text-gray-600">Всего заявок</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-3xl font-bold text-[#1A1A1A]">{applications.length}</div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium text-gray-600">В работе</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-3xl font-bold text-yellow-600">
-                    {applications.filter(a => a.status === 'in_progress').length}
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium text-gray-600">Выполнены</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-3xl font-bold text-green-600">
-                    {applications.filter(a => a.status === 'completed').length}
-                  </div>
-                </CardContent>
-              </Card>
+            <div className="grid lg:grid-cols-2 gap-8 mb-8">
+              <div>
+                <h3 className="text-xl font-bold text-[#1A1A1A] mb-4">Оплата услуг</h3>
+                <PaymentForm />
+              </div>
+              
+              <div>
+                <h3 className="text-xl font-bold text-[#1A1A1A] mb-4">Статистика</h3>
+                <div className="grid grid-cols-1 gap-4">
+                  <Card>
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-sm font-medium text-gray-600">Всего заявок</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-3xl font-bold text-[#1A1A1A]">{applications.length}</div>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-sm font-medium text-gray-600">В работе</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-3xl font-bold text-yellow-600">
+                        {applications.filter(a => a.status === 'in_progress').length}
+                      </div>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-sm font-medium text-gray-600">Выполнены</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-3xl font-bold text-green-600">
+                        {applications.filter(a => a.status === 'completed').length}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
             </div>
 
             <Card>
