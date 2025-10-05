@@ -10,7 +10,7 @@ export default function WhyChooseUs() {
   ];
 
   return (
-    <section className="py-20 bg-gray-800">
+    <section className="py-20 bg-gray-950">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-bold text-center mb-4 text-white animate-on-scroll">Почему выбирают нас— и остаются на годы</h2>
         <p className="text-center text-lg text-gray-300 mb-12 max-w-2xl mx-auto animate-on-scroll">

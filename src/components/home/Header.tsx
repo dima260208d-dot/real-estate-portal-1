@@ -28,7 +28,7 @@ export default function Header({ onApplicationClick }: HeaderProps) {
   };
 
   return (
-    <header className="fixed top-0 w-full bg-gray-800 backdrop-blur-sm border-b-2 border-primary shadow-sm z-50">
+    <header className="fixed top-0 w-full bg-gray-950 backdrop-blur-sm border-b-2 border-primary shadow-sm z-50">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <div className="flex items-center gap-3">
           <img src="https://cdn.poehali.dev/files/49921f72-fe81-4d6d-975f-1ba898046b57.jpg" alt="ЮР недвижимость" className="w-12 h-12 rounded-full" />
@@ -60,7 +60,7 @@ export default function Header({ onApplicationClick }: HeaderProps) {
 
       {/* Мобильное меню */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-gray-800 border-t border-primary shadow-lg">
+        <div className="md:hidden bg-gray-950 border-t border-primary shadow-lg">
           <nav className="container mx-auto px-4 py-4 flex flex-col gap-3">
             <a 
               href="#services" 
