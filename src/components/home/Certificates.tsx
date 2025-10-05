@@ -8,7 +8,7 @@ export default function Certificates() {
   const certificates = [
     {
       title: 'Свидетельство о регистрации ООО',
-      description: 'ООО «ЮрИЭлТи» ИНН 3662311194',
+      description: 'ООО ЮРИЭЛТИ ИНН 3662311194',
       icon: 'FileCheck',
       type: 'document'
     },

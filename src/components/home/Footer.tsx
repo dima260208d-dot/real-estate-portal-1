@@ -45,7 +45,7 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-start gap-6 text-sm text-gray-400">
             <div className="text-center md:text-left flex-1">
               <p>© ЮР недвижимость, 2024. Все права защищены.</p>
-              <p className="mt-1">ООО «ЮрИЭлТи», ИНН 3662311194</p>
+              <p className="mt-1">ООО ЮРИЭЛТИ, ИНН 3662311194</p>
               <div className="flex flex-wrap gap-4 mt-3 justify-center md:justify-start">
                 <Link to="/privacy-policy" className="hover:text-primary transition-colors">Политика конфиденциальности</Link>
                 <Link to="/user-agreement" className="hover:text-primary transition-colors">Пользовательское соглашение</Link>
