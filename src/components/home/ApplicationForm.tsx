@@ -66,7 +66,7 @@ export default function ApplicationForm({ services }: ApplicationFormProps) {
   };
 
   return (
-    <section id="application-form" className="py-20 bg-gray-700">
+    <section id="application-form" className="py-20 bg-black">
       <div className="container mx-auto px-4 max-w-2xl">
         <h2 className="text-4xl font-bold text-center mb-4 text-white animate-on-scroll">Оставить заявку</h2>
         <p className="text-center text-gray-300 mb-8 animate-on-scroll">Перезвоним Вам в течение 15 мин. в рабочее время</p>
