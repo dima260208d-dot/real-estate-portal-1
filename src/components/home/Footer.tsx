@@ -12,6 +12,9 @@ export default function Footer() {
               </div>
             </div>
             <p className="text-gray-400 text-sm">Юрист и риэлтор для эффективного решения задач</p>
+            <div className="mt-4">
+              <iframe src="https://yandex.ru/sprav/widget/rating-badge/158777231552?type=rating&theme=dark" width="150" height="50" frameBorder="0" title="Рейтинг Яндекс"></iframe>
+            </div>
           </div>
           <div>
             <h4 className="font-semibold mb-4">Услуги</h4>
