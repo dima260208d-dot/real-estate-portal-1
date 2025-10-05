@@ -32,6 +32,7 @@ export default function FileUpload({ applications }: FileUploadProps) {
   const [files, setFiles] = useState<UploadedFile[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [selectedApplicationId, setSelectedApplicationId] = useState<string>('');
+  const [filterApplicationId, setFilterApplicationId] = useState<string>('all');
 
   const formatFileSize = (bytes: number): string => {
     if (bytes === 0) return '0 Байт';
@@ -239,29 +240,62 @@ export default function FileUpload({ applications }: FileUploadProps) {
 
         {files.length > 0 && (
           <div className="space-y-3">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <h3 className="font-semibold text-gray-900">
-                Загруженные файлы ({files.length})
+                Загруженные файлы ({files.filter(f => filterApplicationId === 'all' || f.applicationId?.toString() === filterApplicationId).length})
               </h3>
-              {files.length > 0 && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    files.forEach(f => URL.revokeObjectURL(f.url));
-                    setFiles([]);
-                    toast.success('Все файлы удалены');
-                  }}
-                  className="text-red-600 hover:text-red-700"
-                >
-                  <Icon name="Trash2" size={16} className="mr-2" />
-                  Удалить все
-                </Button>
-              )}
+              <div className="flex gap-2 flex-wrap items-center">
+                <Select value={filterApplicationId} onValueChange={setFilterApplicationId}>
+                  <SelectTrigger className="w-[200px]">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">
+                      <span className="flex items-center gap-2">
+                        <Icon name="Folders" size={16} />
+                        Все файлы
+                      </span>
+                    </SelectItem>
+                    {applications.map((app) => {
+                      const count = files.filter(f => f.applicationId === app.id).length;
+                      if (count === 0) return null;
+                      return (
+                        <SelectItem key={app.id} value={app.id.toString()}>
+                          #{app.id} - {app.service} ({count})
+                        </SelectItem>
+                      );
+                    })}
+                  </SelectContent>
+                </Select>
+                {files.length > 0 && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      if (filterApplicationId === 'all') {
+                        files.forEach(f => URL.revokeObjectURL(f.url));
+                        setFiles([]);
+                        toast.success('Все файлы удалены');
+                      } else {
+                        const filesToDelete = files.filter(f => f.applicationId?.toString() === filterApplicationId);
+                        filesToDelete.forEach(f => URL.revokeObjectURL(f.url));
+                        setFiles(prev => prev.filter(f => f.applicationId?.toString() !== filterApplicationId));
+                        toast.success(`Файлы заявки #${filterApplicationId} удалены`);
+                      }
+                    }}
+                    className="text-red-600 hover:text-red-700"
+                  >
+                    <Icon name="Trash2" size={16} className="mr-2" />
+                    {filterApplicationId === 'all' ? 'Удалить все' : 'Удалить выбранные'}
+                  </Button>
+                )}
+              </div>
             </div>
 
             <div className="space-y-2">
-              {files.map((file) => (
+              {files
+                .filter(f => filterApplicationId === 'all' || f.applicationId?.toString() === filterApplicationId)
+                .map((file) => (
                 <div
                   key={file.id}
                   className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
@@ -307,11 +341,27 @@ export default function FileUpload({ applications }: FileUploadProps) {
           </div>
         )}
 
-        {files.length === 0 && (
+        {files.length === 0 ? (
           <div className="text-center py-8 text-gray-500">
             <Icon name="Inbox" size={48} className="mx-auto mb-3 opacity-50" />
             <p>Пока нет загруженных файлов</p>
           </div>
+        ) : (
+          filterApplicationId !== 'all' && 
+          files.filter(f => f.applicationId?.toString() === filterApplicationId).length === 0 && (
+            <div className="text-center py-8 text-gray-500">
+              <Icon name="FolderOpen" size={48} className="mx-auto mb-3 opacity-50" />
+              <p>Нет файлов для выбранной заявки</p>
+              <Button
+                variant="link"
+                size="sm"
+                onClick={() => setFilterApplicationId('all')}
+                className="mt-2"
+              >
+                Показать все файлы
+              </Button>
+            </div>
+          )
         )}
       </CardContent>
     </Card>
