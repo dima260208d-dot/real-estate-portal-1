@@ -18,7 +18,7 @@ export default function HeroSection({ onConsultationClick }: HeroSectionProps) {
           </span>
         </h1>
         <p className="text-lg md:text-xl mb-8 animate-fade-in animation-delay-400 text-white drop-shadow-lg">
-          Юрист и риэлтор для эффективного решения Ваших задач
+          Система услуг юриста и риэлтора для эффективного решения Ваших задач
         </p>
         <div className="flex gap-4 justify-center flex-wrap animate-fade-in animation-delay-600">
           <Button size="lg" onClick={onConsultationClick} className="bg-primary hover:bg-primary/90">
