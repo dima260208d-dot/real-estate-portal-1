@@ -39,7 +39,7 @@ export default function VisitorCounter() {
   }, []);
 
   return (
-    <div className="fixed bottom-4 left-4 bg-black/80 backdrop-blur-sm text-white px-4 py-3 rounded-lg shadow-lg border border-primary/30 z-40">
+    <div className="fixed bottom-24 md:bottom-4 right-4 bg-black/80 backdrop-blur-sm text-white px-4 py-3 rounded-lg shadow-lg border border-primary/30 z-40">
       <div className="flex items-center gap-3">
         <Icon name="Users" size={20} className="text-primary" />
         <div className="text-sm">
