@@ -15,21 +15,21 @@ interface ServicesSectionProps {
 
 export default function ServicesSection({ services, onServiceClick }: ServicesSectionProps) {
   return (
-    <section id="services" className="py-20 bg-white">
+    <section id="services" className="py-20 bg-background">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-4 text-[#1A1A1A] animate-on-scroll">Наши услуги</h2>
+        <h2 className="text-4xl font-bold text-center mb-4 text-foreground animate-on-scroll">Наши услуги</h2>
         <p className="text-center text-gray-600 mb-16 animate-on-scroll">Полный спектр услуг на рынке недвижимости</p>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
           {services.map((service, i) => (
             <Card
               key={service.id}
-              className="cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:border-[#FF6600] animate-on-scroll group"
+              className="cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:border-primary animate-on-scroll group"
               onClick={() => onServiceClick(service)}
               style={{ animationDelay: `${i * 100}ms` }}
             >
               <CardHeader>
-                <div className="w-14 h-14 bg-[#FF6600]/10 rounded-lg flex items-center justify-center mb-3 group-hover:bg-[#FF6600] transition-colors">
-                  <Icon name={service.icon} size={28} className="text-[#FF6600] group-hover:text-white transition-colors" />
+                <div className="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-3 group-hover:bg-primary transition-colors">
+                  <Icon name={service.icon} size={28} className="text-primary group-hover:text-white transition-colors" />
                 </div>
                 <CardTitle className="text-lg">{service.title}</CardTitle>
               </CardHeader>

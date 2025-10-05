@@ -28,23 +28,23 @@ export default function Header({ onApplicationClick }: HeaderProps) {
   };
 
   return (
-    <header className="fixed top-0 w-full bg-white/95 backdrop-blur-sm border-b-2 border-[#FF6600] shadow-sm z-50">
+    <header className="fixed top-0 w-full bg-black backdrop-blur-sm border-b-2 border-primary shadow-sm z-50">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <div className="flex items-center gap-3">
           <img src="https://cdn.poehali.dev/files/49921f72-fe81-4d6d-975f-1ba898046b57.jpg" alt="ЮР недвижимость" className="w-12 h-12 rounded-full" />
           <div>
-            <h1 className="text-xl font-bold text-[#1A1A1A]">ЮР недвижимость</h1>
-            <p className="text-xs text-gray-500">Профессионализм в квадратах</p>
+            <h1 className="text-xl font-bold text-white">ЮР недвижимость</h1>
+            <p className="text-xs text-secondary">Профессионализм в квадратах</p>
           </div>
         </div>
         <nav className="hidden md:flex gap-4 items-center">
-          <a href="#services" className="text-[#1A1A1A] hover:text-[#FF6600] transition-colors">Услуги</a>
-          <a href="#faq" className="text-[#1A1A1A] hover:text-[#FF6600] transition-colors">FAQ</a>
-          <a href="#contacts" className="text-[#1A1A1A] hover:text-[#FF6600] transition-colors">Контакты</a>
-          <Button onClick={onApplicationClick} className="bg-[#FF6600] hover:bg-[#FF7720] text-white">
+          <a href="#services" className="text-white hover:text-primary transition-colors">Услуги</a>
+          <a href="#faq" className="text-white hover:text-primary transition-colors">FAQ</a>
+          <a href="#contacts" className="text-white hover:text-primary transition-colors">Контакты</a>
+          <Button onClick={onApplicationClick} className="bg-primary hover:bg-primary/90">
             Подать заявку
           </Button>
-          <Button variant="outline" className="border-[#FF6600] text-[#FF6600] hover:bg-[#FF6600] hover:text-white" onClick={handleAuthClick}>
+          <Button variant="outline" className="border-secondary text-secondary hover:bg-secondary hover:text-white" onClick={handleAuthClick}>
             {isLoggedIn ? 'Личный кабинет' : 'Вход'}
           </Button>
         </nav>
@@ -60,25 +60,25 @@ export default function Header({ onApplicationClick }: HeaderProps) {
 
       {/* Мобильное меню */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-200 shadow-lg">
+        <div className="md:hidden bg-black border-t border-primary shadow-lg">
           <nav className="container mx-auto px-4 py-4 flex flex-col gap-3">
             <a 
               href="#services" 
-              className="text-[#1A1A1A] hover:text-[#FF6600] transition-colors py-2 border-b"
+              className="text-white hover:text-primary transition-colors py-2 border-b border-gray-700"
               onClick={closeMobileMenu}
             >
               Услуги
             </a>
             <a 
               href="#faq" 
-              className="text-[#1A1A1A] hover:text-[#FF6600] transition-colors py-2 border-b"
+              className="text-white hover:text-primary transition-colors py-2 border-b border-gray-700"
               onClick={closeMobileMenu}
             >
               FAQ
             </a>
             <a 
               href="#contacts" 
-              className="text-[#1A1A1A] hover:text-[#FF6600] transition-colors py-2 border-b"
+              className="text-white hover:text-primary transition-colors py-2 border-b border-gray-700"
               onClick={closeMobileMenu}
             >
               Контакты
@@ -88,13 +88,13 @@ export default function Header({ onApplicationClick }: HeaderProps) {
                 onApplicationClick();
                 closeMobileMenu();
               }} 
-              className="bg-[#FF6600] hover:bg-[#FF7720] text-white w-full"
+              className="bg-primary hover:bg-primary/90 w-full"
             >
               Подать заявку
             </Button>
             <Button 
               variant="outline" 
-              className="border-[#FF6600] text-[#FF6600] hover:bg-[#FF6600] hover:text-white w-full" 
+              className="border-secondary text-secondary hover:bg-secondary hover:text-white w-full" 
               onClick={handleAuthClick}
             >
               {isLoggedIn ? 'Личный кабинет' : 'Вход'}

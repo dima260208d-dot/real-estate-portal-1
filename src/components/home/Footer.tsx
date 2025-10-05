@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="bg-[#1A1A1A] text-white py-12">
+    <footer className="bg-black text-white py-12">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
@@ -16,10 +16,10 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Услуги</h4>
             <div className="space-y-2 text-sm">
-              <a href="#services" className="block text-gray-400 hover:text-[#FF6600] transition-colors">Продать квартиру</a>
-              <a href="#services" className="block text-gray-400 hover:text-[#FF6600] transition-colors">Купить недвижимость</a>
-              <a href="#faq" className="block text-gray-400 hover:text-[#FF6600] transition-colors">FAQ</a>
-              <a href="#contacts" className="block text-gray-400 hover:text-[#FF6600] transition-colors">Контакты</a>
+              <a href="#services" className="block text-gray-400 hover:text-primary transition-colors">Продать квартиру</a>
+              <a href="#services" className="block text-gray-400 hover:text-primary transition-colors">Купить недвижимость</a>
+              <a href="#faq" className="block text-gray-400 hover:text-primary transition-colors">FAQ</a>
+              <a href="#contacts" className="block text-gray-400 hover:text-primary transition-colors">Контакты</a>
             </div>
           </div>
           <div>
@@ -29,8 +29,8 @@ export default function Footer() {
               <p>yur.nedv@mail.ru</p>
               <p>г. Воронеж, Московский пр-т, д. 114 В, офис 200</p>
               <div className="flex gap-3 mt-4">
-                <a href="https://vk.com/yur.nedv" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF6600] transition-colors">VK</a>
-                <a href="https://t.me/yur_nedv" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF6600] transition-colors">Telegram</a>
+                <a href="https://vk.com/yur.nedv" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">VK</a>
+                <a href="https://t.me/yur_nedv" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Telegram</a>
               </div>
             </div>
           </div>

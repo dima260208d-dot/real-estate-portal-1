@@ -66,10 +66,10 @@ export default function ApplicationForm({ services }: ApplicationFormProps) {
   };
 
   return (
-    <section id="application-form" className="py-20 bg-white">
+    <section id="application-form" className="py-20 bg-black">
       <div className="container mx-auto px-4 max-w-2xl">
-        <h2 className="text-4xl font-bold text-center mb-4 text-[#1A1A1A] animate-on-scroll">Оставьте заявку</h2>
-        <p className="text-center text-gray-600 mb-8 animate-on-scroll">Мы перезвоним в течение 15 минут!</p>
+        <h2 className="text-4xl font-bold text-center mb-4 text-white animate-on-scroll">Оставьте заявку</h2>
+        <p className="text-center text-gray-300 mb-8 animate-on-scroll">Мы перезвоним в течение 15 минут!</p>
         <Card className="animate-on-scroll shadow-xl">
           <CardContent className="pt-6">
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -134,7 +134,7 @@ export default function ApplicationForm({ services }: ApplicationFormProps) {
                   Я согласен на обработку персональных данных
                 </Label>
               </div>
-              <Button type="submit" className="w-full bg-[#FF6600] hover:bg-[#FF7720] text-white" size="lg">
+              <Button type="submit" className="w-full bg-primary hover:bg-primary/90" size="lg">
                 Отправить заявку
               </Button>
             </form>

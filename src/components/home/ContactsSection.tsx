@@ -9,20 +9,20 @@ export default function ContactsSection() {
   };
 
   return (
-    <section id="contacts" className="py-20 bg-white">
+    <section id="contacts" className="py-20 bg-background">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-16 text-[#1A1A1A] animate-on-scroll">Наши контакты</h2>
+        <h2 className="text-4xl font-bold text-center mb-16 text-foreground animate-on-scroll">Наши контакты</h2>
         <div className="max-w-4xl mx-auto">
           <div className="space-y-6 animate-on-scroll">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-3">
-                  <Icon name="Phone" className="text-[#FF6600]" />
+                  <Icon name="Phone" className="text-primary" />
                   Телефон
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <a href="tel:+79805557580" className="text-xl font-semibold text-[#FF6600] hover:underline">
+                <a href="tel:+79805557580" className="text-xl font-semibold text-primary hover:underline">
                   +7 980 555 75 80
                 </a>
               </CardContent>
@@ -31,12 +31,12 @@ export default function ContactsSection() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-3">
-                  <Icon name="Mail" className="text-[#FF6600]" />
+                  <Icon name="Mail" className="text-primary" />
                   Email
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <a href="mailto:yur.nedv@mail.ru" className="text-xl font-semibold text-[#FF6600] hover:underline">
+                <a href="mailto:yur.nedv@mail.ru" className="text-xl font-semibold text-primary hover:underline">
                   yur.nedv@mail.ru
                 </a>
               </CardContent>
@@ -45,7 +45,7 @@ export default function ContactsSection() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-3">
-                  <Icon name="MapPin" className="text-[#FF6600]" />
+                  <Icon name="MapPin" className="text-primary" />
                   Адрес
                 </CardTitle>
               </CardHeader>
@@ -58,7 +58,7 @@ export default function ContactsSection() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-3">
-                  <Icon name="Clock" className="text-[#FF6600]" />
+                  <Icon name="Clock" className="text-primary" />
                   График работы
                 </CardTitle>
               </CardHeader>
@@ -83,7 +83,7 @@ export default function ContactsSection() {
                     href="https://vk.com/yur.nedv"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 h-12 bg-[#FF6600] rounded-full flex items-center justify-center hover:scale-110 transition-transform"
+                    className="w-12 h-12 bg-primary rounded-full flex items-center justify-center hover:scale-110 transition-transform"
                   >
                     <span className="text-white text-xl font-bold">VK</span>
                   </a>
@@ -91,7 +91,7 @@ export default function ContactsSection() {
                     href="https://t.me/yur_nedv"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 h-12 bg-[#FF6600] rounded-full flex items-center justify-center hover:scale-110 transition-transform"
+                    className="w-12 h-12 bg-primary rounded-full flex items-center justify-center hover:scale-110 transition-transform"
                   >
                     <Icon name="Send" className="text-white" />
                   </a>

@@ -176,7 +176,7 @@ export default function ServiceModal({ isOpen, onOpenChange, selectedService }: 
       <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-3 text-2xl">
-            {selectedService && <Icon name={selectedService.icon} className="text-[#FF6600]" size={32} />}
+            {selectedService && <Icon name={selectedService.icon} className="text-primary" size={32} />}
             {selectedService?.title}
           </DialogTitle>
           <DialogDescription>
@@ -281,7 +281,7 @@ export default function ServiceModal({ isOpen, onOpenChange, selectedService }: 
               Я согласен на обработку персональных данных
             </Label>
           </div>
-          <Button type="submit" className="w-full bg-[#FF6600] hover:bg-[#FF7720] text-white" size="lg">
+          <Button type="submit" className="w-full bg-primary hover:bg-primary/90" size="lg">
             Заказать услугу
           </Button>
         </form>

@@ -161,7 +161,7 @@ export default function ChatBot() {
       {!isOpen && (
         <Button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-[#FF6600] hover:bg-[#FF7720] shadow-2xl z-50 p-0"
+          className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-primary hover:bg-primary/90 shadow-2xl z-50 p-0"
           size="icon"
         >
           <Icon name="MessageCircle" size={28} className="text-white" />
@@ -170,7 +170,7 @@ export default function ChatBot() {
 
       {isOpen && (
         <Card className="fixed bottom-6 right-6 w-96 h-[600px] shadow-2xl z-50 flex flex-col">
-          <CardHeader className="bg-[#FF6600] text-white rounded-t-lg pb-4">
+          <CardHeader className="bg-primary text-white rounded-t-lg pb-4">
             <div className="flex justify-between items-center">
               <CardTitle className="text-lg flex items-center gap-2">
                 <Icon name="MessageCircle" size={24} />
@@ -180,7 +180,7 @@ export default function ChatBot() {
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsOpen(false)}
-                className="text-white hover:bg-[#FF7720]"
+                className="text-white hover:bg-primary/90"
               >
                 <Icon name="X" size={20} />
               </Button>
@@ -198,7 +198,7 @@ export default function ChatBot() {
                       className={`max-w-[80%] rounded-lg px-4 py-2 ${
                         msg.isBot
                           ? 'bg-gray-100 text-gray-800'
-                          : 'bg-[#FF6600] text-white'
+                          : 'bg-primary text-white'
                       }`}
                     >
                       <p className="text-sm">{msg.text}</p>
@@ -218,7 +218,7 @@ export default function ChatBot() {
                 />
                 <Button
                   onClick={handleSend}
-                  className="bg-[#FF6600] hover:bg-[#FF7720]"
+                  className="bg-primary hover:bg-primary/90"
                   size="icon"
                 >
                   <Icon name="Send" size={20} />
