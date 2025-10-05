@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Icon from '@/components/ui/icon';
 import { toast } from 'sonner';
 
@@ -13,11 +14,24 @@ interface UploadedFile {
   type: string;
   uploadedAt: Date;
   url: string;
+  applicationId?: number;
+  applicationTitle?: string;
 }
 
-export default function FileUpload() {
+interface Application {
+  id: number;
+  service: string;
+  created_at: string;
+}
+
+interface FileUploadProps {
+  applications: Application[];
+}
+
+export default function FileUpload({ applications }: FileUploadProps) {
   const [files, setFiles] = useState<UploadedFile[]>([]);
   const [isDragging, setIsDragging] = useState(false);
+  const [selectedApplicationId, setSelectedApplicationId] = useState<string>('');
 
   const formatFileSize = (bytes: number): string => {
     if (bytes === 0) return '0 Байт';
@@ -72,6 +86,13 @@ export default function FileUpload() {
   };
 
   const processFiles = async (fileList: File[]) => {
+    if (!selectedApplicationId) {
+      toast.error('Выберите заявку', {
+        description: 'Необходимо указать к какой заявке прикрепить файлы'
+      });
+      return;
+    }
+
     const maxSize = 10 * 1024 * 1024; // 10MB
     const validFiles = fileList.filter(file => {
       if (file.size > maxSize) {
@@ -85,6 +106,8 @@ export default function FileUpload() {
 
     if (validFiles.length === 0) return;
 
+    const selectedApp = applications.find(app => app.id.toString() === selectedApplicationId);
+
     // Симуляция загрузки файла
     for (const file of validFiles) {
       const newFile: UploadedFile = {
@@ -93,13 +116,15 @@ export default function FileUpload() {
         size: file.size,
         type: file.type,
         uploadedAt: new Date(),
-        url: URL.createObjectURL(file)
+        url: URL.createObjectURL(file),
+        applicationId: selectedApp?.id,
+        applicationTitle: selectedApp?.service
       };
 
       setFiles(prev => [...prev, newFile]);
       
       toast.success(`Файл ${file.name} загружен`, {
-        description: 'Документ успешно добавлен к вашей заявке'
+        description: `Прикреплён к заявке #${selectedApp?.id}`
       });
     }
   };
@@ -133,15 +158,44 @@ export default function FileUpload() {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
+        <div className="space-y-2">
+          <Label htmlFor="application-select">Выберите заявку *</Label>
+          <Select value={selectedApplicationId} onValueChange={setSelectedApplicationId}>
+            <SelectTrigger>
+              <SelectValue placeholder="К какой заявке прикрепить файлы?" />
+            </SelectTrigger>
+            <SelectContent>
+              {applications.length === 0 ? (
+                <SelectItem value="no-apps" disabled>
+                  У вас пока нет заявок
+                </SelectItem>
+              ) : (
+                applications.map((app) => (
+                  <SelectItem key={app.id} value={app.id.toString()}>
+                    #{app.id} - {app.service}
+                  </SelectItem>
+                ))
+              )}
+            </SelectContent>
+          </Select>
+          {!selectedApplicationId && (
+            <p className="text-sm text-gray-500">
+              Сначала выберите заявку, затем загрузите файлы
+            </p>
+          )}
+        </div>
+
         <div
           className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
             isDragging
               ? 'border-primary bg-primary/5'
-              : 'border-gray-300 hover:border-primary/50'
+              : selectedApplicationId
+              ? 'border-gray-300 hover:border-primary/50'
+              : 'border-gray-200 bg-gray-50 opacity-60 cursor-not-allowed'
           }`}
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
-          onDrop={handleDrop}
+          onDragOver={selectedApplicationId ? handleDragOver : undefined}
+          onDragLeave={selectedApplicationId ? handleDragLeave : undefined}
+          onDrop={selectedApplicationId ? handleDrop : undefined}
         >
           <div className="flex flex-col items-center gap-4">
             <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
@@ -156,7 +210,12 @@ export default function FileUpload() {
               </p>
             </div>
             <Label htmlFor="file-upload" className="cursor-pointer">
-              <Button type="button" className="bg-primary hover:bg-primary/90" asChild>
+              <Button 
+                type="button" 
+                className="bg-primary hover:bg-primary/90" 
+                asChild
+                disabled={!selectedApplicationId}
+              >
                 <span>
                   <Icon name="FolderOpen" size={18} className="mr-2" />
                   Выбрать файлы
@@ -169,6 +228,7 @@ export default function FileUpload() {
                 onChange={handleFileChange}
                 className="hidden"
                 accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.zip,.rar,.xls,.xlsx"
+                disabled={!selectedApplicationId}
               />
             </Label>
             <p className="text-xs text-gray-400">
@@ -215,6 +275,11 @@ export default function FileUpload() {
                     <p className="text-sm text-gray-500">
                       {formatFileSize(file.size)} • {formatDate(file.uploadedAt)}
                     </p>
+                    {file.applicationId && (
+                      <p className="text-xs text-primary font-medium mt-1">
+                        Заявка #{file.applicationId}: {file.applicationTitle}
+                      </p>
+                    )}
                   </div>
 
                   <div className="flex gap-2 flex-shrink-0">

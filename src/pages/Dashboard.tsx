@@ -287,7 +287,7 @@ export default function Dashboard() {
 
                 <div>
                   <h3 className="text-xl font-bold text-[#1A1A1A] mb-4">Документы</h3>
-                  <FileUpload />
+                  <FileUpload applications={applications} />
                 </div>
               </div>
               
