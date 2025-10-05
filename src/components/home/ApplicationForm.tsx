@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from 'sonner';
+import { Link } from 'react-router-dom';
 
 interface Service {
   id: string;
@@ -128,10 +129,22 @@ export default function ApplicationForm({ services }: ApplicationFormProps) {
                   rows={4}
                 />
               </div>
-              <div className="flex items-center gap-2">
-                <Checkbox id="agree" checked={agreed} onCheckedChange={(checked) => setAgreed(checked as boolean)} />
-                <Label htmlFor="agree" className="text-sm cursor-pointer">
-                  Я согласен на обработку персональных данных
+              <div className="flex items-start gap-2">
+                <Checkbox 
+                  id="agree" 
+                  checked={agreed} 
+                  onCheckedChange={(checked) => setAgreed(checked as boolean)}
+                  className="mt-1"
+                />
+                <Label htmlFor="agree" className="text-sm cursor-pointer leading-relaxed">
+                  Я согласен на обработку персональных данных в соответствии с{' '}
+                  <Link to="/personal-data-consent" className="text-primary hover:underline" target="_blank">
+                    Политикой обработки персональных данных
+                  </Link>
+                  {' '}и{' '}
+                  <Link to="/privacy-policy" className="text-primary hover:underline" target="_blank">
+                    Политикой конфиденциальности
+                  </Link>
                 </Label>
               </div>
               <Button type="submit" className="w-full bg-primary hover:bg-primary/90" size="lg">
