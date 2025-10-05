@@ -17,7 +17,7 @@ const services = [
   { id: 'mortgage', title: 'Оформление ипотеки', icon: 'CreditCard', description: 'Одобрение ипотеки в ведущих банках' },
   { id: 'legal', title: 'Юридическое сопровождение', icon: 'Scale', description: 'Полная юридическая чистота сделки' },
   { id: 'rent', title: 'Сдать квартиру', icon: 'Building', description: 'Поиск надежных арендаторов' },
-  { id: 'insurance', title: 'Страхование ипотеки', icon: 'Shield', description: 'Выгодные условия страхования' },
+  { id: 'insurance', title: 'Страхование ипотеки: жизнь и здоровье, имущество, титульное страхование, комплекс', icon: 'Shield', description: 'Выгодные условия страхования' },
   { id: 'pledge', title: 'Деньги под залог', icon: 'Wallet', description: 'Быстрое получение средств под залог недвижимости' },
   { id: 'valuation', title: 'Оценить недвижимость', icon: 'Calculator', description: 'Профессиональная оценка объекта' },
   { id: 'contract', title: 'Оформить договор купли-продажи', icon: 'FileText', description: 'Юридически грамотное составление договоров' },
