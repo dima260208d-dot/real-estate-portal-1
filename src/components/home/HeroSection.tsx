@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
+import Logo from './Logo';
 
 interface HeroSectionProps {
   onConsultationClick: () => void;
@@ -12,12 +13,7 @@ export default function HeroSection({ onConsultationClick }: HeroSectionProps) {
       <div className="absolute inset-0 bg-[url('https://cdn.poehali.dev/files/7d330913-0577-479e-bd95-ea105020552c.jpeg')] bg-cover bg-center" />
       <div className="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
         <div className="mb-6 animate-fade-in flex justify-center">
-          <img 
-            src="https://cdn.poehali.dev/files/36b25a74-42a0-462b-a91d-68e3824e649f.jpeg" 
-            alt="ЮР Юрист Риэлтор" 
-            className="h-32 md:h-48 w-auto object-contain drop-shadow-[0_4px_20px_rgba(255,140,66,0.8)]"
-            style={{ filter: 'brightness(1.2) contrast(1.3)', mixBlendMode: 'screen' }}
-          />
+          <Logo className="h-32 md:h-48 w-auto drop-shadow-[0_4px_20px_rgba(255,140,66,0.8)]" />
         </div>
         <p className="text-lg md:text-xl mb-8 animate-fade-in animation-delay-400 text-white drop-shadow-lg">
           Юрист и риэлтор для эффективного решения Ваших задач
