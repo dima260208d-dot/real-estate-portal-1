@@ -12,9 +12,6 @@ export default function HeroSection({ onConsultationClick }: HeroSectionProps) {
       <div className="absolute inset-0 bg-[url('https://cdn.poehali.dev/files/7d330913-0577-479e-bd95-ea105020552c.jpeg')] bg-cover bg-center" />
       <div className="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
         <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">ЮР недвижимость</h1>
-        <h2 className="text-2xl md:text-3xl mb-4 animate-fade-in animation-delay-200">
-          Профессионализм в квадратах
-        </h2>
         <p className="text-lg md:text-xl mb-8 animate-fade-in animation-delay-400">
           Юрист и риэлтор для эффективного решения Ваших задач
         </p>
