@@ -15,7 +15,7 @@ export default function HeroSection({ onConsultationClick }: HeroSectionProps) {
           <img 
             src="https://cdn.poehali.dev/files/36b25a74-42a0-462b-a91d-68e3824e649f.jpeg" 
             alt="ЮР Юрист Риэлтор" 
-            className="h-32 md:h-48 w-auto object-contain drop-shadow-[0_4px_20px_rgba(255,140,66,0.8)]"
+            className="h-32 md:h-48 w-auto object-contain drop-shadow-[0_4px_20px_rgba(255,140,66,0.8)] mix-blend-lighten"
           />
         </div>
         <p className="text-lg md:text-xl mb-8 animate-fade-in animation-delay-400 text-white drop-shadow-lg">
