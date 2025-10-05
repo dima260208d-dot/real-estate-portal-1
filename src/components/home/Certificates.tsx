@@ -78,7 +78,7 @@ export default function Certificates() {
             Наша деятельность подтверждена всеми необходимыми документами и лицензиями
           </p>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {certificates.map((cert, index) => (
               <Card 
                 key={index} 
@@ -99,33 +99,6 @@ export default function Certificates() {
                 </CardContent>
               </Card>
             ))}
-          </div>
-
-          <div className="bg-white rounded-2xl shadow-lg p-8 mb-12 animate-on-scroll">
-            <h3 className="text-2xl font-bold text-center mb-8 text-gray-900">
-              Наши достижения
-            </h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {achievements.map((achievement, index) => (
-                <div 
-                  key={index} 
-                  className="relative pl-6 border-l-2 border-primary"
-                >
-                  <div className="absolute -left-3 top-0 w-6 h-6 bg-primary rounded-full flex items-center justify-center">
-                    <div className="w-2 h-2 bg-white rounded-full"></div>
-                  </div>
-                  <div className="text-sm text-primary font-bold mb-1">
-                    {achievement.year}
-                  </div>
-                  <h4 className="font-semibold text-gray-900 mb-1">
-                    {achievement.title}
-                  </h4>
-                  <p className="text-sm text-gray-600">
-                    {achievement.description}
-                  </p>
-                </div>
-              ))}
-            </div>
           </div>
 
           <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl p-8 text-center animate-on-scroll">
