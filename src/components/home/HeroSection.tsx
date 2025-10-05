@@ -12,7 +12,7 @@ export default function HeroSection({ onConsultationClick }: HeroSectionProps) {
       <div className="absolute inset-0 bg-[url('https://cdn.poehali.dev/files/7d330913-0577-479e-bd95-ea105020552c.jpeg')] bg-cover bg-center" />
       <div className="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
         <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
-          <span className="bg-gradient-to-r from-primary via-orange-400 to-secondary bg-clip-text text-transparent drop-shadow-[0_2px_10px_rgba(255,140,66,0.5)]">
+          <span className="text-white drop-shadow-[0_4px_20px_rgba(255,140,66,0.8)] [text-shadow:_2px_2px_8px_rgb(0_0_0_/_80%)]">
             ЮР недвижимость
           </span>
         </h1>
