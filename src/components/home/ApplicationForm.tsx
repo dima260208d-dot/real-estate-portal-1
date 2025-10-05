@@ -68,8 +68,8 @@ export default function ApplicationForm({ services }: ApplicationFormProps) {
   return (
     <section id="application-form" className="py-20 bg-black">
       <div className="container mx-auto px-4 max-w-2xl">
-        <h2 className="text-4xl font-bold text-center mb-4 text-white animate-on-scroll">Оставьте заявку</h2>
-        <p className="text-center text-gray-300 mb-8 animate-on-scroll">Мы перезвоним в течение 15 минут!</p>
+        <h2 className="text-4xl font-bold text-center mb-4 text-white animate-on-scroll">Оставить заявку</h2>
+        <p className="text-center text-gray-300 mb-8 animate-on-scroll">И получить бесплатную консультацию</p>
         <Card className="animate-on-scroll shadow-xl">
           <CardContent className="pt-6">
             <form onSubmit={handleSubmit} className="space-y-4">
