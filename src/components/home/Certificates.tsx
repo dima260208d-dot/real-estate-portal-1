@@ -104,11 +104,11 @@ export default function Certificates() {
           <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl p-8 text-center animate-on-scroll">
             <Icon name="CheckCircle" className="mx-auto mb-4 text-primary" size={48} />
             <h3 className="text-2xl font-bold mb-3 text-gray-900">
-              Гарантия юридической чистоты
+              Гарантия организации сделки как себе
             </h3>
             <p className="text-gray-700 max-w-2xl mx-auto mb-4">
               Все наши специалисты имеют соответствующее образование и опыт работы. 
-              Мы несём полную ответственность за юридическую чистоту каждой сделки.
+              Мы несём полную ответственность за организацию каждой сделки.
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
               <div className="flex items-center gap-2">
