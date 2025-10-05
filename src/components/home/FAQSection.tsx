@@ -16,8 +16,8 @@ export default function FAQSection({ faqs }: FAQSectionProps) {
         <h2 className="text-4xl font-bold text-center mb-16 text-foreground animate-on-scroll">Частые вопросы</h2>
         <Accordion type="single" collapsible className="space-y-4 animate-on-scroll">
           {faqs.map((faq, i) => (
-            <AccordionItem key={i} value={`item-${i}`} className="bg-white rounded-lg px-6 border-l-4 border-l-primary">
-              <AccordionTrigger className="text-left font-semibold hover:text-primary">
+            <AccordionItem key={i} value={`item-${i}`} className={`bg-white rounded-lg px-6 border-l-4 ${i % 2 === 0 ? 'border-l-primary' : 'border-l-secondary'}`}>
+              <AccordionTrigger className={`text-left font-semibold ${i % 2 === 0 ? 'hover:text-primary' : 'hover:text-secondary'}`}>
                 {faq.q}
               </AccordionTrigger>
               <AccordionContent className="text-gray-600 pt-2">

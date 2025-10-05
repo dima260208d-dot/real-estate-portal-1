@@ -31,12 +31,12 @@ export default function ContactsSection() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-3">
-                  <Icon name="Mail" className="text-primary" />
+                  <Icon name="Mail" className="text-secondary" />
                   Email
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <a href="mailto:yur.nedv@mail.ru" className="text-xl font-semibold text-primary hover:underline">
+                <a href="mailto:yur.nedv@mail.ru" className="text-xl font-semibold text-secondary hover:underline">
                   yur.nedv@mail.ru
                 </a>
               </CardContent>
@@ -58,7 +58,7 @@ export default function ContactsSection() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-3">
-                  <Icon name="Clock" className="text-primary" />
+                  <Icon name="Clock" className="text-secondary" />
                   График работы
                 </CardTitle>
               </CardHeader>
@@ -91,7 +91,7 @@ export default function ContactsSection() {
                     href="https://t.me/yur_nedv"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 h-12 bg-primary rounded-full flex items-center justify-center hover:scale-110 transition-transform"
+                    className="w-12 h-12 bg-secondary rounded-full flex items-center justify-center hover:scale-110 transition-transform"
                   >
                     <Icon name="Send" className="text-white" />
                   </a>

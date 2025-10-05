@@ -18,9 +18,9 @@ export default function WhyChooseUs() {
         </p>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((item, i) => (
-            <Card key={i} className="text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2 animate-on-scroll border-t-4 border-t-primary">
+            <Card key={i} className="text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2 animate-on-scroll border-t-4 border-t-secondary">
               <CardHeader>
-                <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
                   <Icon name={item.icon} size={32} className="text-white" />
                 </div>
                 <CardTitle className="text-xl">{item.title}</CardTitle>

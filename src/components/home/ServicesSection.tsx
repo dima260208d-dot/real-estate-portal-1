@@ -23,13 +23,13 @@ export default function ServicesSection({ services, onServiceClick }: ServicesSe
           {services.map((service, i) => (
             <Card
               key={service.id}
-              className="cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:border-primary animate-on-scroll group"
+              className={`cursor-pointer hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 ${i % 2 === 0 ? 'hover:border-primary' : 'hover:border-secondary'} animate-on-scroll group`}
               onClick={() => onServiceClick(service)}
               style={{ animationDelay: `${i * 100}ms` }}
             >
               <CardHeader>
-                <div className="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-3 group-hover:bg-primary transition-colors">
-                  <Icon name={service.icon} size={28} className="text-primary group-hover:text-white transition-colors" />
+                <div className={`w-14 h-14 ${i % 2 === 0 ? 'bg-primary/10 group-hover:bg-primary' : 'bg-secondary/10 group-hover:bg-secondary'} rounded-lg flex items-center justify-center mb-3 transition-colors`}>
+                  <Icon name={service.icon} size={28} className={`${i % 2 === 0 ? 'text-primary' : 'text-secondary'} group-hover:text-white transition-colors`} />
                 </div>
                 <CardTitle className="text-lg">{service.title}</CardTitle>
               </CardHeader>
