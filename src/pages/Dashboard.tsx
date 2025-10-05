@@ -10,6 +10,7 @@ import Icon from '@/components/ui/icon';
 import { toast } from 'sonner';
 import * as XLSX from 'xlsx';
 import PaymentForm from '@/components/dashboard/PaymentForm';
+import ClientSupport from '@/components/dashboard/ClientSupport';
 
 interface Application {
   id: number;
@@ -239,47 +240,54 @@ export default function Dashboard() {
           <>
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-[#1A1A1A] mb-2">Личный кабинет</h2>
-              <p className="text-gray-600">Управление заявками и оплата услуг</p>
+              <p className="text-gray-600">Управление заявками и связь со специалистом</p>
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-8 mb-8">
-              <div>
-                <h3 className="text-xl font-bold text-[#1A1A1A] mb-4">Оплата услуг</h3>
-                <PaymentForm />
+            <div className="grid lg:grid-cols-3 gap-6 mb-8">
+              <div className="lg:col-span-2 space-y-6">
+                <div>
+                  <h3 className="text-xl font-bold text-[#1A1A1A] mb-4">Статистика заявок</h3>
+                  <div className="grid sm:grid-cols-3 gap-4">
+                    <Card>
+                      <CardHeader className="pb-3">
+                        <CardTitle className="text-sm font-medium text-gray-600">Всего заявок</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="text-3xl font-bold text-[#1A1A1A]">{applications.length}</div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardHeader className="pb-3">
+                        <CardTitle className="text-sm font-medium text-gray-600">В работе</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="text-3xl font-bold text-yellow-600">
+                          {applications.filter(a => a.status === 'in_progress').length}
+                        </div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardHeader className="pb-3">
+                        <CardTitle className="text-sm font-medium text-gray-600">Выполнены</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="text-3xl font-bold text-green-600">
+                          {applications.filter(a => a.status === 'completed').length}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-bold text-[#1A1A1A] mb-4">Оплата услуг</h3>
+                  <PaymentForm />
+                </div>
               </div>
               
               <div>
-                <h3 className="text-xl font-bold text-[#1A1A1A] mb-4">Статистика</h3>
-                <div className="grid grid-cols-1 gap-4">
-                  <Card>
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-sm font-medium text-gray-600">Всего заявок</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-3xl font-bold text-[#1A1A1A]">{applications.length}</div>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-sm font-medium text-gray-600">В работе</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-3xl font-bold text-yellow-600">
-                        {applications.filter(a => a.status === 'in_progress').length}
-                      </div>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-sm font-medium text-gray-600">Выполнены</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="text-3xl font-bold text-green-600">
-                        {applications.filter(a => a.status === 'completed').length}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
+                <h3 className="text-xl font-bold text-[#1A1A1A] mb-4">Связь</h3>
+                <ClientSupport />
               </div>
             </div>
 
@@ -287,8 +295,8 @@ export default function Dashboard() {
               <CardHeader>
                 <div className="flex justify-between items-center">
                   <div>
-                    <CardTitle>История заявок</CardTitle>
-                    <CardDescription>Ваши обращения в компанию</CardDescription>
+                    <CardTitle>Мои заявки</CardTitle>
+                    <CardDescription>История обращений с актуальными статусами</CardDescription>
                   </div>
                   <Button asChild className="bg-[#FF6600] hover:bg-[#FF7720]">
                     <a href="/">
@@ -317,6 +325,7 @@ export default function Dashboard() {
                     <Table>
                       <TableHeader>
                         <TableRow>
+                          <TableHead>ID</TableHead>
                           <TableHead>Дата</TableHead>
                           <TableHead>Услуга</TableHead>
                           <TableHead>Сообщение</TableHead>
@@ -325,7 +334,8 @@ export default function Dashboard() {
                       </TableHeader>
                       <TableBody>
                         {applications.map((app) => (
-                          <TableRow key={app.id}>
+                          <TableRow key={app.id} className="cursor-pointer hover:bg-gray-50" onClick={() => openApplicationDetails(app)}>
+                            <TableCell className="font-medium">#{app.id}</TableCell>
                             <TableCell className="whitespace-nowrap">{formatDate(app.created_at)}</TableCell>
                             <TableCell className="font-medium">{app.service}</TableCell>
                             <TableCell className="max-w-xs truncate">{app.message || '—'}</TableCell>
