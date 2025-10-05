@@ -10,7 +10,7 @@ import ContactsSection from '@/components/home/ContactsSection';
 import Footer from '@/components/home/Footer';
 import ServiceModal from '@/components/home/ServiceModal';
 import ChatBot from '@/components/ChatBot';
-import VisitorCounter from '@/components/VisitorCounter';
+
 
 const services = [
   { id: 'sale', title: 'Продать квартиру', icon: 'Home', description: 'Поможем быстро и выгодно продать вашу недвижимость' },
@@ -77,7 +77,6 @@ export default function Index() {
       <ContactsSection />
       <Footer />
       <ChatBot />
-      <VisitorCounter />
       <ServiceModal isOpen={isOpen} onOpenChange={setIsOpen} selectedService={selectedService} />
     </div>
   );

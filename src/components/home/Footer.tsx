@@ -1,3 +1,5 @@
+import VisitorCounter from '@/components/VisitorCounter';
+
 export default function Footer() {
   return (
     <footer className="bg-black text-white py-12">
@@ -38,8 +40,16 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div className="border-t border-gray-800 pt-8 text-center text-sm text-gray-400">
-          <p>© ЮР недвижимость, 2024. Все права защищены.</p>
+        <div className="border-t border-gray-800 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
+            <div className="text-center md:text-left">
+              <p>© ЮР недвижимость, 2024. Все права защищены.</p>
+              <p className="mt-1">ООО «ЮрИЭлТи», ИНН 3662311194</p>
+            </div>
+            <div className="relative">
+              <VisitorCounter />
+            </div>
+          </div>
         </div>
       </div>
     </footer>
