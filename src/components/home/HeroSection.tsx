@@ -9,15 +9,15 @@ interface HeroSectionProps {
 export default function HeroSection({ onConsultationClick }: HeroSectionProps) {
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden pt-20">
-      <div className="absolute inset-0 bg-gradient-to-br from-black/50 via-primary/40 to-secondary/35 z-10" />
+      <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-primary/60 to-secondary/55 z-10" />
       <div className="absolute inset-0 bg-[url('https://cdn.poehali.dev/files/7d330913-0577-479e-bd95-ea105020552c.jpeg')] bg-cover bg-center" />
       <div className="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
         <h1 className="text-4xl md:text-5xl font-extrabold mb-6 animate-fade-in tracking-tight">
-          <span className="bg-gradient-to-r from-orange-300 via-orange-500 to-orange-800 bg-clip-text text-transparent animate-glow-pulse">
+          <span className="bg-gradient-to-r from-orange-200 via-orange-400 to-orange-700 bg-clip-text text-transparent animate-glow-pulse">
             ЮР недвижимость
           </span>
         </h1>
-        <p className="text-lg md:text-xl mb-8 animate-fade-in animation-delay-400 text-white drop-shadow-lg">
+        <p className="text-lg md:text-xl mb-8 animate-fade-in animation-delay-400 text-white/80 drop-shadow-lg">
           Система услуг юриста и риэлтора для эффективного решения Ваших задач
         </p>
         <div className="flex gap-4 justify-center flex-wrap animate-fade-in animation-delay-600">
