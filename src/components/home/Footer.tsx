@@ -1,4 +1,4 @@
-import VisitorCounter from '@/components/VisitorCounter';
+
 import { Link } from 'react-router-dom';
 
 export default function Footer() {
@@ -52,9 +52,7 @@ export default function Footer() {
                 <Link to="/personal-data-consent" className="hover:text-primary transition-colors">Согласие на обработку данных</Link>
               </div>
             </div>
-            <div className="relative mx-auto md:mx-0">
-              <VisitorCounter />
-            </div>
+
           </div>
         </div>
       </div>
