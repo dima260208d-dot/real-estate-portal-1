@@ -1,5 +1,6 @@
 
 import { Link } from 'react-router-dom';
+import Icon from '@/components/ui/icon';
 
 export default function Footer() {
   return (
@@ -31,13 +32,28 @@ export default function Footer() {
           </div>
           <div>
             <h4 className="font-semibold mb-4">Контакты</h4>
-            <div className="space-y-2 text-sm text-gray-400">
-              <p>+7 980 555 75 80</p>
-              <p>yur.nedv@mail.ru</p>
-              <p>г. Воронеж, Московский пр-т, д. 114 В, офис 200</p>
-              <div className="flex gap-3 mt-4">
-                <a href="https://vk.com/yur.nedv" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">VK</a>
-                <a href="https://t.me/yur_nedv" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Telegram</a>
+            <div className="space-y-3 text-sm text-gray-400">
+              <div className="flex items-center gap-2">
+                <Icon name="Phone" size={16} className="text-primary" />
+                <a href="tel:+79805557580" className="hover:text-primary transition-colors">+7 980 555 75 80</a>
+              </div>
+              <div className="flex items-center gap-2">
+                <Icon name="Mail" size={16} className="text-primary" />
+                <a href="mailto:yur.nedv@mail.ru" className="hover:text-primary transition-colors">yur.nedv@mail.ru</a>
+              </div>
+              <div className="flex items-start gap-2">
+                <Icon name="MapPin" size={16} className="text-primary mt-0.5" />
+                <p>г. Воронеж, Московский пр-т, д. 114 В, офис 200</p>
+              </div>
+              <div className="flex gap-3 mt-4 pt-2">
+                <a href="https://vk.com/yur.nedv" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-primary transition-colors">
+                  <Icon name="MessageCircle" size={16} />
+                  VK
+                </a>
+                <a href="https://t.me/yur_nedv" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-primary transition-colors">
+                  <Icon name="Send" size={16} />
+                  Telegram
+                </a>
               </div>
             </div>
           </div>
