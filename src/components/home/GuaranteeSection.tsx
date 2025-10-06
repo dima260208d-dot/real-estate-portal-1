@@ -1,4 +1,5 @@
 import Icon from '@/components/ui/icon';
+import { Button } from '@/components/ui/button';
 
 export default function GuaranteeSection() {
   return (
@@ -14,7 +15,7 @@ export default function GuaranteeSection() {
               Все наши специалисты имеют соответствующее образование и опыт работы. 
               Мы несём полную ответственность за организацию каждой сделки.
             </p>
-            <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600">
+            <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600 mb-8">
               <div className="flex items-center gap-2">
                 <Icon name="CheckCircle" className="text-green-500" size={20} />
                 <span className="font-medium">Проверенные специалисты</span>
@@ -27,6 +28,24 @@ export default function GuaranteeSection() {
                 <Icon name="CheckCircle" className="text-green-500" size={20} />
                 <span className="font-medium">Официальные документы</span>
               </div>
+            </div>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Button 
+                size="lg" 
+                className="bg-primary hover:bg-primary/90"
+                onClick={() => document.getElementById('application-form')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                Получить консультацию
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline"
+                className="border-secondary text-secondary hover:bg-secondary hover:text-white"
+                onClick={() => window.open('tel:+79805557580')}
+              >
+                <Icon name="Phone" size={20} className="mr-2" />
+                Позвонить
+              </Button>
             </div>
           </div>
         </div>
