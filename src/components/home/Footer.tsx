@@ -43,16 +43,13 @@ export default function Footer() {
           </div>
         </div>
         <div className="border-t border-gray-800 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-start gap-6 text-sm text-gray-400">
-            <div className="text-center md:text-left flex-1">
-              <p>© ЮР недвижимость, 2024. Все права защищены.</p>
-              <div className="flex flex-wrap gap-4 mt-3 justify-center md:justify-start">
-                <Link to="/privacy-policy" className="hover:text-primary transition-colors">Политика конфиденциальности</Link>
-                <Link to="/user-agreement" className="hover:text-primary transition-colors">Пользовательское соглашение</Link>
-                <Link to="/personal-data-consent" className="hover:text-primary transition-colors">Согласие на обработку данных</Link>
-              </div>
+          <div className="text-center text-sm text-gray-400">
+            <p className="mb-3">© ЮР недвижимость, 2024. Все права защищены.</p>
+            <div className="flex flex-wrap gap-4 justify-center">
+              <Link to="/privacy-policy" className="hover:text-primary transition-colors">Политика конфиденциальности</Link>
+              <Link to="/user-agreement" className="hover:text-primary transition-colors">Пользовательское соглашение</Link>
+              <Link to="/personal-data-consent" className="hover:text-primary transition-colors">Согласие на обработку данных</Link>
             </div>
-
           </div>
         </div>
       </div>
