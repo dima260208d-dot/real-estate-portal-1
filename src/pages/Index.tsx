@@ -5,7 +5,7 @@ import AboutUs from '@/components/home/AboutUs';
 import WhyChooseUs from '@/components/home/WhyChooseUs';
 import ServicesSection from '@/components/home/ServicesSection';
 import Testimonials from '@/components/home/Testimonials';
-
+import GuaranteeSection from '@/components/home/GuaranteeSection';
 import StepsSection from '@/components/home/StepsSection';
 import ApplicationForm from '@/components/home/ApplicationForm';
 import FAQSection from '@/components/home/FAQSection';
@@ -76,6 +76,7 @@ export default function Index() {
       <WhyChooseUs />
       <ServicesSection services={services} onServiceClick={handleServiceClick} />
       <Testimonials />
+      <GuaranteeSection />
       <StepsSection />
       <ApplicationForm services={services} />
       <FAQSection faqs={faqs} />
