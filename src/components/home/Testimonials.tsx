@@ -61,20 +61,8 @@ export default function Testimonials() {
           </h2>
           <div className="text-center mb-12 animate-on-scroll">
             <p className="text-gray-600 mb-4 max-w-2xl mx-auto">
-              Отзывы на сайте опубликованы из официальных источников:
+              Отзывы загружены из официальных источников: Авито, Яндекс и др.
             </p>
-            <div className="flex items-center justify-center gap-6 flex-wrap">
-              <img 
-                src="https://upload.wikimedia.org/wikipedia/commons/6/60/Avito_logo.svg" 
-                alt="Авито" 
-                className="h-8 opacity-70 hover:opacity-100 transition-opacity"
-              />
-              <img 
-                src="https://upload.wikimedia.org/wikipedia/commons/5/58/Yandex_icon.svg" 
-                alt="Яндекс" 
-                className="h-8 opacity-70 hover:opacity-100 transition-opacity"
-              />
-            </div>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
