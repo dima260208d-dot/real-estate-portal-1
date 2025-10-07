@@ -31,11 +31,7 @@ export default function Header({ onApplicationClick }: HeaderProps) {
     <header className="fixed top-0 w-full bg-black backdrop-blur-sm border-b-2 border-primary shadow-sm z-50">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <div className="flex items-center gap-3">
-          <img src="https://cdn.poehali.dev/files/49921f72-fe81-4d6d-975f-1ba898046b57.jpg" alt="ЮР недвижимость" className="w-12 h-12 rounded-full" />
-          <div>
-            <h1 className="text-xl font-bold text-white">ЮР недвижимость</h1>
-            <p className="text-xs text-secondary">Профессионализм в квадратах</p>
-          </div>
+          <img src="https://cdn.poehali.dev/files/855a0bef-af1c-4794-9913-95fb0e695be8.png" alt="ЮР недвижимость" className="h-12 w-auto object-contain" />
         </div>
         <nav className="hidden md:flex gap-4 items-center">
           <a href="#services" className="text-white hover:text-primary transition-colors">Услуги</a>
