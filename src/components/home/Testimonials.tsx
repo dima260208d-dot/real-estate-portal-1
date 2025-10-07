@@ -64,7 +64,7 @@ export default function Testimonials() {
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-4 animate-on-scroll">
-            Отзывы наших клиентов
+            Отзывы клиентов
           </h2>
           <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto animate-on-scroll">
             Отзывы на сайте из официальных источников: Авито, Яндекс
