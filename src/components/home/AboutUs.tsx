@@ -5,7 +5,7 @@ export default function AboutUs() {
     { value: '900+', label: 'Успешных сделок', icon: 'HandshakeIcon' },
     { value: '12+', label: 'Лет опыта', icon: 'Award' },
     { value: '98%', label: 'Довольных клиентов', icon: 'ThumbsUp' },
-    { value: '24/7', label: 'Поддержка', icon: 'Clock' }
+    { value: 'Всегда', label: 'На связи', icon: 'Clock' }
   ];
 
   return (
