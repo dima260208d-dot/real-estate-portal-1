@@ -6,6 +6,7 @@ import ReviewForm from '@/components/ReviewForm';
 
 export default function Testimonials() {
   const [showReviewForm, setShowReviewForm] = useState(false);
+  const [showAll, setShowAll] = useState(false);
   
   const testimonials = [
     {
@@ -68,7 +69,7 @@ export default function Testimonials() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {testimonials.map((testimonial, index) => (
+            {(showAll ? testimonials : testimonials.slice(0, 3)).map((testimonial, index) => (
               <Card 
                 key={index} 
                 className="hover:shadow-xl transition-shadow animate-on-scroll"
@@ -97,6 +98,27 @@ export default function Testimonials() {
               </Card>
             ))}
           </div>
+
+          {testimonials.length > 3 && (
+            <div className="text-center mt-8">
+              <Button
+                onClick={() => setShowAll(!showAll)}
+                variant="outline"
+                size="lg"
+                className="gap-2"
+              >
+                {showAll ? (
+                  <>
+                    Скрыть <Icon name="ChevronUp" size={20} />
+                  </>
+                ) : (
+                  <>
+                    Показать все отзывы ({testimonials.length}) <Icon name="ChevronDown" size={20} />
+                  </>
+                )}
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </section>
