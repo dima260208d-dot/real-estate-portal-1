@@ -16,7 +16,7 @@ export default function HeroSection({ onConsultationClick }: HeroSectionProps) {
           <img 
             src="https://cdn.poehali.dev/files/5ff42783-4fa7-42c0-9af3-ea6eeaa9dd47.png" 
             alt="ЮР недвижимость - Юрист Риэлтор" 
-            className="h-20 md:h-28 w-auto object-contain animate-logo-glow transition-all duration-700 hover:scale-110 hover:rotate-6 cursor-pointer brightness-110"
+            className="h-20 md:h-28 w-auto object-contain animate-logo-glow transition-all duration-700 hover:scale-110 hover:rotate-6 cursor-pointer"
           />
         </div>
         <p className="text-lg md:text-xl mb-8 animate-fade-in animation-delay-400 text-white/80 drop-shadow-lg">
