@@ -19,11 +19,13 @@ export default function HeroSection({ onConsultationClick }: HeroSectionProps) {
         />
       </div>
       <div className="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
-        <h1 className="text-3xl md:text-4xl font-extrabold mb-6 animate-fade-in tracking-tight">
-          <span className="bg-gradient-to-r from-orange-200 via-orange-400 to-orange-700 bg-clip-text text-transparent animate-glow-pulse">
-            ЮР недвижимость
-          </span>
-        </h1>
+        <div className="mb-6 animate-fade-in flex justify-center">
+          <img 
+            src="https://cdn.poehali.dev/files/5ff42783-4fa7-42c0-9af3-ea6eeaa9dd47.png" 
+            alt="ЮР недвижимость - Юрист Риэлтор" 
+            className="h-24 md:h-32 w-auto object-contain drop-shadow-2xl"
+          />
+        </div>
         <p className="text-lg md:text-xl mb-8 animate-fade-in animation-delay-400 text-white/80 drop-shadow-lg">
           Система услуг юриста и риэлтора для эффективного решения Ваших задач
         </p>
