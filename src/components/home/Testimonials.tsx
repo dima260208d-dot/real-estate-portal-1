@@ -1,7 +1,12 @@
+import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
+import ReviewForm from '@/components/ReviewForm';
 
 export default function Testimonials() {
+  const [showReviewForm, setShowReviewForm] = useState(false);
+  
   const testimonials = [
     {
       name: 'Клиент',
@@ -97,14 +102,21 @@ export default function Testimonials() {
           </div>
 
           <div className="mt-12 text-center animate-on-scroll">
-            <div className="inline-flex items-center gap-3 bg-gray-50 px-6 py-4 rounded-xl">
-              <Icon name="MessageCircle" className="text-primary" size={24} />
-              <div className="text-left">
-                <p className="font-semibold text-gray-900">Хотите оставить отзыв?</p>
-                <p className="text-sm text-gray-600">Напишите нам на yur.nedv@mail.ru</p>
-              </div>
-            </div>
+            <Button 
+              onClick={() => setShowReviewForm(!showReviewForm)}
+              size="lg"
+              className="gap-2"
+            >
+              <Icon name="MessageCircle" size={20} />
+              {showReviewForm ? 'Скрыть форму' : 'Оставить отзыв'}
+            </Button>
           </div>
+
+          {showReviewForm && (
+            <div className="mt-8 animate-on-scroll">
+              <ReviewForm />
+            </div>
+          )}
         </div>
       </div>
     </section>
