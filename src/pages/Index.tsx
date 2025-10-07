@@ -23,7 +23,6 @@ const services = [
   { id: 'rent', title: 'Сдать квартиру', icon: 'Building', description: 'Поиск надежных арендаторов' },
   { id: 'insurance', title: 'Страхование ипотеки', icon: 'Shield', description: 'Выгодные условия страхования' },
   { id: 'pledge', title: 'Деньги под залог', icon: 'Wallet', description: 'Быстрое получение средств под залог недвижимости' },
-  { id: 'valuation', title: 'Оценить недвижимость', icon: 'Calculator', description: 'Профессиональная оценка объекта' },
   { id: 'contract', title: 'Оформить договор купли-продажи', icon: 'FileText', description: 'Юридически грамотное составление договоров' },
   { id: 'newbuilding', title: 'Новостройки без комиссии', icon: 'Building2', description: 'Прямые продажи от застройщиков' }
 ];
