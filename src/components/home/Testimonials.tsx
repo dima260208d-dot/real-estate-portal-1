@@ -72,7 +72,11 @@ export default function Testimonials() {
             {(showAll ? testimonials : testimonials.slice(0, 3)).map((testimonial, index) => (
               <Card 
                 key={index} 
-                className="hover:shadow-xl transition-shadow animate-on-scroll"
+                className="hover:shadow-xl transition-all duration-500 animate-on-scroll"
+                style={{
+                  animation: showAll && index >= 3 ? 'fadeInUp 0.5s ease-out' : undefined,
+                  animationDelay: showAll && index >= 3 ? `${(index - 3) * 0.1}s` : undefined
+                }}
               >
                 <CardContent className="pt-6">
                   <div className="flex items-center gap-1 mb-3">
