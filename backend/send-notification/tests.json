@@ -1,0 +1,33 @@
+{
+  "tests": [
+    {
+      "name": "Test notification endpoint with valid data",
+      "method": "POST",
+      "body": {
+        "application_id": 123,
+        "name": "Иван Петров",
+        "phone": "+79991234567",
+        "email": "test@example.com",
+        "service": "Покупка квартиры",
+        "message": "Тестовое сообщение"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Test notification with missing fields",
+      "method": "POST",
+      "body": {
+        "application_id": 123
+      },
+      "expectedStatus": 400,
+      "expectedBody": {
+        "error": "Missing required fields"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
