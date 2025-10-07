@@ -11,13 +11,6 @@ export default function HeroSection({ onConsultationClick }: HeroSectionProps) {
     <section className="relative h-screen flex items-center justify-center overflow-hidden pt-20">
       <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-primary/60 to-secondary/55 z-10" />
       <div className="absolute inset-0 bg-[url('https://cdn.poehali.dev/files/7d330913-0577-479e-bd95-ea105020552c.jpeg')] bg-cover bg-center" />
-      <div className="absolute top-32 right-8 z-30 animate-fade-in">
-        <img 
-          src="https://cdn.poehali.dev/files/5ff42783-4fa7-42c0-9af3-ea6eeaa9dd47.png" 
-          alt="ЮР недвижимость - Юрист Риэлтор" 
-          className="h-16 md:h-20 w-auto object-contain drop-shadow-2xl transition-all duration-500 hover:scale-110 hover:drop-shadow-[0_0_25px_rgba(251,146,60,0.8)] hover:brightness-110 cursor-pointer"
-        />
-      </div>
       <div className="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
         <div className="mb-6 animate-fade-in flex justify-center">
           <img 
