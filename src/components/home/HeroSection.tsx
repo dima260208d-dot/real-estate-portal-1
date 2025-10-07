@@ -12,7 +12,7 @@ export default function HeroSection({ onConsultationClick }: HeroSectionProps) {
       <div className="absolute inset-0 bg-gradient-to-br from-black/50 via-primary/30 to-secondary/25 z-10" />
       <div className="absolute inset-0 bg-[url('https://cdn.poehali.dev/files/7d330913-0577-479e-bd95-ea105020552c.jpeg')] bg-cover bg-center brightness-110" />
       <div className="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
-        <div className="mb-6 animate-fade-in flex justify-center relative w-full -mt-20">
+        <div className="mb-6 animate-fade-in flex justify-center relative w-full -mt-8">
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
             <div className="absolute animate-sparkle-1 text-base md:text-xl">✨</div>
             <div className="absolute animate-sparkle-2 text-base md:text-xl">⭐</div>
