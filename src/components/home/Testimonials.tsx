@@ -95,23 +95,6 @@ export default function Testimonials() {
               </Card>
             ))}
           </div>
-
-          <div className="mt-12 text-center animate-on-scroll">
-            <Button 
-              onClick={() => setShowReviewForm(!showReviewForm)}
-              size="lg"
-              className="gap-2"
-            >
-              <Icon name="MessageCircle" size={20} />
-              {showReviewForm ? 'Скрыть форму' : 'Оставить отзыв'}
-            </Button>
-          </div>
-
-          {showReviewForm && (
-            <div className="mt-8 animate-on-scroll">
-              <ReviewForm />
-            </div>
-          )}
         </div>
       </div>
     </section>
