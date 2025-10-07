@@ -11,7 +11,6 @@ export default function Footer() {
             <div className="mb-4">
               <img src="https://cdn.poehali.dev/files/855a0bef-af1c-4794-9913-95fb0e695be8.png" alt="ЮР недвижимость" className="h-12 w-auto object-contain" />
             </div>
-            <p className="text-gray-400 text-sm">Система услуг для эффективного решения Ваших задач</p>
             <div className="mt-4">
               <iframe src="https://yandex.ru/sprav/widget/rating-badge/158777231552?type=rating&theme=dark" width="150" height="50" frameBorder="0" title="Рейтинг Яндекс"></iframe>
             </div>
