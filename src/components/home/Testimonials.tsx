@@ -61,7 +61,7 @@ export default function Testimonials() {
           </h2>
           <div className="text-center mb-12 animate-on-scroll">
             <p className="text-gray-600 mb-4 max-w-2xl mx-auto">
-              Отзывы загружены из официальных источников: Авито, Яндекс и др.
+              Отзывы на сайт выгружены из официальных источников: Авито, Яндекс и др.
             </p>
           </div>
 
