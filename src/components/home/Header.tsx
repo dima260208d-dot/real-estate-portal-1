@@ -90,7 +90,7 @@ export default function Header({ onApplicationClick }: HeaderProps) {
             </Button>
             <Button 
               variant="outline" 
-              className="border-secondary text-secondary hover:bg-secondary hover:text-white transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-secondary/50 w-full" 
+              className="border-2 border-secondary text-secondary bg-secondary/10 hover:bg-secondary hover:text-white transition-all duration-300 hover:scale-105 shadow-lg shadow-secondary/30 hover:shadow-xl hover:shadow-secondary/60 font-semibold w-full" 
               onClick={handleAuthClick}
             >
               {isLoggedIn ? 'Личный кабинет' : 'Вход'}
