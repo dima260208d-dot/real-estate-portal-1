@@ -1,8 +1,17 @@
 User-agent: Googlebot
 Allow: /
+Disallow: /dashboard
+Disallow: /register
 
 User-agent: Bingbot
 Allow: /
+Disallow: /dashboard
+Disallow: /register
+
+User-agent: Yandex
+Allow: /
+Disallow: /dashboard
+Disallow: /register
 
 User-agent: Twitterbot
 Allow: /
@@ -12,3 +21,7 @@ Allow: /
 
 User-agent: *
 Allow: /
+Disallow: /dashboard
+Disallow: /register
+
+Sitemap: https://yur-nedv.ru/sitemap.xml
