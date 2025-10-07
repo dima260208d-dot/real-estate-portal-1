@@ -6,7 +6,6 @@ import ReviewForm from '@/components/ReviewForm';
 
 export default function Testimonials() {
   const [showReviewForm, setShowReviewForm] = useState(false);
-  const [showAll, setShowAll] = useState(false);
   
   const testimonials = [
     {
@@ -69,14 +68,10 @@ export default function Testimonials() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {(showAll ? testimonials : testimonials.slice(0, 3)).map((testimonial, index) => (
+            {testimonials.map((testimonial, index) => (
               <Card 
                 key={index} 
-                className="hover:shadow-xl transition-all duration-500 animate-on-scroll"
-                style={{
-                  animation: showAll && index >= 3 ? 'fadeInUp 0.5s ease-out' : undefined,
-                  animationDelay: showAll && index >= 3 ? `${(index - 3) * 0.1}s` : undefined
-                }}
+                className="hover:shadow-xl transition-shadow animate-on-scroll"
               >
                 <CardContent className="pt-6">
                   <div className="flex items-center gap-1 mb-3">
@@ -102,27 +97,6 @@ export default function Testimonials() {
               </Card>
             ))}
           </div>
-
-          {testimonials.length > 3 && (
-            <div className="text-center mt-8">
-              <Button
-                onClick={() => setShowAll(!showAll)}
-                variant="outline"
-                size="lg"
-                className="gap-2"
-              >
-                {showAll ? (
-                  <>
-                    Скрыть <Icon name="ChevronUp" size={20} />
-                  </>
-                ) : (
-                  <>
-                    Показать все отзывы ({testimonials.length}) <Icon name="ChevronDown" size={20} />
-                  </>
-                )}
-              </Button>
-            </div>
-          )}
         </div>
       </div>
     </section>
