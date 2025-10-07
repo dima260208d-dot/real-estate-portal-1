@@ -21,8 +21,8 @@ export default function HeroSection({ onConsultationClick }: HeroSectionProps) {
             <div className="absolute animate-sparkle-5 text-xl md:text-2xl">⭐</div>
             <div className="absolute animate-sparkle-6 text-xl md:text-2xl">✨</div>
           </div>
-          <div className="relative z-10 inline-block bg-white/20 backdrop-blur-lg px-16 py-8 rounded-3xl shadow-[0_0_80px_rgba(255,255,255,0.3)] border-2 border-white/40">
-            <h1 className="text-5xl md:text-7xl font-extrabold text-white animate-logo-glow transition-all duration-700 hover:scale-105 cursor-pointer tracking-tight" style={{ 
+          <div className="relative z-10 inline-block bg-white/20 backdrop-blur-lg px-10 py-5 rounded-3xl shadow-[0_0_80px_rgba(255,255,255,0.3)] border-2 border-white/40">
+            <h1 className="text-3xl md:text-5xl font-extrabold text-white animate-logo-glow transition-all duration-700 hover:scale-105 cursor-pointer tracking-tight" style={{ 
               filter: 'drop-shadow(0 0 60px rgba(255,255,255,1)) drop-shadow(0 0 30px rgba(255,255,255,0.8)) drop-shadow(0 0 15px rgba(255,215,0,0.5))',
               textShadow: '0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(255,255,255,0.6)'
             }}>
