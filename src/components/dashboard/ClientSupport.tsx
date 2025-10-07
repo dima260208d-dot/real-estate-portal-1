@@ -116,8 +116,8 @@ export default function ClientSupport() {
               </div>
               <div className="flex items-center gap-2">
                 <Icon name="Mail" size={16} className="text-primary" />
-                <a href="mailto:info@ur-nedvizhimost.ru" className="text-primary hover:underline">
-                  info@ur-nedvizhimost.ru
+                <a href="mailto:yur.nedv@mail.ru" className="text-primary hover:underline">
+                  yur.nedv@mail.ru
                 </a>
               </div>
             </div>
