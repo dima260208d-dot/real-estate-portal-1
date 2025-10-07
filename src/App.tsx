@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { Analytics } from "@/components/Analytics";
+import QuickContactButtons from "@/components/QuickContactButtons";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -26,6 +27,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Analytics />
+          <QuickContactButtons />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />
