@@ -63,7 +63,7 @@ export default function Testimonials() {
             <p className="text-gray-600 mb-4 max-w-2xl mx-auto">
               Отзывы на сайт выгружены из официальных источников: 
               <a href="https://www.avito.ru/brands/i104252085/all?src=fs&page_from=from_favorite_sellers&sellerId=ef2036a79c9bb624bcfd4fc5489fce42" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline mx-1">Авито</a>, 
-              <a href="https://yandex.ru/profile/158777231552" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline mx-1">Яндекс</a> и др.
+              <a href="https://yandex.ru/profile/158777231552?lang=ru" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline mx-1">Яндекс</a> и др.
             </p>
           </div>
 
