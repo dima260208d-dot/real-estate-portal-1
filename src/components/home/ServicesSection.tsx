@@ -19,7 +19,7 @@ export default function ServicesSection({ services, onServiceClick }: ServicesSe
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-bold text-center mb-4 text-foreground animate-on-scroll">Наши услуги</h2>
         <p className="text-center text-gray-600 mb-16 animate-on-scroll">Полный спектр услуг на рынке недвижимости</p>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, i) => (
             <Card
               key={service.id}
