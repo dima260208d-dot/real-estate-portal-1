@@ -53,7 +53,7 @@ export default function Testimonials() {
             Отзывы клиентов
           </h2>
           <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto animate-on-scroll">
-            Отзывы на сайте из официальных источников: Авито, Яндекс
+            Отзывы на сайте опубликованы из официальных источников: Авито, Яндекс
           </p>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
