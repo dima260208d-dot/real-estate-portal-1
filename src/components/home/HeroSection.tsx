@@ -16,7 +16,7 @@ export default function HeroSection({ onConsultationClick }: HeroSectionProps) {
           <img 
             src="https://cdn.poehali.dev/files/5ff42783-4fa7-42c0-9af3-ea6eeaa9dd47.png" 
             alt="ЮР недвижимость - Юрист Риэлтор" 
-            className="h-24 md:h-32 w-auto object-contain drop-shadow-2xl animate-glow-pulse transition-all duration-700 hover:scale-105"
+            className="h-24 md:h-32 w-auto object-contain drop-shadow-2xl animate-glow-pulse transition-all duration-700 hover:scale-110 hover:rotate-6 cursor-pointer"
             style={{ filter: 'drop-shadow(0 0 30px rgba(251, 146, 60, 0.8)) drop-shadow(0 0 60px rgba(251, 146, 60, 0.4))' }}
           />
         </div>
