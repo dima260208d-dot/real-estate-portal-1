@@ -9,6 +9,7 @@ import Testimonials from '@/components/home/Testimonials';
 import GuaranteeSection from '@/components/home/GuaranteeSection';
 import StepsSection from '@/components/home/StepsSection';
 import ApplicationForm from '@/components/home/ApplicationForm';
+import ContactForm from '@/components/ContactForm';
 import FAQSection from '@/components/home/FAQSection';
 import ContactsSection from '@/components/home/ContactsSection';
 import Footer from '@/components/home/Footer';
@@ -108,6 +109,7 @@ export default function Index() {
         <GuaranteeSection />
         <StepsSection />
         <ApplicationForm services={services} />
+        <ContactForm />
         <FAQSection faqs={faqs} />
         <ContactsSection />
         <Footer />
