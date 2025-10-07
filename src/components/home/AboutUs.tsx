@@ -3,7 +3,7 @@ import Icon from '@/components/ui/icon';
 export default function AboutUs() {
   const stats = [
     { value: '900+', label: 'Успешных сделок', icon: 'HandshakeIcon' },
-    { value: 'с 2012 г.', label: 'опыт', icon: 'Award' },
+    { value: 'с 2012 г.', label: 'Опыт', icon: 'Award' },
     { value: '98%', label: 'Довольных клиентов', icon: 'ThumbsUp' },
     { value: 'Всегда', label: 'На связи', icon: 'Clock' }
   ];
