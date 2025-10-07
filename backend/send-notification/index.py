@@ -8,7 +8,7 @@ from typing import Dict, Any
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     '''
-    Business: Send email and SMS notifications about new applications
+    Business: Send email, SMS and Telegram notifications about new applications
     Args: event - dict with httpMethod, body containing application details
           context - object with request_id attribute
     Returns: HTTP response dict with notification status
@@ -65,9 +65,12 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     notification_email = os.environ.get('NOTIFICATION_EMAIL')
     notification_phone = os.environ.get('NOTIFICATION_PHONE')
     sms_api_key = os.environ.get('SMS_API_KEY')
+    telegram_bot_token = os.environ.get('TELEGRAM_BOT_TOKEN')
+    telegram_chat_id = os.environ.get('TELEGRAM_CHAT_ID')
     
     email_sent = False
     sms_sent = False
+    telegram_sent = False
     errors = []
     
     if smtp_user and smtp_password and notification_email:
@@ -130,6 +133,32 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         except Exception as e:
             errors.append(f'SMS error: {str(e)}')
     
+    if telegram_bot_token and telegram_chat_id:
+        try:
+            telegram_message = f'''🏠 <b>Новая заявка #{app_id}</b>
+
+<b>Услуга:</b> {service}
+<b>Клиент:</b> {name}
+<b>Телефон:</b> {phone}
+<b>Email:</b> {email}'''
+            
+            if message:
+                telegram_message += f'\n<b>Сообщение:</b>\n{message}'
+            
+            telegram_url = f'https://api.telegram.org/bot{telegram_bot_token}/sendMessage'
+            response = requests.post(telegram_url, json={
+                'chat_id': telegram_chat_id,
+                'text': telegram_message,
+                'parse_mode': 'HTML'
+            }, timeout=10)
+            
+            if response.status_code == 200:
+                telegram_sent = True
+            else:
+                errors.append(f'Telegram error: {response.text}')
+        except Exception as e:
+            errors.append(f'Telegram error: {str(e)}')
+    
     return {
         'statusCode': 200,
         'headers': {
@@ -140,6 +169,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             'success': True,
             'email_sent': email_sent,
             'sms_sent': sms_sent,
+            'telegram_sent': telegram_sent,
             'errors': errors if errors else None
         }),
         'isBase64Encoded': False
