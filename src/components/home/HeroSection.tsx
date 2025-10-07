@@ -21,11 +21,13 @@ export default function HeroSection({ onConsultationClick }: HeroSectionProps) {
             <div className="absolute animate-sparkle-5 text-base md:text-xl">⭐</div>
             <div className="absolute animate-sparkle-6 text-base md:text-xl">✨</div>
           </div>
-          <img 
-            src="https://cdn.poehali.dev/files/5ff42783-4fa7-42c0-9af3-ea6eeaa9dd47.png" 
-            alt="ЮР недвижимость - Юрист Риэлтор" 
-            className="h-20 md:h-28 w-auto object-contain animate-logo-glow transition-all duration-700 hover:scale-110 hover:rotate-6 cursor-pointer relative z-10 max-w-[90vw]"
-          />
+          <div className="relative z-10 p-4 md:p-6 rounded-2xl bg-white/10 backdrop-blur-sm border-2 border-white/30 shadow-2xl">
+            <img 
+              src="https://cdn.poehali.dev/files/5ff42783-4fa7-42c0-9af3-ea6eeaa9dd47.png" 
+              alt="ЮР недвижимость - Юрист Риэлтор" 
+              className="h-20 md:h-28 w-auto object-contain animate-logo-glow transition-all duration-700 hover:scale-110 hover:rotate-6 cursor-pointer max-w-[90vw]"
+            />
+          </div>
         </div>
         <p className="text-lg md:text-xl mb-8 animate-fade-in animation-delay-400 text-white/80 drop-shadow-lg">
           Система услуг для эффективного решения Ваших задач
