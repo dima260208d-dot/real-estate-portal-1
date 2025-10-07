@@ -21,10 +21,9 @@ export default function HeroSection({ onConsultationClick }: HeroSectionProps) {
             <div className="absolute animate-sparkle-5 text-xl md:text-2xl">⭐</div>
             <div className="absolute animate-sparkle-6 text-xl md:text-2xl">✨</div>
           </div>
-          <div className="relative z-10 inline-block bg-white/20 backdrop-blur-lg px-10 py-5 rounded-3xl shadow-[0_0_80px_rgba(255,255,255,0.3)] border-2 border-white/40">
+          <div className="relative z-10 inline-block">
             <h1 className="text-3xl md:text-5xl font-extrabold text-white animate-logo-glow transition-all duration-700 hover:scale-105 cursor-pointer tracking-tight" style={{ 
-              filter: 'drop-shadow(0 0 60px rgba(255,255,255,1)) drop-shadow(0 0 30px rgba(255,255,255,0.8)) drop-shadow(0 0 15px rgba(255,215,0,0.5))',
-              textShadow: '0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(255,255,255,0.6)'
+              textShadow: '0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15)'
             }}>
               ЮР недвижимость
             </h1>
