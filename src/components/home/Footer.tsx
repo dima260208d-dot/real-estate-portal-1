@@ -8,12 +8,8 @@ export default function Footer() {
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
-            <div className="flex items-center gap-3 mb-4">
-              <img src="https://cdn.poehali.dev/files/49921f72-fe81-4d6d-975f-1ba898046b57.jpg" alt="ЮР недвижимость" className="w-12 h-12 rounded-full" />
-              <div>
-                <h3 className="font-bold text-lg">ЮР недвижимость</h3>
-                <p className="text-sm text-gray-400">Профессионализм в квадратах</p>
-              </div>
+            <div className="mb-4">
+              <img src="https://cdn.poehali.dev/files/855a0bef-af1c-4794-9913-95fb0e695be8.png" alt="ЮР недвижимость" className="h-16 w-auto object-contain" />
             </div>
             <p className="text-gray-400 text-sm">Юрист и риэлтор для эффективного решения задач</p>
             <div className="mt-4">
