@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import Header from '@/components/home/Header';
 import HeroSection from '@/components/home/HeroSection';
 import AboutUs from '@/components/home/AboutUs';
@@ -68,21 +69,51 @@ export default function Index() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
-      <Header onApplicationClick={scrollToForm} />
-      <HeroSection onConsultationClick={scrollToForm} />
-      <AboutUs />
-      <WhyChooseUs />
-      <ServicesSection services={services} onServiceClick={handleServiceClick} />
-      <Testimonials />
-      <GuaranteeSection />
-      <StepsSection />
-      <ApplicationForm services={services} />
-      <FAQSection faqs={faqs} />
-      <ContactsSection />
-      <Footer />
-      <ChatBot />
-      <ServiceModal isOpen={isOpen} onOpenChange={setIsOpen} selectedService={selectedService} />
-    </div>
+    <>
+      <Helmet>
+        <title>ЮР недвижимость — Юрист и риэлтор в Воронеже | Покупка, продажа, ипотека</title>
+        <meta name="description" content="Профессиональные услуги юриста и риэлтора в Воронеже. Покупка и продажа недвижимости, оформление ипотеки, юридическое сопровождение сделок. Бесплатная консультация ☎️ +7 (900) 947-97-75" />
+        <meta name="keywords" content="юрист по недвижимости воронеж, риэлтор воронеж, купить квартиру воронеж, продать квартиру воронеж, ипотека воронеж, юридическое сопровождение сделок" />
+        <link rel="canonical" href="https://urdoma.ru/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://urdoma.ru/" />
+        <meta property="og:site_name" content="ЮР недвижимость" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="ЮР недвижимость — Юрист и риэлтор в Воронеже" />
+        <meta name="twitter:description" content="Профессиональные услуги юриста и риэлтора. Покупка, продажа, ипотека. Бесплатная консультация" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "RealEstateAgent",
+            "name": "ЮР недвижимость",
+            "description": "Юрист и риэлтор для решения задач по недвижимости в Воронеже",
+            "telephone": "+7-900-947-97-75",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Воронеж",
+              "addressCountry": "RU"
+            },
+            "priceRange": "$$",
+            "areaServed": "Воронеж"
+          })}
+        </script>
+      </Helmet>
+      <div className="min-h-screen bg-white">
+        <Header onApplicationClick={scrollToForm} />
+        <HeroSection onConsultationClick={scrollToForm} />
+        <AboutUs />
+        <WhyChooseUs />
+        <ServicesSection services={services} onServiceClick={handleServiceClick} />
+        <Testimonials />
+        <GuaranteeSection />
+        <StepsSection />
+        <ApplicationForm services={services} />
+        <FAQSection faqs={faqs} />
+        <ContactsSection />
+        <Footer />
+        <ChatBot />
+        <ServiceModal isOpen={isOpen} onOpenChange={setIsOpen} selectedService={selectedService} />
+      </div>
+    </>
   );
 }

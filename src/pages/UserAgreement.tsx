@@ -1,9 +1,16 @@
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import Icon from '@/components/ui/icon';
 
 export default function UserAgreement() {
   return (
-    <div className="min-h-screen bg-white">
+    <>
+      <Helmet>
+        <title>Пользовательское соглашение — ЮР недвижимость</title>
+        <meta name="description" content="Пользовательское соглашение ООО ЮРИЭЛТИ — условия использования сайта yur-nedv.ru, права и обязанности сторон, ответственность и разрешение споров" />
+        <meta name="robots" content="noindex, follow" />
+      </Helmet>
+      <div className="min-h-screen bg-white">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <Link to="/" className="inline-flex items-center gap-2 text-primary hover:text-primary/80 mb-6">
           <Icon name="ArrowLeft" size={20} />
@@ -107,5 +114,6 @@ export default function UserAgreement() {
         </div>
       </div>
     </div>
+    </>
   );
 }

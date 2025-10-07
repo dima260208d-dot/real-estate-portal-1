@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
@@ -62,7 +63,13 @@ export default function MobileApp() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <>
+      <Helmet>
+        <title>Мобильное приложение — ЮР недвижимость</title>
+        <meta name="description" content="Скачайте мобильное приложение ЮР недвижимость для iOS и Android. Управляйте недвижимостью, отслеживайте сделки и общайтесь со специалистами прямо с телефона" />
+        <meta name="robots" content="index, follow" />
+      </Helmet>
+      <div className="min-h-screen bg-white">
       <Header onApplicationClick={() => {}} />
       
       <section className="relative pt-32 pb-20 px-4 bg-gradient-to-br from-primary/10 via-white to-secondary/10">
@@ -250,5 +257,6 @@ export default function MobileApp() {
 
       <Footer />
     </div>
+    </>
   );
 }

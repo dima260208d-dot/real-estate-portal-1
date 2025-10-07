@@ -1,16 +1,23 @@
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import Icon from '@/components/ui/icon';
 
 export default function PrivacyPolicy() {
   return (
-    <div className="min-h-screen bg-white">
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
-        <Link to="/" className="inline-flex items-center gap-2 text-primary hover:text-primary/80 mb-6">
-          <Icon name="ArrowLeft" size={20} />
-          <span>Вернуться на главную</span>
-        </Link>
-        
-        <h1 className="text-3xl font-bold mb-6">Политика конфиденциальности</h1>
+    <>
+      <Helmet>
+        <title>Политика конфиденциальности — ЮР недвижимость</title>
+        <meta name="description" content="Политика конфиденциальности и обработки персональных данных ЮР недвижимость. Информация о защите личных данных пользователей сайта" />
+        <meta name="robots" content="noindex, follow" />
+      </Helmet>
+      <div className="min-h-screen bg-white">
+        <div className="container mx-auto px-4 py-8 max-w-4xl">
+          <Link to="/" className="inline-flex items-center gap-2 text-primary hover:text-primary/80 mb-6">
+            <Icon name="ArrowLeft" size={20} />
+            <span>Вернуться на главную</span>
+          </Link>
+          
+          <h1 className="text-3xl font-bold mb-6">Политика конфиденциальности</h1>
         
         <div className="prose max-w-none space-y-6 text-gray-700">
           <section>
@@ -94,6 +101,7 @@ export default function PrivacyPolicy() {
           </p>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

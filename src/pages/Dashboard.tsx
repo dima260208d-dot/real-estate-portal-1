@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -207,7 +208,13 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F5F5]">
+    <>
+      <Helmet>
+        <title>Личный кабинет — ЮР недвижимость</title>
+        <meta name="description" content="Личный кабинет клиента ЮР недвижимость — управление заявками, оплата услуг, загрузка документов и связь со специалистом" />
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+      <div className="min-h-screen bg-[#F5F5F5]">
       <header className="bg-white shadow-sm border-b">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center gap-3">
@@ -632,5 +639,6 @@ export default function Dashboard() {
         </DialogContent>
       </Dialog>
     </div>
+    </>
   );
 }
