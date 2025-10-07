@@ -112,7 +112,7 @@ export default function ClientSupport() {
             <div className="text-sm text-gray-600 space-y-2">
               <div className="flex items-center gap-2">
                 <Icon name="Clock" size={16} className="text-primary" />
-                <span>Работаем: Пн-Пт 9:00 - 18:00</span>
+                <span>Работаем: Пн-Пт 10:00 - 20:00</span>
               </div>
               <div className="flex items-center gap-2">
                 <Icon name="Mail" size={16} className="text-primary" />
