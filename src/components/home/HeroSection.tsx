@@ -30,10 +30,10 @@ export default function HeroSection({ onConsultationClick }: HeroSectionProps) {
             />
           </div>
         </div>
-        <p className="text-lg md:text-xl mb-8 animate-fade-in animation-delay-400 text-white/80 drop-shadow-lg">
+        <p className="text-lg md:text-xl mb-8 animate-fade-in animation-delay-400 text-white/80 drop-shadow-lg mt-16">
           Система услуг для эффективного решения Ваших задач
         </p>
-        <div className="flex gap-4 justify-center flex-wrap animate-fade-in animation-delay-600">
+        <div className="flex gap-4 justify-center flex-wrap animate-fade-in animation-delay-600 mt-8">
           <Button size="lg" onClick={onConsultationClick} className="bg-primary hover:bg-primary/90">
             Продать квартиру
           </Button>
