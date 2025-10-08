@@ -96,20 +96,18 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     cur.close()
     conn.close()
     
-    notification_url = os.environ.get('NOTIFICATION_FUNCTION_URL')
-    if notification_url:
-        try:
-            import requests
-            requests.post(notification_url, json={
-                'application_id': app_id,
-                'name': name,
-                'phone': phone,
-                'email': email,
-                'service': service,
-                'message': message
-            }, timeout=5)
-        except Exception:
-            pass
+    try:
+        import requests
+        requests.post('https://functions.poehali.dev/430f7394-a519-4680-b9ea-266a23cea8a1', json={
+            'application_id': app_id,
+            'name': name,
+            'phone': phone,
+            'email': email,
+            'service': service,
+            'message': message
+        }, timeout=5)
+    except Exception:
+        pass
     
     return {
         'statusCode': 200,
