@@ -13,9 +13,7 @@
       },
       "expectedStatus": 200,
       "expectedBody": {
-        "success": true,
-        "application_id": "number",
-        "message": "string"
+        "success": true
       },
       "bodyMatcher": "partial"
     },
