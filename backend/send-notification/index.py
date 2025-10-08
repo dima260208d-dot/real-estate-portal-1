@@ -66,7 +66,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     notification_phone = os.environ.get('NOTIFICATION_PHONE')
     sms_api_key = os.environ.get('SMS_API_KEY')
     telegram_bot_token = '8493580794:AAF1VaHaK6U7D5X1Lr2jAREkhYT0BGtv2_E'
-    telegram_chat_id = '5262932064'
+    telegram_chat_id = '5585697661'
     
     email_sent = False
     sms_sent = False
