@@ -135,6 +135,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     
     if telegram_bot_token and telegram_chat_id:
         try:
+            print(f'Sending Telegram notification to chat_id: {telegram_chat_id}')
             telegram_message = f'''🏠 <b>Новая заявка #{app_id}</b>
 
 <b>Услуга:</b> {service}
@@ -146,17 +147,22 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 telegram_message += f'\n<b>Сообщение:</b>\n{message}'
             
             telegram_url = f'https://api.telegram.org/bot{telegram_bot_token}/sendMessage'
+            print(f'Telegram URL: {telegram_url}')
             response = requests.post(telegram_url, json={
                 'chat_id': telegram_chat_id,
                 'text': telegram_message,
                 'parse_mode': 'HTML'
             }, timeout=10)
             
+            print(f'Telegram response status: {response.status_code}')
+            print(f'Telegram response body: {response.text}')
+            
             if response.status_code == 200:
                 telegram_sent = True
             else:
                 errors.append(f'Telegram error: {response.text}')
         except Exception as e:
+            print(f'Telegram exception: {str(e)}')
             errors.append(f'Telegram error: {str(e)}')
     
     return {
