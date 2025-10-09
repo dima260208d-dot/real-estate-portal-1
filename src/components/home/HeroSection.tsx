@@ -12,17 +12,17 @@ export default function HeroSection({ onConsultationClick }: HeroSectionProps) {
       <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-primary/60 to-secondary/50 z-10" />
       <div className="absolute inset-0 bg-[url('https://cdn.poehali.dev/files/7d330913-0577-479e-bd95-ea105020552c.jpeg')] bg-cover bg-center brightness-75" />
       <div className="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
-        <div className="mb-6 animate-fade-in flex justify-center relative w-full mt-8">
+        <div className="mb-6 flex justify-center relative w-full mt-8">
           <div className="relative z-10 inline-block bg-white/10 backdrop-blur-sm px-8 py-4 rounded-2xl border border-white/20">
             <h1 className="text-2xl md:text-4xl font-bold text-white tracking-tight">
               ЮР недвижимость
             </h1>
           </div>
         </div>
-        <p className="text-lg md:text-xl mb-8 animate-fade-in animation-delay-400 text-white/80 drop-shadow-lg mt-24">
+        <p className="text-lg md:text-xl mb-8 text-white/80 drop-shadow-lg mt-24">
           Система услуг юриста и риэлтора для эффективного решения Ваших задач
         </p>
-        <div className="flex gap-4 justify-center flex-wrap animate-fade-in animation-delay-600 mt-12">
+        <div className="flex gap-4 justify-center flex-wrap mt-12">
           <Button size="lg" onClick={onConsultationClick} className="bg-primary hover:bg-primary/90">
             Продать квартиру
           </Button>
