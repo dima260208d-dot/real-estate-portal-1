@@ -106,6 +106,8 @@ export default function ServiceModal({ isOpen, onOpenChange, selectedService }: 
     message: ''
   });
   const [serviceDetails, setServiceDetails] = useState<Record<string, string | boolean>>({});
+  const [files, setFiles] = useState<File[]>([]);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     if (selectedService) {
@@ -134,9 +136,33 @@ export default function ServiceModal({ isOpen, onOpenChange, selectedService }: 
         })
         .join('\n');
 
+      setUploading(true);
+      let uploadedFileUrls: string[] = [];
+
+      if (files.length > 0) {
+        const uploadPromises = files.map(async (file) => {
+          return new Promise<string>((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              const base64 = reader.result as string;
+              resolve(base64);
+            };
+            reader.readAsDataURL(file);
+          });
+        });
+        
+        uploadedFileUrls = await Promise.all(uploadPromises);
+      }
+
+      const filesText = uploadedFileUrls.length > 0 
+        ? `\n\nПрикрепленные файлы (${files.length}):\n${files.map((f, i) => `${i + 1}. ${f.name} (${(f.size / 1024).toFixed(1)} KB)`).join('\n')}\n\nBase64 данные:\n${uploadedFileUrls.map((data, i) => `Файл ${i + 1}: ${data.substring(0, 100)}...`).join('\n')}`
+        : '';
+
       const fullMessage = detailsText 
-        ? `${detailsText}\n\n${formData.message || ''}`.trim()
-        : formData.message;
+        ? `${detailsText}\n\n${formData.message || ''}${filesText}`.trim()
+        : `${formData.message}${filesText}`;
+      
+      setUploading(false);
       
       const applicationData = {
         ...formData,
@@ -160,6 +186,7 @@ export default function ServiceModal({ isOpen, onOpenChange, selectedService }: 
         onOpenChange(false);
         setFormData({ name: '', phone: '', email: '', service: '', message: '' });
         setServiceDetails({});
+        setFiles([]);
         setAgreed(false);
       } else {
         toast.error('Ошибка отправки заявки. Попробуйте позже.');
@@ -275,14 +302,55 @@ export default function ServiceModal({ isOpen, onOpenChange, selectedService }: 
               rows={3}
             />
           </div>
+          <div>
+            <Label htmlFor="modal-files">Прикрепить файлы</Label>
+            <div className="mt-2">
+              <label htmlFor="modal-files" className="cursor-pointer">
+                <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-primary transition-colors">
+                  <Icon name="Upload" className="mx-auto mb-2 text-gray-400" size={24} />
+                  <p className="text-xs text-gray-600">Фото, документы (PNG, JPG, PDF)</p>
+                </div>
+              </label>
+              <input
+                id="modal-files"
+                type="file"
+                multiple
+                accept="image/*,.pdf"
+                className="hidden"
+                onChange={(e) => {
+                  const newFiles = Array.from(e.target.files || []);
+                  setFiles([...files, ...newFiles]);
+                }}
+              />
+              {files.length > 0 && (
+                <div className="mt-2 space-y-1">
+                  {files.map((file, index) => (
+                    <div key={index} className="flex items-center justify-between bg-gray-50 p-2 rounded text-sm">
+                      <div className="flex items-center gap-2">
+                        <Icon name="File" size={14} className="text-gray-400" />
+                        <span className="text-gray-700 truncate max-w-[200px]">{file.name}</span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setFiles(files.filter((_, i) => i !== index))}
+                        className="text-red-500 hover:text-red-700"
+                      >
+                        <Icon name="X" size={14} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
           <div className="flex items-center gap-2">
             <Checkbox id="modal-agree" checked={agreed} onCheckedChange={(checked) => setAgreed(checked as boolean)} />
             <Label htmlFor="modal-agree" className="text-sm cursor-pointer">
               Я согласен на обработку персональных данных
             </Label>
           </div>
-          <Button type="submit" className="w-full bg-primary hover:bg-primary/90" size="lg">
-            Заказать услугу
+          <Button type="submit" className="w-full bg-primary hover:bg-primary/90" size="lg" disabled={uploading}>
+            {uploading ? 'Загрузка файлов...' : 'Заказать услугу'}
           </Button>
         </form>
       </DialogContent>

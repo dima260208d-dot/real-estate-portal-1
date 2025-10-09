@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
+import Icon from '@/components/ui/icon';
 
 interface Service {
   id: string;
@@ -27,6 +28,8 @@ export default function ApplicationForm({ services }: ApplicationFormProps) {
     service: '',
     message: ''
   });
+  const [files, setFiles] = useState<File[]>([]);
+  const [uploading, setUploading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,10 +42,35 @@ export default function ApplicationForm({ services }: ApplicationFormProps) {
       const userData = localStorage.getItem('user');
       const user = userData ? JSON.parse(userData) : null;
       
+      setUploading(true);
+      let uploadedFileUrls: string[] = [];
+
+      if (files.length > 0) {
+        const uploadPromises = files.map(async (file) => {
+          return new Promise<string>((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              const base64 = reader.result as string;
+              resolve(base64);
+            };
+            reader.readAsDataURL(file);
+          });
+        });
+        
+        uploadedFileUrls = await Promise.all(uploadPromises);
+      }
+
+      const filesText = uploadedFileUrls.length > 0 
+        ? `\n\nПрикрепленные файлы (${files.length}):\n${files.map((f, i) => `${i + 1}. ${f.name} (${(f.size / 1024).toFixed(1)} KB)`).join('\n')}\n\nBase64 данные:\n${uploadedFileUrls.map((data, i) => `Файл ${i + 1}: ${data.substring(0, 100)}...`).join('\n')}`
+        : '';
+
       const applicationData = {
         ...formData,
+        message: formData.message + filesText,
         user_id: user?.user_id || null
       };
+      
+      setUploading(false);
 
       const response = await fetch('https://functions.poehali.dev/680c3b01-9d4e-4dee-a366-4c371d7942aa', {
         method: 'POST',
@@ -57,6 +85,7 @@ export default function ApplicationForm({ services }: ApplicationFormProps) {
       if (response.ok && data.success) {
         toast.success('Спасибо! Ваша заявка принята. Мы свяжемся с вами в течение 15 минут!');
         setFormData({ name: '', phone: '', email: '', service: '', message: '' });
+        setFiles([]);
         setAgreed(false);
       } else {
         toast.error('Ошибка отправки заявки. Попробуйте позже.');
@@ -129,6 +158,48 @@ export default function ApplicationForm({ services }: ApplicationFormProps) {
                   rows={4}
                 />
               </div>
+              <div>
+                <Label htmlFor="files">Прикрепить файлы (фото, документы)</Label>
+                <div className="mt-2">
+                  <label htmlFor="files" className="cursor-pointer">
+                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-primary transition-colors">
+                      <Icon name="Upload" className="mx-auto mb-2 text-gray-400" size={32} />
+                      <p className="text-sm text-gray-600">Нажмите для загрузки или перетащите файлы</p>
+                      <p className="text-xs text-gray-400 mt-1">PNG, JPG, PDF до 10MB</p>
+                    </div>
+                  </label>
+                  <input
+                    id="files"
+                    type="file"
+                    multiple
+                    accept="image/*,.pdf"
+                    className="hidden"
+                    onChange={(e) => {
+                      const newFiles = Array.from(e.target.files || []);
+                      setFiles([...files, ...newFiles]);
+                    }}
+                  />
+                  {files.length > 0 && (
+                    <div className="mt-3 space-y-2">
+                      {files.map((file, index) => (
+                        <div key={index} className="flex items-center justify-between bg-gray-50 p-2 rounded">
+                          <div className="flex items-center gap-2">
+                            <Icon name="File" size={16} className="text-gray-400" />
+                            <span className="text-sm text-gray-700">{file.name}</span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setFiles(files.filter((_, i) => i !== index))}
+                            className="text-red-500 hover:text-red-700"
+                          >
+                            <Icon name="X" size={16} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
               <div className="flex items-start gap-2">
                 <Checkbox 
                   id="agree" 
@@ -147,8 +218,8 @@ export default function ApplicationForm({ services }: ApplicationFormProps) {
                   </Link>
                 </Label>
               </div>
-              <Button type="submit" className="w-full bg-primary hover:bg-primary/90" size="lg">
-                Отправить заявку
+              <Button type="submit" className="w-full bg-primary hover:bg-primary/90" size="lg" disabled={uploading}>
+                {uploading ? 'Загрузка файлов...' : 'Отправить заявку'}
               </Button>
             </form>
           </CardContent>
