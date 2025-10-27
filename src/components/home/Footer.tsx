@@ -55,7 +55,8 @@ export default function Footer() {
         </div>
         <div className="border-t border-gray-800 pt-8">
           <div className="text-center text-sm text-gray-400">
-            <p className="mb-3">© ЮР недвижимость, 2024. Все права защищены.</p>
+            <p className="mb-2">© ЮР недвижимость, 2024. Все права защищены.</p>
+            <p className="mb-3 text-xs">ИНН 3662311194 • ОГРН 1243600013359</p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link to="/privacy-policy" className="hover:text-primary transition-colors">Политика конфиденциальности</Link>
               <Link to="/user-agreement" className="hover:text-primary transition-colors">Пользовательское соглашение</Link>
