@@ -1,0 +1,6 @@
+# Redirect all HTTP traffic to HTTPS
+http://yur-nedv.ru/* https://yur-nedv.ru/:splat 301!
+http://www.yur-nedv.ru/* https://yur-nedv.ru/:splat 301!
+
+# Ensure SPA routing works correctly
+/*    /index.html   200
