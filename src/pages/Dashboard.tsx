@@ -1,18 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import Icon from '@/components/ui/icon';
 import { toast } from 'sonner';
 import * as XLSX from 'xlsx';
 import PaymentForm from '@/components/dashboard/PaymentForm';
 import ClientSupport from '@/components/dashboard/ClientSupport';
 import FileUpload from '@/components/dashboard/FileUpload';
+import DashboardHeader from '@/components/dashboard/DashboardHeader';
+import DashboardStats from '@/components/dashboard/DashboardStats';
+import ApplicationsFilter from '@/components/dashboard/ApplicationsFilter';
+import ApplicationsTable from '@/components/dashboard/ApplicationsTable';
+import ApplicationDetailsDialog from '@/components/dashboard/ApplicationDetailsDialog';
 
 interface Application {
   id: number;
@@ -117,16 +115,6 @@ export default function Dashboard() {
     window.location.href = '/login';
   };
 
-  const getStatusBadge = (status: string) => {
-    const variants: Record<string, { label: string; className: string }> = {
-      new: { label: 'Новая', className: 'bg-blue-500 hover:bg-blue-600' },
-      in_progress: { label: 'В работе', className: 'bg-yellow-500 hover:bg-yellow-600' },
-      completed: { label: 'Выполнена', className: 'bg-green-500 hover:bg-green-600' },
-    };
-    const variant = variants[status] || variants.new;
-    return <Badge className={variant.className}>{variant.label}</Badge>;
-  };
-
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat('ru-RU', {
@@ -196,6 +184,11 @@ export default function Dashboard() {
     );
   });
 
+  const handleStatusFilterChange = (status: string) => {
+    setStatusFilter(status);
+    fetchApplications(status === 'all' ? undefined : status);
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -215,430 +208,63 @@ export default function Dashboard() {
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
       <div className="min-h-screen bg-[#F5F5F5]">
-      <header className="bg-white shadow-sm border-b">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <img 
-              src="https://cdn.poehali.dev/files/49921f72-fe81-4d6d-975f-1ba898046b57.jpg" 
-              alt="ЮР недвижимость" 
-              className="w-12 h-12 rounded-full"
-            />
-            <div>
-              <h1 className="text-xl font-bold text-[#1A1A1A]">Личный кабинет</h1>
-              <p className="text-xs text-gray-500">
-                {user?.role === 'director' ? 'Директор' : user?.role === 'admin' ? 'Администратор' : 'Клиент'} ({user?.username})
-              </p>
-            </div>
-          </div>
-          <div className="flex gap-2">
-            <Button variant="outline" size="icon" asChild title="На сайт">
-              <a href="/">
-                <Icon name="Home" size={20} />
-              </a>
-            </Button>
-            <Button variant="outline" size="icon" onClick={handleLogout} className="text-red-600 hover:text-red-700" title="Выйти">
-              <Icon name="LogOut" size={20} />
-            </Button>
-          </div>
-        </div>
-      </header>
+        <DashboardHeader user={user} onLogout={handleLogout} />
 
-      <main className="container mx-auto px-4 py-8">
-        {user?.role === 'client' ? (
-          <>
-            <div className="mb-8">
-              <h2 className="text-2xl font-bold text-[#1A1A1A] mb-2">Личный кабинет</h2>
-              <p className="text-gray-600">Управление заявками и связь со специалистом</p>
-            </div>
+        <main className="container mx-auto px-4 py-8">
+          {user?.role !== 'client' && <DashboardStats applications={applications} />}
 
-            <div className="grid lg:grid-cols-3 gap-6 mb-8">
-              <div className="lg:col-span-2 space-y-6">
-                <div>
-                  <h3 className="text-xl font-bold text-[#1A1A1A] mb-4">Статистика заявок</h3>
-                  <div className="grid sm:grid-cols-3 gap-4">
-                    <Card>
-                      <CardHeader className="pb-3">
-                        <CardTitle className="text-sm font-medium text-gray-600">Всего заявок</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="text-3xl font-bold text-[#1A1A1A]">{applications.length}</div>
-                      </CardContent>
-                    </Card>
-                    <Card>
-                      <CardHeader className="pb-3">
-                        <CardTitle className="text-sm font-medium text-gray-600">В работе</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="text-3xl font-bold text-yellow-600">
-                          {applications.filter(a => a.status === 'in_progress').length}
-                        </div>
-                      </CardContent>
-                    </Card>
-                    <Card>
-                      <CardHeader className="pb-3">
-                        <CardTitle className="text-sm font-medium text-gray-600">Выполнены</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="text-3xl font-bold text-green-600">
-                          {applications.filter(a => a.status === 'completed').length}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </div>
+          <Card>
+            <CardHeader>
+              <CardTitle>Мои заявки</CardTitle>
+              <CardDescription>
+                {user?.role === 'client' 
+                  ? 'Управляйте своими заявками и отслеживайте их статус'
+                  : 'Все заявки клиентов'}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ApplicationsFilter
+                searchQuery={searchQuery}
+                onSearchChange={setSearchQuery}
+                statusFilter={statusFilter}
+                onStatusFilterChange={handleStatusFilterChange}
+                onExportExcel={exportToExcel}
+                showExport={user?.role === 'admin' || user?.role === 'director'}
+              />
 
-                <div>
-                  <h3 className="text-xl font-bold text-[#1A1A1A] mb-4">Оплата услуг</h3>
-                  <PaymentForm />
-                </div>
-
-                <div>
-                  <h3 className="text-xl font-bold text-[#1A1A1A] mb-4">Документы</h3>
-                  <FileUpload applications={applications} />
-                </div>
+              <div className="overflow-x-auto">
+                <ApplicationsTable
+                  applications={filteredApplications}
+                  user={user}
+                  onStatusChange={updateStatus}
+                  onOpenDetails={openApplicationDetails}
+                />
               </div>
-              
-              <div>
-                <h3 className="text-xl font-bold text-[#1A1A1A] mb-4">Связь</h3>
-                <ClientSupport />
-              </div>
-            </div>
+            </CardContent>
+          </Card>
 
-            <Card>
-              <CardHeader>
-                <div className="flex justify-between items-center">
-                  <div>
-                    <CardTitle>Мои заявки</CardTitle>
-                    <CardDescription>История обращений с актуальными статусами</CardDescription>
-                  </div>
-                  <Button asChild className="bg-[#FF6600] hover:bg-[#FF7720]">
-                    <a href="/">
-                      <Icon name="Plus" size={16} className="mr-2" />
-                      Новая заявка
-                    </a>
-                  </Button>
-                </div>
-              </CardHeader>
-              <CardContent>
-                {applications.length === 0 ? (
-                  <div className="text-center py-12">
-                    <div className="w-20 h-20 bg-[#FF6600]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Icon name="FileText" size={40} className="text-[#FF6600]" />
-                    </div>
-                    <p className="text-gray-600 mb-4">У вас пока нет заявок</p>
-                    <Button asChild className="bg-[#FF6600] hover:bg-[#FF7720]">
-                      <a href="/">
-                        <Icon name="Home" size={16} className="mr-2" />
-                        Подать заявку на сайте
-                      </a>
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="overflow-x-auto">
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>ID</TableHead>
-                          <TableHead>Дата</TableHead>
-                          <TableHead>Услуга</TableHead>
-                          <TableHead>Сообщение</TableHead>
-                          <TableHead>Статус</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {applications.map((app) => (
-                          <TableRow key={app.id} className="cursor-pointer hover:bg-gray-50" onClick={() => openApplicationDetails(app)}>
-                            <TableCell className="font-medium">#{app.id}</TableCell>
-                            <TableCell className="whitespace-nowrap">{formatDate(app.created_at)}</TableCell>
-                            <TableCell className="font-medium">{app.service}</TableCell>
-                            <TableCell className="max-w-xs truncate">{app.message || '—'}</TableCell>
-                            <TableCell>{getStatusBadge(app.status)}</TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </>
-        ) : (
-          <>
-            <div className="grid md:grid-cols-4 gap-6 mb-8">
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium text-gray-600">Всего заявок</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-3xl font-bold text-[#1A1A1A]">{applications.length}</div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium text-gray-600">Новые</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-3xl font-bold text-blue-600">
-                    {applications.filter(a => a.status === 'new').length}
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium text-gray-600">В работе</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-3xl font-bold text-yellow-600">
-                    {applications.filter(a => a.status === 'in_progress').length}
-                  </div>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium text-gray-600">Выполнены</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-3xl font-bold text-green-600">
-                    {applications.filter(a => a.status === 'completed').length}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            <Card>
-              <CardHeader>
-                <div className="flex justify-between items-center flex-wrap gap-3">
-                  <div>
-                    <CardTitle>Заявки клиентов</CardTitle>
-                    <CardDescription>Архив всех заявок с сайта</CardDescription>
-                  </div>
-                  <div className="flex gap-2 flex-wrap">
-                    <div className="relative">
-                      <Icon name="Search" size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                      <Input
-                        placeholder="Поиск по заявкам..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="pl-10 pr-10 w-64"
-                      />
-                      {searchQuery && (
-                        <button
-                          onClick={() => setSearchQuery('')}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
-                        >
-                          <Icon name="X" size={18} />
-                        </button>
-                      )}
-                    </div>
-                    <Button 
-                      variant="outline" 
-                      onClick={exportToExcel}
-                      className="bg-green-50 hover:bg-green-100 text-green-700 border-green-300"
-                    >
-                      <Icon name="Download" size={16} className="mr-2" />
-                      Экспорт в Excel
-                    </Button>
-                    <Select value={statusFilter} onValueChange={(value) => {
-                      setStatusFilter(value);
-                      fetchApplications(value === 'all' ? undefined : value);
-                    }}>
-                      <SelectTrigger className="w-48">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">Все заявки</SelectItem>
-                        <SelectItem value="new">Новые</SelectItem>
-                        <SelectItem value="in_progress">В работе</SelectItem>
-                        <SelectItem value="completed">Выполнены</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="overflow-x-auto">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>ID</TableHead>
-                        <TableHead>Дата</TableHead>
-                        <TableHead>ФИО</TableHead>
-                        <TableHead>Телефон</TableHead>
-                        <TableHead>Email</TableHead>
-                        <TableHead>Услуга</TableHead>
-                        <TableHead>Сообщение</TableHead>
-                        <TableHead>Статус</TableHead>
-                        <TableHead>Действия</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {filteredApplications.length === 0 ? (
-                        <TableRow>
-                          <TableCell colSpan={9} className="text-center py-8 text-gray-500">
-                            {searchQuery ? 'Заявки не найдены' : 'Заявок пока нет'}
-                          </TableCell>
-                        </TableRow>
-                      ) : (
-                        filteredApplications.map((app) => (
-                          <TableRow 
-                            key={app.id} 
-                            className="cursor-pointer hover:bg-gray-50"
-                            onClick={() => openApplicationDetails(app)}
-                          >
-                            <TableCell className="font-medium">{app.id}</TableCell>
-                            <TableCell className="whitespace-nowrap">{formatDate(app.created_at)}</TableCell>
-                            <TableCell>{app.name}</TableCell>
-                            <TableCell>
-                              <a 
-                                href={`tel:${app.phone}`} 
-                                className="text-[#FF6600] hover:underline"
-                                onClick={(e) => e.stopPropagation()}
-                              >
-                                {app.phone}
-                              </a>
-                            </TableCell>
-                            <TableCell>
-                              <a 
-                                href={`mailto:${app.email}`} 
-                                className="text-[#FF6600] hover:underline"
-                                onClick={(e) => e.stopPropagation()}
-                              >
-                                {app.email}
-                              </a>
-                            </TableCell>
-                            <TableCell className="max-w-xs truncate">{app.service}</TableCell>
-                            <TableCell className="max-w-xs truncate">{app.message || '—'}</TableCell>
-                            <TableCell>{getStatusBadge(app.status)}</TableCell>
-                            <TableCell onClick={(e) => e.stopPropagation()}>
-                              <Select
-                                value={app.status}
-                                onValueChange={(value) => updateStatus(app.id, value)}
-                              >
-                                <SelectTrigger className="w-32">
-                                  <SelectValue />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="new">Новая</SelectItem>
-                                  <SelectItem value="in_progress">В работе</SelectItem>
-                                  <SelectItem value="completed">Выполнена</SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </TableCell>
-                          </TableRow>
-                        ))
-                      )}
-                    </TableBody>
-                  </Table>
-                </div>
-              </CardContent>
-            </Card>
-          </>
-        )}
-      </main>
-
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="text-2xl flex items-center gap-2">
-              <Icon name="FileText" className="text-[#FF6600]" size={28} />
-              Заявка #{selectedApp?.id}
-            </DialogTitle>
-            <DialogDescription>
-              Полная информация о заявке
-            </DialogDescription>
-          </DialogHeader>
-          
-          {selectedApp && (
-            <div className="space-y-4 mt-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <div className="text-sm text-gray-500 mb-1">ID заявки</div>
-                  <div className="font-semibold text-lg">#{selectedApp.id}</div>
-                </div>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <div className="text-sm text-gray-500 mb-1">Статус</div>
-                  <div>{getStatusBadge(selectedApp.status)}</div>
-                </div>
-              </div>
-
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <div className="text-sm text-gray-500 mb-1">Дата создания</div>
-                <div className="font-semibold">{formatDate(selectedApp.created_at)}</div>
-              </div>
-
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <div className="text-sm text-gray-500 mb-1">Последнее обновление</div>
-                <div className="font-semibold">{formatDate(selectedApp.updated_at)}</div>
-              </div>
-
-              <div className="border-t pt-4">
-                <h3 className="font-semibold text-lg mb-3 text-[#1A1A1A]">Контактная информация</h3>
-                
-                <div className="space-y-3">
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <div className="text-sm text-gray-500 mb-1">ФИО клиента</div>
-                    <div className="font-semibold">{selectedApp.name}</div>
-                  </div>
-
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <div className="text-sm text-gray-500 mb-1">Телефон</div>
-                    <a href={`tel:${selectedApp.phone}`} className="font-semibold text-[#FF6600] hover:underline flex items-center gap-2">
-                      <Icon name="Phone" size={16} />
-                      {selectedApp.phone}
-                    </a>
-                  </div>
-
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <div className="text-sm text-gray-500 mb-1">Email</div>
-                    <a href={`mailto:${selectedApp.email}`} className="font-semibold text-[#FF6600] hover:underline flex items-center gap-2">
-                      <Icon name="Mail" size={16} />
-                      {selectedApp.email}
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <div className="border-t pt-4">
-                <h3 className="font-semibold text-lg mb-3 text-[#1A1A1A]">Детали заявки</h3>
-                
-                <div className="space-y-3">
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <div className="text-sm text-gray-500 mb-1">Услуга</div>
-                    <div className="font-semibold text-lg">{selectedApp.service}</div>
-                  </div>
-
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <div className="text-sm text-gray-500 mb-2">Сообщение</div>
-                    <div className="whitespace-pre-wrap text-gray-800">
-                      {selectedApp.message || 'Сообщение отсутствует'}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="border-t pt-4 flex gap-3">
-                <Select
-                  value={selectedApp.status}
-                  onValueChange={(value) => updateStatus(selectedApp.id, value)}
-                >
-                  <SelectTrigger className="flex-1">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="new">Новая</SelectItem>
-                    <SelectItem value="in_progress">В работе</SelectItem>
-                    <SelectItem value="completed">Выполнена</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
-                  Закрыть
-                </Button>
-              </div>
+          {user?.role === 'client' && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+              <PaymentForm />
+              <ClientSupport />
             </div>
           )}
-        </DialogContent>
-      </Dialog>
-    </div>
+
+          {user?.role === 'client' && (
+            <div className="mt-8">
+              <FileUpload userId={user.user_id} />
+            </div>
+          )}
+        </main>
+
+        <ApplicationDetailsDialog
+          application={selectedApp}
+          isOpen={isDialogOpen}
+          onClose={() => setIsDialogOpen(false)}
+          user={user}
+          onStatusChange={updateStatus}
+        />
+      </div>
     </>
   );
 }
